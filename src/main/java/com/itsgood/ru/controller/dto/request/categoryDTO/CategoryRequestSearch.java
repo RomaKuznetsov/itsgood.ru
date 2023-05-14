@@ -1,7 +1,11 @@
 package com.itsgood.ru.controller.dto.request.categoryDTO;
 
-import javax.validation.constraints.Size;
+import lombok.Getter;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.constraints.Size;
+@Getter
+@Validated
 public class CategoryRequestSearch {
 
     private int id;

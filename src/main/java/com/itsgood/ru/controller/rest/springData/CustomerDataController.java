@@ -44,7 +44,7 @@ public class CustomerDataController {
     }
 
     //ok
-    @PatchMapping(value = "/updateHibernateCustomer", consumes = {"application/xml", "application/json"})
+    @PutMapping(value = "/updateHibernateCustomer", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateCustomer> updateHibernateCustomer(@Validated @RequestBody CustomerRequestUpdate request,
                                                                      BindingResult result) {
         if (result.hasErrors()) {

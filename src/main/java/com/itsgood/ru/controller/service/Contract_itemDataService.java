@@ -14,10 +14,14 @@ import com.itsgood.ru.hibernate.domain.HibernateContract_item;
 import com.itsgood.ru.hibernate.domain.HibernateDelivery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.springframework.transaction.annotation.Isolation.DEFAULT;
+import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +48,7 @@ public class Contract_itemDataService {
         }
         return hibernateContract.getContracts_items();
     }
-
+    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract_item createHibernateContract_item(Contract_itemRequestCreate request) {
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestCreate.convert(request);
         HibernateContract hibernateContract = contractDataService.findHibernateContractByCustomerAuthenticateRelevance();
@@ -54,7 +58,7 @@ public class Contract_itemDataService {
         hibernateContract_item.setContract(hibernateContract);
         return hibernateContract_item;
     }
-
+    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract_item updateHibernateContract_item(Contract_itemRequestUpdate request) {
         HibernateDelivery hibernateDelivery = new HibernateDelivery();
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestUpdate.convert(request);
@@ -67,11 +71,11 @@ public class Contract_itemDataService {
         hibernateContract_item.setDelivery(hibernateDelivery);
         return hibernateContract_item;
     }
-
+    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContract_itemById(Integer id) {
         contract_itemDataRepository.deleteById(id);
     }
-
+    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContract_item(Contract_itemRequestUpdate request) {
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestUpdate.convert(request);
         if (contractDataService.findSetHibernateContracts_items(request.getContract_id()).

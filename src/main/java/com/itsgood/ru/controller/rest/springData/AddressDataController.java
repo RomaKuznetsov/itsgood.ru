@@ -31,7 +31,7 @@ public class AddressDataController {
         return new ResponseEntity<>(addressDataService.createHibernateAddress(request), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/updateAddress", consumes = {"application/xml", "application/json"})
+    @PutMapping(value = "/updateAddress", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateAddress> updateHibernateAddress(@Validated @RequestBody AddressRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);

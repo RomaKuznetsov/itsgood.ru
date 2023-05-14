@@ -1,6 +1,8 @@
 package com.itsgood.ru.controller.rest.springData;
 
+import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestCreate;
 import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestSearch;
+import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestUpdate;
 import com.itsgood.ru.controller.service.DeliveryDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import com.itsgood.ru.hibernate.domain.HibernateDelivery;
@@ -35,8 +37,41 @@ public class DeliveryDataController {
     }
 
     @PostMapping(value = "/createHibernateDelivery", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateDelivery> findAll() {
-        return new ResponseEntity<>(deliveryDataService.findAll(), HttpStatus.OK);
+    public ResponseEntity<HibernateDelivery> createHibernateDelivery(@Validated @RequestBody DeliveryRequestCreate request,
+                                                                     BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(deliveryDataService.createHibernateDelivery(request), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/updateHibernateDelivery", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<HibernateDelivery> updateHibernateDelivery(@Validated @RequestBody DeliveryRequestUpdate request,
+                                                                     BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(deliveryDataService.updateHibernateDelivery(request), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/deleteHibernateDelivery", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteHibernateDelivery(@Validated @RequestBody DeliveryRequestUpdate request,
+                                                                     BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        deliveryDataService.deleteHibernateDelivery(request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/deleteHibernateDeliveryById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteHibernateDeliveryById(@Validated @RequestBody DeliveryRequestUpdate request,
+                                                          BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        deliveryDataService.deleteHibernateDeliveryById(request);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //Domain - Car
@@ -52,39 +87,4 @@ public class DeliveryDataController {
     //PUT + /rest/cars/calculate
     //query - поисковой запрос
     //limit/offset = page = ограничение на число выводимых объектов
-
-
-    //    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    //    public HibernateDelivery createHibernateDelivery(DeliveryRequestCreate request) {
-    //        HibernateDelivery hibernateDelivery = new HibernateDelivery();
-    //        if (customerDataService.findAllAddressHibernateCustomerByAuthenticate().contains(addressDataService.
-    //                findHibernateAddressById(request.getAddress_id()))) {
-    //            hibernateDelivery = deliveryDataRepository.save(deliveryConverterRequestCreate.convert(request));
-    //        } else throw new EntityNotFoundException("Ошибка адресата");
-    //        return hibernateDelivery;
-    //    }
-    //
-    //    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    //    public HibernateDelivery updateHibernateDelivery(DeliveryRequestUpdate request) {
-    //        HibernateDelivery hibernateDelivery = new HibernateDelivery();
-    //        if (customerDataService.findAllAddressHibernateCustomerByAuthenticate().
-    //                contains(addressDataService.findHibernateAddressById(request.getAddress_id()))) {
-    //            deliveryDataRepository.save(deliveryConverterRequestUpdate.convert(request));
-    //        } else throw new EntityNotFoundException("Ошибка адресата");
-    //        return hibernateDelivery;
-    //    }
-    //
-    //    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    //    public void deleteHibernateDelivery(DeliveryRequestUpdate request) {
-    //        if (customerDataService.findAllAddressHibernateCustomerByAuthenticate().
-    //                contains(addressDataService.findHibernateAddressById(request.getAddress_id()))) {
-    //            deliveryDataRepository.delete(deliveryConverterRequestUpdate.convert(request));
-    //        } else throw new EntityNotFoundException("Ошибка адресата");
-    //    }
-    //
-    //    @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    //    public void deleteHibernateDeliveryById(DeliveryRequestUpdate request) {
-    //        deliveryDataRepository.deleteById(request.getId());
-    //    }
-
 }

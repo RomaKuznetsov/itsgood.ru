@@ -24,6 +24,7 @@ public class CustomerDataController {
 
     private final CustomerDataService customerDataService;
 
+
     //ok
     @GetMapping(value = "/findAllHibernateCustomer", consumes = {"application/xml", "application/json"})
     public ResponseEntity<List<HibernateCustomer>> findAllHibernateCustomer() {

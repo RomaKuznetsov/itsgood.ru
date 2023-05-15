@@ -13,4 +13,6 @@ public class ContractRequestCreate {
     private String payment_types = "cash";
     @NotNull
     private String relevance = "relevance";
+    private int address_id;
+    private int payment_id;
 }

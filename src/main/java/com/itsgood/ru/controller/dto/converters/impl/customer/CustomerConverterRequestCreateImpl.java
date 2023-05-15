@@ -7,17 +7,16 @@ import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Component
 @RequiredArgsConstructor
 public class CustomerConverterRequestCreateImpl implements CustomerConverterRequestCreate {
 
+    private final AuthenticationInfo authenticationInfo;
     @Override
     public HibernateCustomer convert(CustomerRequestCreate customerRequestCreate) {
         HibernateCustomer hibernateCustomer = new HibernateCustomer();
-        AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         hibernateCustomer.setFirstname(customerRequestCreate.getFirstname());
         hibernateCustomer.setLastname(customerRequestCreate.getLastname());
         hibernateCustomer.setMail(customerRequestCreate.getMail());

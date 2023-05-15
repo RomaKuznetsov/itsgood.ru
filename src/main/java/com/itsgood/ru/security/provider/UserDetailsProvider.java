@@ -6,10 +6,7 @@ import com.itsgood.ru.domain.Role;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import com.itsgood.ru.service.CustomerService;
 import com.itsgood.ru.service.RoleService;
-import com.sun.net.httpserver.HttpPrincipal;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.http.UserDetailsServiceFactoryBean;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +22,6 @@ public class UserDetailsProvider implements UserDetailsService {
     private final CustomerService customerService;
     private final CustomerDataRepository customerDataRepository;
     private final RoleService roleService;
-
 
 
     @Override

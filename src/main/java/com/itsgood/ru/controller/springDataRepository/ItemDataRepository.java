@@ -15,7 +15,7 @@ public interface ItemDataRepository extends JpaRepository<HibernateItem, Integer
         PagingAndSortingRepository<HibernateItem, Integer>,
         CrudRepository<HibernateItem, Integer> {
 
-    Optional<HibernateItem> findHibernateItemByIdOrTitle(ItemRequestSearch request);
+    Optional<HibernateItem> findHibernateItemByIdOrTitle(Integer id, String title);
 
 
 }

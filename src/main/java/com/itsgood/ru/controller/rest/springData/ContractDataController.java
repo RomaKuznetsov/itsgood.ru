@@ -40,10 +40,10 @@ public class ContractDataController {
         return new ResponseEntity<>(contractDataService.findHibernateContractById(request.getId()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateContractByCustomerAuthenticateRelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract> findHibernateContractByCustomerAuthenticateRelevance() {
-        return new ResponseEntity<>(contractDataService.findHibernateContractByCustomerAuthenticateRelevance(), HttpStatus.OK);
-    }
+//    @GetMapping(value = "/findHibernateContractByCustomerAuthenticateRelevance", consumes = {"application/xml", "application/json"})
+//    public ResponseEntity<HibernateContract> findHibernateContractByCustomerAuthenticateRelevance() {
+//        return new ResponseEntity<>(contractDataService.findHibernateContractByCustomerAuthenticateRelevance(), HttpStatus.OK);
+//    }
 
     @PostMapping(value = "/createHibernateContract", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateContract> createHibernateContract(@Validated @RequestBody ContractRequestCreate request,
@@ -94,7 +94,7 @@ public class ContractDataController {
     }
 
     @DeleteMapping(value = "/findSetHibernateContracts_items", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateContract_item>> deleteHibernateContractById(@Validated @RequestBody ContractRequestSearch request,
+    public ResponseEntity<Set<HibernateContract_item>> findSetHibernateContracts_items(@Validated @RequestBody ContractRequestSearch request,
                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);

@@ -1,9 +1,7 @@
 package com.itsgood.ru;
 
 import com.itsgood.ru.configuration.ApplicationConfig;
-
 import com.itsgood.ru.configuration.HibernateConfiguration;
-import com.itsgood.ru.configuration.WebMVC;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import com.itsgood.ru.security.configuration.WebSecurityConfiguration;
 import org.springframework.boot.SpringApplication;

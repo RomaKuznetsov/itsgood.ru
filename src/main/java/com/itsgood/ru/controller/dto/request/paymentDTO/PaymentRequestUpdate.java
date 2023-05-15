@@ -1,12 +1,10 @@
 package com.itsgood.ru.controller.dto.request.paymentDTO;
 
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.sql.Date;
 @Getter
 @Validated
 public class PaymentRequestUpdate {

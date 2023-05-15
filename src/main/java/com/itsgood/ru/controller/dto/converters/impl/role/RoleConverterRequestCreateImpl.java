@@ -3,13 +3,11 @@ package com.itsgood.ru.controller.dto.converters.impl.role;
 import com.itsgood.ru.controller.dto.converters.RoleConverterRequestCreate;
 import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestCreate;
 import com.itsgood.ru.hibernate.domain.HibernateRole;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 
 @Component
-@RequiredArgsConstructor
 public class RoleConverterRequestCreateImpl implements RoleConverterRequestCreate {
 
     @Override

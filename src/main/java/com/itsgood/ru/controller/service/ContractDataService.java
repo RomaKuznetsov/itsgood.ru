@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -43,15 +42,15 @@ public class ContractDataService {
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateContract findHibernateContractByCustomerAuthenticateRelevance() {
-        HibernateContract hibernateContract = new HibernateContract();
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        hibernateContract.setCustomer(hibernateCustomer);
-        hibernateContract.setRelevance(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
-        Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByCustomerAndRelevance(hibernateContract);
-        return searchResult.orElseThrow(EntityNotFoundException::new);
-    }
+//    public HibernateContract findHibernateContractByCustomerAuthenticateRelevance() {
+//        HibernateContract hibernateContract = new HibernateContract();
+//        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+//        hibernateContract.setCustomer(hibernateCustomer);
+//        hibernateContract.setRelevance(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+//        Optional<HibernateContract> searchResult = contractDataRepository.
+//                findHibernateContractByCustomerAndRelevance(hibernateContract);
+//        return searchResult.orElseThrow(EntityNotFoundException::new);
+//    }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract createHibernateContract(ContractRequestCreate request) {

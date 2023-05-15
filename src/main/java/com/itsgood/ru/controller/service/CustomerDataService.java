@@ -8,13 +8,17 @@ import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestSearch;
 import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestUpdate;
 import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestCreate;
 import com.itsgood.ru.controller.springDataRepository.CustomerDataRepository;
+import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.hibernate.domain.*;
+import com.itsgood.ru.security.dto.AuthResponse;
+import com.itsgood.ru.security.jwt.TokenProvider;
+import com.itsgood.ru.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,13 +30,13 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @RequiredArgsConstructor
 public class CustomerDataService {
 
-    private final UserDetails userDetails;
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
-    private final RoleDataService roleDataService;
-
-    private final ContractDataService contractDataService;
+//    private final RoleDataService roleDataService;
+    private final CustomerService customerService;
+    private final AuthenticationInfo authenticationInfo;
+//    private final ContractDataService contractDataService;
 
     public List<HibernateCustomer> findAllHibernateCustomer() {
         return customerDataRepository.findAll();
@@ -51,8 +55,8 @@ public class CustomerDataService {
 
     public HibernateCustomer findHibernateCustomerByAuthenticationInfo() {
         Optional<HibernateCustomer> searchResult =
-                customerDataRepository.findByAuthenticationInfo(new AuthenticationInfo(userDetails.getUsername(),
-                        userDetails.getPassword()));
+                customerDataRepository.findByAuthenticationInfo(new AuthenticationInfo(authenticationInfo.getUsername(),
+                        authenticationInfo.getPassword()));
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
@@ -64,10 +68,10 @@ public class CustomerDataService {
             hibernateCustomer = customerDataRepository.save(
                     customerConverterRequestCreate.convert(request));
             Set<HibernateRole> roles = hibernateCustomer.getRoles();
-            roles.add(roleDataService.createHibernateRole(new RoleRequestCreate()));
+//            roles.add(roleDataService.createHibernateRole(new RoleRequestCreate()));
             hibernateCustomer.setRoles(roles);
             Set<HibernateContract> contracts = hibernateCustomer.getContracts();
-            contracts.add(contractDataService.createHibernateContract(new ContractRequestCreate()));
+//            contracts.add(contractDataService.createHibernateContract(new ContractRequestCreate()));
             hibernateCustomer.setContracts(contracts);
         } else new EntityNotFoundException("Пользователь с таким именем уже зарегестрирован");
         return hibernateCustomer;
@@ -126,6 +130,7 @@ public class CustomerDataService {
         Set<HibernatePayment> payments = hibernateCustomer.getPayments();
         return payments;
     }
+
 
     public Set<HibernatePayment> findAllPaymentsHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());

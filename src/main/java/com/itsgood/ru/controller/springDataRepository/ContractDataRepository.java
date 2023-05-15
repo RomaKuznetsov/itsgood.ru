@@ -1,6 +1,7 @@
 package com.itsgood.ru.controller.springDataRepository;
 
 import com.itsgood.ru.hibernate.domain.HibernateContract;
+import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -12,5 +13,5 @@ public interface ContractDataRepository extends JpaRepository<HibernateContract,
         PagingAndSortingRepository<HibernateContract, Integer>,
         CrudRepository<HibernateContract, Integer> {
 
-    Optional<HibernateContract> findHibernateContractByCustomerAndRelevance(HibernateContract hibernateContract);
+    Optional<HibernateContract> findHibernateContractByCustomerAndRelevance(HibernateCustomer customer, String relevance);
 }

@@ -75,8 +75,9 @@ public class PaymentDataService {
     }
 
     public List<HibernatePayment> findHibernatePaymentByCustomerAndStatus(PaymentRequestSearch request) {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         List<HibernatePayment> payments = new ArrayList<>();
-        for (HibernatePayment payment : customerDataService.findAllPaymentsHibernateCustomerByAuthenticate()) {
+        for (HibernatePayment payment : hibernateCustomer.getPayments()) {
             if (payment.getStatus().contains(request.getStatus())) {
                 payments.add(payment);
             }

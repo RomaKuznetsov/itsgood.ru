@@ -15,10 +15,10 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class CustomerConverterRequestUpdateImpl implements CustomerConverterRequestUpdate {
 
+    private final AuthenticationInfo authenticationInfo;
     @Override
     public HibernateCustomer convert(CustomerRequestUpdate request) {
         HibernateCustomer hibernateCustomer = new HibernateCustomer();
-        AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         hibernateCustomer.setId(request.getId());
         hibernateCustomer.setFirstname(request.getFirstname());
         hibernateCustomer.setLastname(request.getLastname());

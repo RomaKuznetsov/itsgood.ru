@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,10 +45,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public AuthenticationPrincipalArgumentResolver AuthenticationPrincipalBean() throws Exception {
-            return new AuthenticationPrincipalArgumentResolver();
-    }
 
     @Bean
     public PasswordEncoder noOpPasswordEncoder() {
@@ -57,22 +55,22 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.
                 //отключение крос доменных запросов
-        // запрещено выполнение запросов от других приложений
-                csrf().
+                // запрещено выполнение запросов от других приложений
+                        csrf().
                 disable().
-        // влключена обработка всех исключений по работе безопастности
-                exceptionHandling().
+                // влключена обработка всех исключений по работе безопастности
+                        exceptionHandling().
                 and().
                 sessionManagement().
                 sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().
                 authorizeRequests().
                 //название метода и описание урл и разрешение кому есть доступ к этому урл
-        //permitAll() - разрешено всем
-        //hasAnyRole() - и перечислить всех кому разрешен доступ
-        //можно разрешить всем доступ ко всем url и методам get или только администратору
+                //permitAll() - разрешено всем
+                //hasAnyRole() - и перечислить всех кому разрешен доступ
+                //можно разрешить всем доступ ко всем url и методам get или только администратору
                 //проверка на роботоспособность сервера
-                antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
+                        antMatchers(HttpMethod.OPTIONS, "/**").permitAll().
                 antMatchers("/guest/**").permitAll().
                 antMatchers("/registration/**").permitAll().
                 antMatchers("/authentication/**").permitAll().

@@ -12,7 +12,7 @@ public interface CategoryDataRepository extends JpaRepository<HibernateCategory,
         PagingAndSortingRepository<HibernateCategory, Integer>,
         CrudRepository<HibernateCategory, Integer> {
 
-    Optional<HibernateCategory> findHibernateCategoryByTitleOrId(CategoryRequestSearch request);
+    Optional<HibernateCategory> findHibernateCategoryByTitleOrId(String title, Integer id);
     Optional<HibernateCategory> findHibernateCategoryByTitle(String title);
-    void deleteByTitleOrId(HibernateCategory request);
+    void deleteByTitleOrId(String title, Integer id);
 }

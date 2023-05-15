@@ -82,8 +82,9 @@ public class AddressDataService {
     }
 
     public HibernateAddress findHibernateAddressByCustomerAuthenticateAndRegistration() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         HibernateAddress hibernateAddress = new HibernateAddress();
-        for (HibernateAddress address : customerDataService.findAllAddressHibernateCustomerByAuthenticate()) {
+        for (HibernateAddress address : hibernateCustomer.getAddress()) {
             if (address.getCode().equals(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode())) {
                 hibernateAddress = address;
             } else if (hibernateAddress.getId() == 0) throw new EntityNotFoundException("Нет адреса регистрации");

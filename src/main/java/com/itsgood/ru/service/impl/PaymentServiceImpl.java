@@ -33,7 +33,6 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-
     public Payment serviceCreatePayment(Customer customer, Payment payment) {
         Customer customerVol;
         try {

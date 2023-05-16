@@ -4,7 +4,6 @@ import com.itsgood.ru.controller.dto.converters.ContractConverterRequestCreate;
 import com.itsgood.ru.controller.dto.converters.ContractConverterRequestUpdate;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestCreate;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestUpdate;
-import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestSearch;
 import com.itsgood.ru.controller.springDataRepository.ContractDataRepository;
 import com.itsgood.ru.enums.ContractRelevance;
 import com.itsgood.ru.hibernate.domain.HibernateContract;
@@ -42,15 +41,12 @@ public class ContractDataService {
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-//    public HibernateContract findHibernateContractByCustomerAuthenticateRelevance() {
-//        HibernateContract hibernateContract = new HibernateContract();
-//        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-//        hibernateContract.setCustomer(hibernateCustomer);
-//        hibernateContract.setRelevance(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
-//        Optional<HibernateContract> searchResult = contractDataRepository.
-//                findHibernateContractByCustomerAndRelevance(hibernateContract);
-//        return searchResult.orElseThrow(EntityNotFoundException::new);
-//    }
+    public HibernateContract findHibernateContractByCustomerAuthenticateRelevance() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<HibernateContract> searchResult = contractDataRepository.
+                findHibernateContractByCustomerAndRelevance(hibernateCustomer, ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+        return searchResult.orElseThrow(EntityNotFoundException::new);
+    }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract createHibernateContract(ContractRequestCreate request) {

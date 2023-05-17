@@ -14,6 +14,6 @@ public interface CustomerDataRepository extends JpaRepository<HibernateCustomer,
 
     Optional<HibernateCustomer> findByMail(String mail);
 
-    Optional<HibernateCustomer> findByAuthenticationInfo(AuthenticationInfo authenticationInfo);
+    Optional<HibernateCustomer> findByAuthenticationInfoUsername(String username);
 
 }

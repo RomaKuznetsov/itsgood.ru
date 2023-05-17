@@ -3,6 +3,7 @@ package com.itsgood.ru.hibernate.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"id", "customer", "contracts"})
 @Table(name = "Payment")
+@Cacheable("payment")
 public class HibernatePayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

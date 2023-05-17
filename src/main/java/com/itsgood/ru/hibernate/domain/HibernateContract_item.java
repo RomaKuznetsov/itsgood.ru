@@ -2,6 +2,7 @@ package com.itsgood.ru.hibernate.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @EqualsAndHashCode(exclude = {"item", "contract"})
 @Table(name = "Contract_item")
+@Cacheable("contract_item")
 public class HibernateContract_item {
 
     @Id

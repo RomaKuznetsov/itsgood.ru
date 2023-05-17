@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class AddressRequestSearch {
     @NotNull
     private int id;
+    private String code;
 
 
 }

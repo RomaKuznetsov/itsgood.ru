@@ -2,6 +2,7 @@ package com.itsgood.ru.hibernate.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 @Entity
 @EqualsAndHashCode(exclude = {"customer"})
 @Table(name = "Role")
+@Cacheable("roles")
 public class HibernateRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

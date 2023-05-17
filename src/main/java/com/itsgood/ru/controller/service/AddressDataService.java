@@ -38,7 +38,7 @@ public class AddressDataService {
         if (!hibernateCustomer.getAddress().contains(hibernateAddress)) {
             hibernateAddress.setCustomer(hibernateCustomer);
             hibernateAddress = addressDataRepository.save(hibernateAddress);
-        } else throw new EntityNotFoundException("Такой адрес уже есть");
+        } else throw new EntityNotFoundException("this address already exists");
         return hibernateAddress;
     }
 
@@ -49,7 +49,7 @@ public class AddressDataService {
         if (hibernateCustomer.getAddress().contains(hibernateAddress)) {
             hibernateAddress.setCustomer(hibernateCustomer);
             hibernateAddress = addressDataRepository.save(hibernateAddress);
-        } else throw new EntityNotFoundException("Уточните данные");
+        } else throw new EntityNotFoundException("specify the data");
         return hibernateAddress;
     }
 
@@ -74,22 +74,25 @@ public class AddressDataService {
         if (hibernateCustomer.getAddress().contains(hibernateAddress)) {
             hibernateAddress.setCustomer(hibernateCustomer);
             addressDataRepository.delete(hibernateAddress);
-        } else throw new EntityNotFoundException("Такого адреса уже нет");
+        } else throw new EntityNotFoundException("no such address");
     }
 
     public List<HibernateAddress> findListHibernateAddressRegistration() {
-        return addressDataRepository.findAllByCode(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
+        return addressDataRepository.findAllHibernateAddressByCode(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
     }
 
-    public HibernateAddress findHibernateAddressByCustomerAuthenticateAndRegistration() {
+    public List<HibernateAddress> findAllHibernateAddressByAuthenticateAndCode(AddressRequestSearch request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateAddress hibernateAddress = new HibernateAddress();
-        for (HibernateAddress address : hibernateCustomer.getAddress()) {
-            if (address.getCode().equals(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode())) {
-                hibernateAddress = address;
-            } else if (hibernateAddress.getId() == 0) throw new EntityNotFoundException("Нет адреса регистрации");
-        }
-        return hibernateAddress;
+        Optional<List<HibernateAddress>> searchResult = addressDataRepository.
+                findHibernateAddressByCustomerAndCode(hibernateCustomer, request.getCode());
+        return searchResult.orElseThrow(EntityNotFoundException::new);
+    }
+
+    public HibernateAddress findHibernateAddressByAuthenticateAndRegistration() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<HibernateAddress>> searchResult = addressDataRepository.
+                findHibernateAddressByCustomerAndCode(hibernateCustomer, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
+        return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
     }
 
     public List<HibernateAddress> findAllHibernateAddress() {

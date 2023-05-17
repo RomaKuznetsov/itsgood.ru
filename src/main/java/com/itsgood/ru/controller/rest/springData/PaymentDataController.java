@@ -63,7 +63,7 @@ public class PaymentDataController {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByCustomerAndValidity(request), HttpStatus.OK);
+        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByAuthenticateAndValidity(request), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findHibernatePaymentByCustomerAndStatus", consumes = {"application/xml", "application/json"})
@@ -72,7 +72,7 @@ public class PaymentDataController {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByCustomerAndStatus(request), HttpStatus.OK);
+        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByAuthenticateAndStatus(request), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findHibernatePaymentById", consumes = {"application/xml", "application/json"})
@@ -86,7 +86,7 @@ public class PaymentDataController {
 
     @GetMapping(value = "/findHibernatePaymentByAuthenticateAndActive", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernatePayment> findHibernatePaymentByAuthenticateAndActive() {
-        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByAuthenticateAndActive(), HttpStatus.OK);
+        return new ResponseEntity<>(paymentDataService.findHibernatePaymentByAuthenticateAndStatusActive(), HttpStatus.OK);
     }
 
 

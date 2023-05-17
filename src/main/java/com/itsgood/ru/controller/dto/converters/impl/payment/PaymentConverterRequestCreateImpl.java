@@ -2,7 +2,9 @@ package com.itsgood.ru.controller.dto.converters.impl.payment;
 
 import com.itsgood.ru.controller.dto.converters.PaymentConverterRequestCreate;
 import com.itsgood.ru.controller.dto.request.paymentDTO.PaymentRequestCreate;
+import com.itsgood.ru.controller.service.CustomerDataService;
 import com.itsgood.ru.hibernate.domain.HibernatePayment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component

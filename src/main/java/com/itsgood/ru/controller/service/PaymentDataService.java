@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,6 +28,7 @@ public class PaymentDataService {
     private final PaymentDataRepository paymentDataRepository;
     private final PaymentConverterRequestUpdate paymentConverterRequestUpdate;
     private final PaymentConverterRequestCreate paymentCardConverterRequestCreate;
+
 
     public HibernatePayment findHibernatePaymentById(Integer id) {
         Optional<HibernatePayment> searchResult = paymentDataRepository.findById(id);
@@ -53,59 +53,35 @@ public class PaymentDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernatePayment(PaymentRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         HibernatePayment hibernatePayment = paymentConverterRequestUpdate.convert(request);
-        Set<HibernatePayment> payments = hibernateCustomer.getPayments();
-        if (payments.contains(hibernatePayment)) {
-            hibernatePayment.setCustomer(hibernateCustomer);
             paymentDataRepository.delete(hibernatePayment);
-        }
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernatePayment updateHibernatePayment(PaymentRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         HibernatePayment hibernatePayment = paymentConverterRequestUpdate.convert(request);
-        Set<HibernatePayment> payments = hibernateCustomer.getPayments();
-        if (payments.contains(hibernatePayment)) {
-            hibernatePayment.setCustomer(hibernateCustomer);
-            hibernatePayment = paymentDataRepository.save(hibernatePayment);
-        }
-        return hibernatePayment;
+            return paymentDataRepository.save(hibernatePayment);
     }
 
-    public List<HibernatePayment> findHibernatePaymentByCustomerAndStatus(PaymentRequestSearch request) {
+    public List<HibernatePayment> findHibernatePaymentByAuthenticateAndStatus(PaymentRequestSearch request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        List<HibernatePayment> payments = new ArrayList<>();
-        for (HibernatePayment payment : hibernateCustomer.getPayments()) {
-            if (payment.getStatus().contains(request.getStatus())) {
-                payments.add(payment);
-            }
-        }
-        if (payments.size() == 0) new EntityNotFoundException("Такой оплаты не существует");
-        return payments;
+        Optional<List<HibernatePayment>> searchResult = paymentDataRepository.
+                findHibernatePaymentByCustomerAndStatus(hibernateCustomer, request.getStatus());
+        return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernatePayment findHibernatePaymentByAuthenticateAndActive() {
-        HibernatePayment hibernatePayment = new HibernatePayment();
-        for (HibernatePayment payment : customerDataService.findHibernateCustomerByAuthenticationInfo().getPayments()) {
-            if (payment.getStatus().contains(StatusPayment.STATUS_PAYMENT_ACTIVE.getStatus())) {
-                hibernatePayment = payment;
-            }
-        }
-        if (hibernatePayment.getId() == 0) new EntityNotFoundException("Такой оплаты не существует");
-        return hibernatePayment;
+    public HibernatePayment findHibernatePaymentByAuthenticateAndStatusActive() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<HibernatePayment>> searchResult = paymentDataRepository.
+                findHibernatePaymentByCustomerAndStatus(hibernateCustomer,
+                        StatusPayment.STATUS_PAYMENT_ACTIVE.getStatus());
+        return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
     }
 
-    public List<HibernatePayment> findHibernatePaymentByCustomerAndValidity(PaymentRequestSearch request) {
-        List<HibernatePayment> payments = new ArrayList<>();
-        for (HibernatePayment payment : customerDataService.findHibernateCustomerByAuthenticationInfo().getPayments()) {
-            if (payment.getValidity().after(request.getValidation())) {
-                payments.add(payment);
-            }
-        }
-        if (payments.size() == 0) new EntityNotFoundException("Таких оплат не существует");
-        return payments;
+    public List<HibernatePayment> findHibernatePaymentByAuthenticateAndValidity(PaymentRequestSearch request) {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<HibernatePayment>> searchResult = paymentDataRepository.
+                findHibernatePaymentByCustomerAndValidity(hibernateCustomer, request.getValidation());
+        return searchResult.orElseThrow(EntityNotFoundException::new);
     }
-
 }

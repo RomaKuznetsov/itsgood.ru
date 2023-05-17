@@ -62,8 +62,9 @@ public class CategoryDataService {
     public HibernateCategory updateHibernateCategoryById(CategoryRequestUpdate request) {
         Optional<HibernateCategory> searchResult = categoryDataRepository.findById(request.getId());
         HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        if (hibernateCategory.getId() != 0) {
-            hibernateCategory = categoryDataRepository.save(categoryConverterRequestUpdate.convert(request));}
+        if (hibernateCategory != null) {
+            hibernateCategory = categoryDataRepository.save(categoryConverterRequestUpdate.convert(request));
+        }
         return hibernateCategory;
     }
 
@@ -71,7 +72,7 @@ public class CategoryDataService {
     public void deleteHibernateCategoryByTitleOrId(CategoryRequestSearch request) {
         Optional<HibernateCategory> searchResult = categoryDataRepository.findHibernateCategoryByTitleOrId(request.getTitle(), request.getId());
         HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        categoryDataRepository.deleteByTitleOrId(hibernateCategory.getTitle(),  hibernateCategory.getId());
+        categoryDataRepository.deleteByTitleOrId(hibernateCategory.getTitle(), hibernateCategory.getId());
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

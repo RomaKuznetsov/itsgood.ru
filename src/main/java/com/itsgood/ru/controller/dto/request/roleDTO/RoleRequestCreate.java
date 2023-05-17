@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 @Validated
 public class RoleRequestCreate {
 
-    @NotNull
     private String role = RoleCustomer.ROLE_PERSON_USER.getRole();
     private int customer_id;
     @Positive

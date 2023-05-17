@@ -4,6 +4,7 @@ import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestCreate;
 import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestSearch;
 import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestUpdate;
 import com.itsgood.ru.controller.service.RoleDataService;
+import com.itsgood.ru.controller.springDataRepository.RoleDataRepository;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import com.itsgood.ru.hibernate.domain.HibernateRole;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoleDataController {
     private final RoleDataService roleDataService;
+
+    private final RoleDataRepository roleDataRepository;
 
     @PostMapping(value = "/createHibernateRole", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateRole> createHibernateRole(@Validated @RequestBody RoleRequestCreate request,
@@ -58,7 +61,7 @@ public class RoleDataController {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(roleDataService.findHibernateRoleByValidity(request), HttpStatus.OK);
+        return new ResponseEntity<>(roleDataService.findHibernateRoleByAuthenticateAndValidity(request), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/deleteHibernateRolesById", consumes = {"application/xml", "application/json"})

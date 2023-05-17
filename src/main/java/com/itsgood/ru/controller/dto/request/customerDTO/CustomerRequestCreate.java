@@ -24,10 +24,9 @@ public class CustomerRequestCreate {
     private String mail;
     @NotNull
     private String password;
-    @Pattern(regexp = "[//d{9}]")
+    @Pattern(regexp = "//d{9}")
     private int phone;
     @NotNull
-    @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String gender;

@@ -20,7 +20,7 @@ public class DeliveryRequestUpdate {
     @NotNull
     @Size(min = 2, max = 100)
     private String lastname;
-    @Pattern(regexp = "[//d{9}]")
+    @Pattern(regexp = "//d{9}")
     private int phone;
     @DateTimeFormat (pattern = "yyyy-MM-dd hh:mm:ss")
     private Timestamp shipment_time;

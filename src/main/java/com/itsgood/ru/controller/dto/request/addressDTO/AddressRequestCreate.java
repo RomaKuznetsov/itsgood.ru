@@ -22,9 +22,10 @@ public class AddressRequestCreate {
     @NotNull
     private String street;
     @NotNull
+    @Size(min = 1, max = 5)
     private int house;
     private String frame;
     @NotNull
-    @Size(min = 2, max = 100)
+    @Size(min = 1, max = 5)
     private int apartment;
 }

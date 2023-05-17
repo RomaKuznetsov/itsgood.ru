@@ -14,8 +14,7 @@ public interface PaymentDataRepository extends JpaRepository<HibernatePayment, I
         PagingAndSortingRepository<HibernatePayment, Integer>,
         CrudRepository<HibernatePayment, Integer> {
 
-    Optional<HibernatePayment> findHibernatePaymentByCustomerAndStatus(HibernateCustomer customer, Date validity);
-
-    List<HibernatePayment> findHibernatePaymentByCustomerAndValidity(HibernateCustomer customer, Date validity);
+    Optional<List<HibernatePayment>> findHibernatePaymentByCustomerAndStatus(HibernateCustomer customer, String status);
+    Optional<List<HibernatePayment>> findHibernatePaymentByCustomerAndValidity(HibernateCustomer customer, Date validity);
 }
 

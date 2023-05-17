@@ -23,14 +23,15 @@ public class ContractConverterRequestUpdateImpl implements ContractConverterRequ
         hibernateContract.setPayment_types(request.getPayment_types());
         hibernateContract.setRelevance(request.getRelevance());
         hibernateContract.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        hibernateContract.setAddress(addressDataService.findHibernateAddressByCustomerAuthenticateAndRegistration());
+        hibernateContract.setAddress(addressDataService.findHibernateAddressByAuthenticateAndRegistration());
         if (request.getPayment_types().contains("card")) {
-            hibernateContract.setPayment(paymentDataService.findHibernatePaymentByAuthenticateAndActive());
+            hibernateContract.setPayment(paymentDataService.findHibernatePaymentByAuthenticateAndStatusActive());
         } else if (request.getPayment_types().contains("cash")) {
             hibernateContract.setPayment(null);
         }
         return hibernateContract;
     }
+
 }
 
 

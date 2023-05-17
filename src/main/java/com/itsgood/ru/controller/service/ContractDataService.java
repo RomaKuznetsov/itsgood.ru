@@ -3,6 +3,7 @@ package com.itsgood.ru.controller.service;
 import com.itsgood.ru.controller.dto.converters.ContractConverterRequestCreate;
 import com.itsgood.ru.controller.dto.converters.ContractConverterRequestUpdate;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestCreate;
+import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestSearch;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestUpdate;
 import com.itsgood.ru.controller.springDataRepository.ContractDataRepository;
 import com.itsgood.ru.enums.ContractRelevance;
@@ -11,6 +12,7 @@ import com.itsgood.ru.hibernate.domain.HibernateContract_item;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import com.itsgood.ru.hibernate.domain.HibernateItem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +32,6 @@ public class ContractDataService {
     private final ContractConverterRequestCreate contractConverterRequestCreate;
     private final ContractConverterRequestUpdate contractConverterRequestUpdate;
 
-    private final PaymentDataService paymentDataService;
-
     public List<HibernateContract> findAllHibernateContract() {
         return contractDataRepository.findAll();
     }
@@ -41,27 +41,31 @@ public class ContractDataService {
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateContract findHibernateContractByCustomerAuthenticateRelevance() {
+    public HibernateContract findHibernateContractByAuthenticateAndRelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByCustomerAndRelevance(hibernateCustomer, ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                        ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+        return searchResult.orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<HibernateContract> findAllHibernateContractsByAuthenticateAndIrrelevance() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<HibernateContract>> searchResult = contractDataRepository.
+                findAllHibernateContractsByAuthenticateAndRelevance(hibernateCustomer,
+                        ContractRelevance.RELEVANCE_CONTRACT_IRRELEVANCE.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract createHibernateContract(ContractRequestCreate request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateContract> searchRequest = hibernateCustomer.getContracts();
+        Set<HibernateContract> searchResult = hibernateCustomer.getContracts();
         HibernateContract hibernateContract = contractConverterRequestCreate.convert(request);
-        if (!searchRequest.contains(hibernateContract)) {
-            if (request.getPayment_types().equals("cash")) {
-                hibernateContract.setPayment(null);
-            } else if (request.getPayment_types().equals("card")) {
-                hibernateContract.setPayment(paymentDataService.findHibernatePaymentByAuthenticateAndActive());
-            }
+        if (!searchResult.contains(hibernateContract)) {
             hibernateContract.setCustomer(hibernateCustomer);
-            contractDataRepository.save(hibernateContract);
-        }
+            hibernateContract = contractDataRepository.save(hibernateContract);
+        } else throw new EntityNotFoundException("such a contract already exists");
         return hibernateContract;
     }
 
@@ -87,7 +91,7 @@ public class ContractDataService {
         if (!contracts.contains(hibernateContract)) {
             hibernateContract.setCustomer(hibernateCustomer);
             contractDataRepository.delete(hibernateContract);
-        } else throw new EntityNotFoundException("Такого контракта у данного пользователя нет");
+        } else throw new EntityNotFoundException("no such contract");
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -95,28 +99,36 @@ public class ContractDataService {
         contractDataRepository.deleteById(request.getId());
     }
 
-    public Set<HibernateContract_item> findSetHibernateContract_itemsByCustomerAuthenticateAndRelevance() {
-        HibernateContract hibernateContract = new HibernateContract();
-        for (HibernateContract contract : customerDataService.findHibernateCustomerByAuthenticationInfo().getContracts()) {
-            if (contract.getRelevance().equals(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus())) {
-                hibernateContract = contract;
-            } else throw new EntityNotFoundException("Актуальных контрактов нет");
-        }
+
+    public Set<HibernateContract_item> findSetHibernateContract_itemsByAuthenticateAndRelevance() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<HibernateContract> searchResult = contractDataRepository.
+                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                        ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
+        return hibernateContract.getContracts_items();
+    }
+
+    @Cacheable("contract_item")
+    public Set<HibernateContract_item> findSetHibernateContract_itemsByAuthenticate() {
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<HibernateContract> searchResult = contractDataRepository.findById(hibernateCustomer.getId());
+        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getContracts_items();
     }
 
     public List<HibernateItem> findSetItemsByCustomerAuthenticateAndRelevance() {
-        HibernateContract hibernateContract = new HibernateContract();
-        for (HibernateContract contract : customerDataService.findHibernateCustomerByAuthenticationInfo().getContracts()) {
-            if (contract.getRelevance().equals(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus())) {
-                hibernateContract = contract;
-            } else throw new EntityNotFoundException("Актуальных контрактов нет");
-        }
+        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<HibernateContract> searchResult = contractDataRepository.
+                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                        ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getItems();
     }
-
-    public Set<HibernateContract_item> findSetHibernateContracts_items(Integer id) {
-        HibernateContract hibernateContract = findHibernateContractById(id);
+    @Cacheable("contract_item")
+    public Set<HibernateContract_item> findSetHibernateContract_item(Integer id) {
+        Optional<HibernateContract> searchResult = contractDataRepository.findById(id);
+        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getContracts_items();
     }
 }

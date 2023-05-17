@@ -14,6 +14,7 @@ import com.itsgood.ru.security.dto.AuthResponse;
 import com.itsgood.ru.security.jwt.TokenProvider;
 import com.itsgood.ru.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,13 +31,12 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @RequiredArgsConstructor
 public class CustomerDataService {
 
+    private final RoleDataService roleDataService;
+    private final AuthenticationInfo authenticationInfo;
+    private final ContractDataService contractDataService;
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
-//    private final RoleDataService roleDataService;
-    private final CustomerService customerService;
-    private final AuthenticationInfo authenticationInfo;
-//    private final ContractDataService contractDataService;
 
     public List<HibernateCustomer> findAllHibernateCustomer() {
         return customerDataRepository.findAll();
@@ -54,9 +54,8 @@ public class CustomerDataService {
     }
 
     public HibernateCustomer findHibernateCustomerByAuthenticationInfo() {
-        Optional<HibernateCustomer> searchResult =
-                customerDataRepository.findByAuthenticationInfo(new AuthenticationInfo(authenticationInfo.getUsername(),
-                        authenticationInfo.getPassword()));
+        Optional<HibernateCustomer> searchResult = customerDataRepository.
+                findByAuthenticationInfoUsername(authenticationInfo.getUsername());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
@@ -67,13 +66,13 @@ public class CustomerDataService {
         if (!searchCustomer.getAuthenticationInfo().getUsername().equals(request.getUsername())) {
             hibernateCustomer = customerDataRepository.save(
                     customerConverterRequestCreate.convert(request));
-            Set<HibernateRole> roles = hibernateCustomer.getRoles();
-//            roles.add(roleDataService.createHibernateRole(new RoleRequestCreate()));
-            hibernateCustomer.setRoles(roles);
-            Set<HibernateContract> contracts = hibernateCustomer.getContracts();
-//            contracts.add(contractDataService.createHibernateContract(new ContractRequestCreate()));
-            hibernateCustomer.setContracts(contracts);
-        } else new EntityNotFoundException("Пользователь с таким именем уже зарегестрирован");
+            RoleRequestCreate roleRequestCreate = new RoleRequestCreate();
+            roleRequestCreate.setCustomer_id(hibernateCustomer.getId());
+            roleDataService.createHibernateRole(roleRequestCreate);
+            ContractRequestCreate contractRequestCreate = new ContractRequestCreate();
+            contractRequestCreate.setCustomer_id(hibernateCustomer.getId());
+            contractDataService.createHibernateContract(contractRequestCreate);
+        } else throw new EntityNotFoundException("User with this date is already registered");
         return hibernateCustomer;
     }
 
@@ -101,49 +100,51 @@ public class CustomerDataService {
         customerDataRepository.delete(findHibernateCustomerByAuthenticationInfo());
     }
 
+    @Cacheable("roles")
     public Set<HibernateRole> findAllRolesHibernateCustomerByAuthenticate() {
         HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
         Set<HibernateRole> roles = hibernateCustomer.getRoles();
         return roles;
     }
-
+    @Cacheable("roles")
     public Set<HibernateRole> findAllRolesHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
         Set<HibernateRole> roles = hibernateCustomer.getRoles();
         return roles;
     }
 
+    @Cacheable("address")
     public Set<HibernateAddress> findAllAddressHibernateCustomerByAuthenticate() {
         HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
         Set<HibernateAddress> addresses = hibernateCustomer.getAddress();
         return addresses;
     }
-
+    @Cacheable("address")
     public Set<HibernateAddress> findAllAddressHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
         Set<HibernateAddress> addresses = hibernateCustomer.getAddress();
         return addresses;
     }
-
+    @Cacheable("payment")
     public Set<HibernatePayment> findAllPaymentsHibernateCustomerByAuthenticate() {
         HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
         Set<HibernatePayment> payments = hibernateCustomer.getPayments();
         return payments;
     }
 
-
+    @Cacheable("payment")
     public Set<HibernatePayment> findAllPaymentsHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
         Set<HibernatePayment> payments = hibernateCustomer.getPayments();
         return payments;
     }
-
+    @Cacheable("contract")
     public Set<HibernateContract> findAllContractsHibernateCustomerByAuthenticate() {
         HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
         Set<HibernateContract> contracts = hibernateCustomer.getContracts();
         return contracts;
     }
-
+    @Cacheable("contract")
     public Set<HibernateContract> findAllContractsHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
         Set<HibernateContract> contracts = hibernateCustomer.getContracts();

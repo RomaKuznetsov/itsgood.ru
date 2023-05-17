@@ -85,7 +85,15 @@ public class AddressDataController {
 
     @GetMapping(value = "/findHibernateAddressByCustomerAuthenticateAndRegistration", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateAddress> findHibernateAddressByCustomerAuthenticateAndRegistration() {
-        return new ResponseEntity<>(addressDataService.findHibernateAddressByCustomerAuthenticateAndRegistration(), HttpStatus.OK);
+        return new ResponseEntity<>(addressDataService.findHibernateAddressByAuthenticateAndRegistration(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/findAllHibernateAddressByAuthenticateAndCode", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<HibernateAddress>> findAllHibernateAddressByAuthenticateAndCode(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(addressDataService.findAllHibernateAddressByAuthenticateAndCode(request), HttpStatus.OK);
+    }
 }
+

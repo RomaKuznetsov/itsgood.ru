@@ -15,17 +15,17 @@ public class CustomerConverterRequestCreateImpl implements CustomerConverterRequ
 
     private final AuthenticationInfo authenticationInfo;
     @Override
-    public HibernateCustomer convert(CustomerRequestCreate customerRequestCreate) {
+    public HibernateCustomer convert(CustomerRequestCreate request) {
         HibernateCustomer hibernateCustomer = new HibernateCustomer();
-        hibernateCustomer.setFirstname(customerRequestCreate.getFirstname());
-        hibernateCustomer.setLastname(customerRequestCreate.getLastname());
-        hibernateCustomer.setMail(customerRequestCreate.getMail());
-        hibernateCustomer.setPhone(customerRequestCreate.getPhone());
-        hibernateCustomer.setBirthday(customerRequestCreate.getBirthday());
-        hibernateCustomer.setGender(customerRequestCreate.getGender());
+        hibernateCustomer.setFirstname(request.getFirstname());
+        hibernateCustomer.setLastname(request.getLastname());
+        hibernateCustomer.setMail(request.getMail());
+        hibernateCustomer.setPhone(request.getPhone());
+        hibernateCustomer.setBirthday(request.getBirthday());
+        hibernateCustomer.setGender(request.getGender());
         hibernateCustomer.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        authenticationInfo.setUsername(customerRequestCreate.getUsername());
-        authenticationInfo.setPassword(customerRequestCreate.getPassword());
+        authenticationInfo.setUsername(request.getUsername());
+        authenticationInfo.setPassword(request.getPassword());
         hibernateCustomer.setAuthenticationInfo(authenticationInfo);
         return hibernateCustomer;
 

@@ -54,7 +54,7 @@ public class Contract_itemDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract_item createHibernateContract_item(Contract_itemRequestCreate request) {
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestCreate.convert(request);
-        HibernateContract hibernateContract = contractDataService.findHibernateContractByCustomerAuthenticateRelevance();
+        HibernateContract hibernateContract = contractDataService.findHibernateContractByAuthenticateAndRelevance();
         if (hibernateContract.getId() != 0) {
             hibernateContract_item.setContract(hibernateContract);
         } else hibernateContract = contractDataService.createHibernateContract(new ContractRequestCreate());
@@ -81,7 +81,7 @@ public class Contract_itemDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContract_item(Contract_itemRequestUpdate request) {
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestUpdate.convert(request);
-        if (contractDataService.findSetHibernateContracts_items(request.getContract_id()).
+        if (contractDataService.findSetHibernateContract_item(request.getContract_id()).
                 contains(hibernateContract_item)) {
             contract_itemDataRepository.delete(hibernateContract_item);
         }

@@ -2,7 +2,7 @@ package com.itsgood.ru.enums;
 
 public enum ContractRelevance {
 
-    RELEVANCE_CONTRACT_RELEVANT("relevant"), STATUS_PAYMENT_INACTIVE("irrelevance");
+    RELEVANCE_CONTRACT_RELEVANT("relevant"), RELEVANCE_CONTRACT_IRRELEVANCE("irrelevance");
 
     private String relevance;
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"id", "items", "customer", "address", "payment", "contracts_items"})
 @Table(name = "Contract")
+@Cacheable("contract")
 public class HibernateContract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

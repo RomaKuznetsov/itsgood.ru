@@ -13,7 +13,6 @@ import java.sql.Date;
 public class RoleRequestUpdate {
     @NotNull
     private int id;
-    @NotNull
     private int customer_id;
     private String role;
     @Positive

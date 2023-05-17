@@ -4,22 +4,26 @@ import com.itsgood.ru.controller.dto.converters.ContractConverterRequestUpdate;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestUpdate;
 import com.itsgood.ru.controller.service.AddressDataService;
 import com.itsgood.ru.controller.service.PaymentDataService;
+import com.itsgood.ru.controller.springDataRepository.ContractDataRepository;
 import com.itsgood.ru.hibernate.domain.HibernateContract;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class ContractConverterRequestUpdateImpl implements ContractConverterRequestUpdate {
     private final AddressDataService addressDataService;
     private final PaymentDataService paymentDataService;
+    private final ContractDataRepository contractDataRepository;
 
     @Override
     public HibernateContract convert(ContractRequestUpdate request) {
-        HibernateContract hibernateContract = new HibernateContract();
-        hibernateContract.setId(request.getId());
+        Optional<HibernateContract> searchResult = contractDataRepository.findById(request.getId());
+        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         hibernateContract.setPayment_types(request.getPayment_types());
         hibernateContract.setRelevance(request.getRelevance());
         hibernateContract.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));

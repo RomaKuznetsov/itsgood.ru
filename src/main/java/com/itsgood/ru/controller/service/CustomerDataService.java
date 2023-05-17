@@ -31,9 +31,9 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @RequiredArgsConstructor
 public class CustomerDataService {
 
-    private final RoleDataService roleDataService;
+//    private final RoleDataService roleDataService;
     private final AuthenticationInfo authenticationInfo;
-    private final ContractDataService contractDataService;
+//    private final ContractDataService contractDataService;
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
@@ -68,10 +68,10 @@ public class CustomerDataService {
                     customerConverterRequestCreate.convert(request));
             RoleRequestCreate roleRequestCreate = new RoleRequestCreate();
             roleRequestCreate.setCustomer_id(hibernateCustomer.getId());
-            roleDataService.createHibernateRole(roleRequestCreate);
+//            roleDataService.createHibernateRole(roleRequestCreate);
             ContractRequestCreate contractRequestCreate = new ContractRequestCreate();
             contractRequestCreate.setCustomer_id(hibernateCustomer.getId());
-            contractDataService.createHibernateContract(contractRequestCreate);
+//            contractDataService.createHibernateContract(contractRequestCreate);
         } else throw new EntityNotFoundException("User with this date is already registered");
         return hibernateCustomer;
     }

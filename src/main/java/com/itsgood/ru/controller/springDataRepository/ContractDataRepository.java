@@ -13,8 +13,8 @@ public interface ContractDataRepository extends JpaRepository<HibernateContract,
         PagingAndSortingRepository<HibernateContract, Integer>,
         CrudRepository<HibernateContract, Integer> {
 
-    Optional<HibernateContract> findHibernateContractByAuthenticateAndRelevance(HibernateCustomer customer, String relevance);
+    Optional<HibernateContract> findHibernateContractByCustomerAndRelevance(HibernateCustomer customer, String relevance);
 
-    Optional<List<HibernateContract>> findAllHibernateContractsByAuthenticateAndRelevance(HibernateCustomer customer, String relevance);
+    Optional<List<HibernateContract>> findAllHibernateContractsByCustomerAndRelevance(HibernateCustomer customer, String relevance);
 
 }

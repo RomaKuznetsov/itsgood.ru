@@ -3,7 +3,6 @@ package com.itsgood.ru.controller.service;
 import com.itsgood.ru.controller.dto.converters.ContractConverterRequestCreate;
 import com.itsgood.ru.controller.dto.converters.ContractConverterRequestUpdate;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestCreate;
-import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestSearch;
 import com.itsgood.ru.controller.dto.request.contractDTO.ContractRequestUpdate;
 import com.itsgood.ru.controller.springDataRepository.ContractDataRepository;
 import com.itsgood.ru.enums.ContractRelevance;
@@ -44,7 +43,7 @@ public class ContractDataService {
     public HibernateContract findHibernateContractByAuthenticateAndRelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
@@ -52,7 +51,7 @@ public class ContractDataService {
     public List<HibernateContract> findAllHibernateContractsByAuthenticateAndIrrelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<List<HibernateContract>> searchResult = contractDataRepository.
-                findAllHibernateContractsByAuthenticateAndRelevance(hibernateCustomer,
+                findAllHibernateContractsByCustomerAndRelevance(hibernateCustomer,
                         ContractRelevance.RELEVANCE_CONTRACT_IRRELEVANCE.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
@@ -103,7 +102,7 @@ public class ContractDataService {
     public Set<HibernateContract_item> findSetHibernateContract_itemsByAuthenticateAndRelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
         HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getContracts_items();
@@ -120,7 +119,7 @@ public class ContractDataService {
     public List<HibernateItem> findSetItemsByCustomerAuthenticateAndRelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByAuthenticateAndRelevance(hibernateCustomer,
+                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
         HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getItems();
@@ -131,4 +130,5 @@ public class ContractDataService {
         HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getContracts_items();
     }
+
 }

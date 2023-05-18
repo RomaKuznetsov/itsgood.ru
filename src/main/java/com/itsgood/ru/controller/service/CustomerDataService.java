@@ -36,7 +36,7 @@ public class CustomerDataService {
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
-
+    @Cacheable("customer")
     public List<HibernateCustomer> findAllHibernateCustomer() {
         return customerDataRepository.findAll();
     }
@@ -64,7 +64,7 @@ public class CustomerDataService {
         if (!hibernateCustomer.getAuthenticationInfo().getUsername().equals(request.getUsername())) {
             hibernateCustomer = customerDataRepository.save(
                     customerConverterRequestCreate.convert(request));
-        } else throw new EntityExistsException("User with this date is already registered");
+        } else throw new EntityExistsException();
         return hibernateCustomer;
     }
 

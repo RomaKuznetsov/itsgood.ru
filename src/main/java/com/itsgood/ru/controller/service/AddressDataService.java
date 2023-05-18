@@ -11,6 +11,7 @@ import com.itsgood.ru.hibernate.domain.HibernateAddress;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import com.itsgood.ru.hibernate.domain.HibernateDelivery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,7 @@ public class AddressDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateAddress updateHibernateAddress(AddressRequestUpdate request) {
-            return addressDataRepository.save(addressConverterRequestUpdate.convert(request));
+        return addressDataRepository.save(addressConverterRequestUpdate.convert(request));
     }
 
     public HibernateAddress findHibernateAddressById(Integer id) {
@@ -64,11 +65,16 @@ public class AddressDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateAddress(AddressRequestUpdate request) {
-            addressDataRepository.delete(addressConverterRequestUpdate.convert(request));
+        addressDataRepository.delete(addressConverterRequestUpdate.convert(request));
     }
 
     public List<HibernateAddress> findListHibernateAddressRegistration() {
         return addressDataRepository.findAllHibernateAddressByCode(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
+    }
+
+    @Cacheable("delivery")
+    public Set<HibernateDelivery> findListHibernateDeliveryOneAddress(AddressRequestSearch request) {
+        return findHibernateAddressById(request.getId()).getDeliveries();
     }
 
     public List<HibernateAddress> findAllHibernateAddressByAuthenticateAndCode(AddressRequestSearch request) {

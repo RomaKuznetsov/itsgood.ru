@@ -46,7 +46,7 @@ public class CategoryDataService {
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-
+    @Cacheable("category")
     public List<HibernateCategory> findAllHibernateCategories() {
         return categoryDataRepository.findAll();
     }
@@ -79,7 +79,6 @@ public class CategoryDataService {
         categoryDataRepository.delete(hibernateCategory);
     }
 
-    @Cacheable("item")
     public Set<HibernateItem> findAllItemsHibernateCategoryById(Integer id) {
         Optional<HibernateCategory> searchResult = categoryDataRepository.findById(id);
         HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);

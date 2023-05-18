@@ -43,6 +43,9 @@ public class RoleDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateRole createHibernateRole(RoleRequestCreate request) {
         HibernateRole hibernateRole = roleConverterRequestCreate.convert(request);
+        if (hibernateRole.getCustomer() == null) {
+            hibernateRole.setCustomer(customerDataService.findHibernateCustomerByAuthenticationInfo());
+        }
         if (!hibernateRole.getCustomer().getRoles().contains(hibernateRole)) {
             hibernateRole = roleDataRepository.save(hibernateRole);
         } else throw new EntityExistsException();

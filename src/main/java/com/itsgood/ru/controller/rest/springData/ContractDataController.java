@@ -102,11 +102,6 @@ public class ContractDataController {
         return new ResponseEntity<>(contractDataService.findSetHibernateContract_item(request.getId()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findSetHibernateContract_itemsByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateContract_item>> findSetHibernateContract_itemsByAuthenticate() {
-        return new ResponseEntity<>(contractDataService.findSetHibernateContract_itemsByAuthenticate(), HttpStatus.OK);
-    }
-
     @GetMapping(value = "/findAllHibernateContractsByAuthenticateAndIrrelevance", consumes = {"application/xml", "application/json"})
     public ResponseEntity<List<HibernateContract>> findAllHibernateContractsByAuthenticateAndIrrelevance() {
         return new ResponseEntity<>(contractDataService.findAllHibernateContractsByAuthenticateAndIrrelevance(), HttpStatus.OK);

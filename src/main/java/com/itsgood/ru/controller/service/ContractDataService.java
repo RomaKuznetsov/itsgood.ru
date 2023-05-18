@@ -103,14 +103,6 @@ public class ContractDataService {
         return hibernateContract.getContracts_items();
     }
 
-    @Cacheable("contract_item")
-    public Set<HibernateContract_item> findSetHibernateContract_itemsByAuthenticate() {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<HibernateContract> searchResult = contractDataRepository.findById(hibernateCustomer.getId());
-        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
-        return hibernateContract.getContracts_items();
-    }
-
     public List<HibernateItem> findSetItemsByCustomerAuthenticateAndRelevance() {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
         Optional<HibernateContract> searchResult = contractDataRepository.
@@ -119,6 +111,7 @@ public class ContractDataService {
         HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
         return hibernateContract.getItems();
     }
+
     @Cacheable("contract_item")
     public Set<HibernateContract_item> findSetHibernateContract_item(Integer id) {
         Optional<HibernateContract> searchResult = contractDataRepository.findById(id);

@@ -30,16 +30,6 @@ public class Contract_itemDataController {
         return new ResponseEntity<>(contract_itemDataService.findHibernateContract_itemById(request.getId()), HttpStatus.OK);
     }
 
-
-    @GetMapping(value = "/findHibernateContract_itemsByCustomerAuthenticateAndRelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateContract_item>> deleteHibernateCategoryByTitleOrId(@Validated @RequestBody
-                                                                                              Contract_itemRequestSearch request, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(contract_itemDataService.findHibernateContract_itemsByCustomerAuthenticateAndRelevance(request), HttpStatus.OK);
-    }
-
     @PostMapping(value = "/createHibernateContract_item", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateContract_item> createHibernateContract_item(@Validated @RequestBody
                                                                                     Contract_itemRequestCreate request, BindingResult result) {

@@ -8,6 +8,7 @@ import com.itsgood.ru.controller.dto.request.itemDTO.ItemRequestUpdate;
 import com.itsgood.ru.controller.springDataRepository.ItemDataRepository;
 import com.itsgood.ru.hibernate.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class ItemDataService {
     private final CategoryDataService categoryDataService;
     private final ItemConverterRequestCreate itemConverterRequestCreate;
     private final ItemConverterRequestUpdate itemConverterRequestUpdate;
-
+@Cacheable("item")
     public List<HibernateItem> findAllHibernateItem() {
         return itemDataRepository.findAll();
     }
@@ -82,6 +83,7 @@ public class ItemDataService {
         itemDataRepository.deleteById(id);
     }
 
+    @Cacheable("contract_item")
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public Set<HibernateContract_item> findSetHibernateContract_itemById(Integer id) {
         return findHibernateItemById(id).getContracts_items();

@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class Contract_itemRequestCreate {
-
-        private int contract_id;
+    private int item_id;
+    private int contract_id;
 }

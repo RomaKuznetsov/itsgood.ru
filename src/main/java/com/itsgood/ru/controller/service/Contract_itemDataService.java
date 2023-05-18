@@ -40,17 +40,6 @@ public class Contract_itemDataService {
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public Set<HibernateContract_item> findHibernateContract_itemsByCustomerAuthenticateAndRelevance(Contract_itemRequestSearch request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateContract hibernateContract = new HibernateContract();
-        for (HibernateContract contract : hibernateCustomer.getContracts()) {
-            if (contract.getRelevance().equals(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus())) {
-                hibernateContract = contract;
-            } else throw new EntityNotFoundException("Актуальных контрактов нет");
-        }
-        return hibernateContract.getContracts_items();
-    }
-
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract_item createHibernateContract_item(Contract_itemRequestCreate request) {
         HibernateContract_item hibernateContract_item = contract_itemConverterRequestCreate.convert(request);

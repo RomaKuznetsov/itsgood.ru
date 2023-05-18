@@ -95,5 +95,13 @@ public class AddressDataController {
         }
         return new ResponseEntity<>(addressDataService.findAllHibernateAddressByAuthenticateAndCode(request), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/findListHibernateDeliveryOneAddress", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<HibernateDelivery>> findListHibernateDeliveryOneAddress(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(addressDataService.findListHibernateDeliveryOneAddress(request), HttpStatus.OK);
+    }
 }
 

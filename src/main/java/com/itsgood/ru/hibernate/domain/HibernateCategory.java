@@ -2,6 +2,7 @@ package com.itsgood.ru.hibernate.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"id", "description", "items"})
 @Table(name = "Category")
+@Cacheable("category")
 public class HibernateCategory {
 // @Id
 //    @GeneratedValue(strategy = GenerationType.UUID)

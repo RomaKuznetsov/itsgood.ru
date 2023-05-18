@@ -40,7 +40,7 @@ public class Contract_itemDataController {
 
     }
 
-    @PutMapping(value = "/updateHibernateContract_item", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateHibernateContract_item", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateContract_item> updateHibernateContract_item(@Validated @RequestBody Contract_itemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);

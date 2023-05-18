@@ -48,9 +48,9 @@ public class HibernateCustomer {
     private String gender;
     //  @JsonView
     @Column(name = "create_time")
-    private Timestamp create_time;
+    private String create_time;
     @Column(name = "update_time")
-    private Timestamp update_time;
+    private String update_time;
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)

@@ -48,7 +48,7 @@ public class PaymentDataController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = "/updateHibernatePayment", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateHibernatePayment", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernatePayment> updateHibernatePayment(@Validated @RequestBody PaymentRequestUpdate request,
                                                                    BindingResult result) {
         if (result.hasErrors()) {

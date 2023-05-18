@@ -54,7 +54,7 @@ public class ContractDataController {
         return new ResponseEntity<>(contractDataService.createHibernateContract(request), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/updateHibernateContract", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateHibernateContract", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateContract> updateHibernateContract(@Validated @RequestBody ContractRequestUpdate request,
                                                                      BindingResult result) {
         if (result.hasErrors()) {

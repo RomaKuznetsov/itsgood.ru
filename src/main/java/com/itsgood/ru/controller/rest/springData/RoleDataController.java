@@ -33,7 +33,7 @@ public class RoleDataController {
         return new ResponseEntity<>(roleDataService.createHibernateRole(request), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/updateHibernateRole", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateHibernateRole", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateRole> updateHibernateRole(@Validated @RequestBody RoleRequestUpdate request,
                                                              BindingResult result) {
         if (result.hasErrors()) {

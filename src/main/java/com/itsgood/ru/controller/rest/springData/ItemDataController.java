@@ -53,7 +53,7 @@ public class ItemDataController {
         return new ResponseEntity<>(itemDataService.createHibernateItem(request), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/createHibernateItem", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/createHibernateItem", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateItem> updateHibernateItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);

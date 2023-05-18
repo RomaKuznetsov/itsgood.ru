@@ -9,6 +9,4 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class ContractRequestCreate {
     private int sum_order = 0;
-    @NotNull
-    private int customer_id;
 }

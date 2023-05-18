@@ -45,7 +45,7 @@ public class DeliveryDataController {
         return new ResponseEntity<>(deliveryDataService.createHibernateDelivery(request), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/updateHibernateDelivery", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateHibernateDelivery", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateDelivery> updateHibernateDelivery(@Validated @RequestBody DeliveryRequestUpdate request,
                                                                      BindingResult result) {
         if (result.hasErrors()) {

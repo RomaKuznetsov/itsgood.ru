@@ -19,4 +19,6 @@ public class JWTConfiguration {
     //количество милисекунд на которое выдается токен для аутиенфикации
     private Integer expiration;
 
+    private String serverPasswordSalt;
+
 }

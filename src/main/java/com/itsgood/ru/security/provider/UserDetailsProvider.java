@@ -4,9 +4,11 @@ import com.itsgood.ru.controller.springDataRepository.CustomerDataRepository;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.domain.Role;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
+import com.itsgood.ru.hibernate.domain.HibernateRole;
 import com.itsgood.ru.service.CustomerService;
 import com.itsgood.ru.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,20 +29,18 @@ public class UserDetailsProvider implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            Optional<Customer> searchResult = customerService.findCustomerByUsername(username);
+            Optional<HibernateCustomer> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
             if (searchResult.isPresent()) {
-                Customer customer = searchResult.get();
+                HibernateCustomer hibernateCustomer = searchResult.get();
                 //конвертни его через поиск в Hibernate
-                HibernateCustomer hibernateCustomer = customerDataRepository.findById(customer.getId()).get();
-
                 return new org.springframework.security.core.userdetails.User(
                         hibernateCustomer.getMail(),
                         hibernateCustomer.getAuthenticationInfo().getPassword(),
 //                        ["ROLE_USER", "ROLE_ADMIN"]
                         AuthorityUtils.commaSeparatedStringToAuthorityList(
-                                roleService.findListRoleOneCustomer(customer.getId())
+                                hibernateCustomer.getRoles()
                                         .stream()
-                                        .map(Role::getRole)
+                                        .map(HibernateRole::getRole)
                                         .collect(Collectors.joining(","))
                         )
                 );

@@ -1,6 +1,7 @@
 package com.itsgood.ru.security.controller;
 
 
+import com.itsgood.ru.security.configuration.JWTConfiguration;
 import com.itsgood.ru.security.dto.AuthRequest;
 import com.itsgood.ru.security.dto.AuthResponse;
 import com.itsgood.ru.security.jwt.TokenProvider;
@@ -26,6 +27,7 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final TokenProvider provider;
     private final UserDetailsService userProvider;
+    private final JWTConfiguration jwtConfiguration;
 
 
     @PostMapping(value = "/authentication", consumes = {"application/xml", "application/json"})
@@ -34,7 +36,7 @@ public class AuthenticationController {
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getLogin(),
-                        request.getPassword()
+                        request.getPassword() + jwtConfiguration.getServerPasswordSalt()
                 ));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         /*Generate token with answer to user*/

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -38,19 +39,13 @@ public class AddressDataService {
         if (!hibernateCustomer.getAddress().contains(hibernateAddress)) {
             hibernateAddress.setCustomer(hibernateCustomer);
             hibernateAddress = addressDataRepository.save(hibernateAddress);
-        } else throw new EntityNotFoundException("this address already exists");
+        } else throw new EntityExistsException();
         return hibernateAddress;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateAddress updateHibernateAddress(AddressRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateAddress hibernateAddress = addressConverterRequestUpdate.convert(request);
-        if (hibernateCustomer.getAddress().contains(hibernateAddress)) {
-            hibernateAddress.setCustomer(hibernateCustomer);
-            hibernateAddress = addressDataRepository.save(hibernateAddress);
-        } else throw new EntityNotFoundException("specify the data");
-        return hibernateAddress;
+            return addressDataRepository.save(addressConverterRequestUpdate.convert(request));
     }
 
     public HibernateAddress findHibernateAddressById(Integer id) {
@@ -69,12 +64,7 @@ public class AddressDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateAddress(AddressRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateAddress hibernateAddress = addressConverterRequestUpdate.convert(request);
-        if (hibernateCustomer.getAddress().contains(hibernateAddress)) {
-            hibernateAddress.setCustomer(hibernateCustomer);
-            addressDataRepository.delete(hibernateAddress);
-        } else throw new EntityNotFoundException("no such address");
+            addressDataRepository.delete(addressConverterRequestUpdate.convert(request));
     }
 
     public List<HibernateAddress> findListHibernateAddressRegistration() {

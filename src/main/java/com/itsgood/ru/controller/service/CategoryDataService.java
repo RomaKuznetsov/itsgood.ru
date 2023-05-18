@@ -10,9 +10,11 @@ import com.itsgood.ru.controller.springDataRepository.CategoryDataRepository;
 import com.itsgood.ru.hibernate.domain.HibernateCategory;
 import com.itsgood.ru.hibernate.domain.HibernateItem;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -54,18 +56,13 @@ public class CategoryDataService {
         HibernateCategory hibernateCategory = categoryConverterRequestCreate.convert(request);
         if (!findAllHibernateCategories().contains(hibernateCategory)) {
             hibernateCategory = categoryDataRepository.save(hibernateCategory);
-        } else throw new EntityNotFoundException("Такая категория уже есть");
+        } else throw new EntityExistsException();
         return hibernateCategory;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateCategory updateHibernateCategoryById(CategoryRequestUpdate request) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findById(request.getId());
-        HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        if (hibernateCategory != null) {
-            hibernateCategory = categoryDataRepository.save(categoryConverterRequestUpdate.convert(request));
-        }
-        return hibernateCategory;
+        return categoryDataRepository.save(categoryConverterRequestUpdate.convert(request));
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -82,6 +79,7 @@ public class CategoryDataService {
         categoryDataRepository.delete(hibernateCategory);
     }
 
+    @Cacheable("item")
     public Set<HibernateItem> findAllItemsHibernateCategoryById(Integer id) {
         Optional<HibernateCategory> searchResult = categoryDataRepository.findById(id);
         HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);

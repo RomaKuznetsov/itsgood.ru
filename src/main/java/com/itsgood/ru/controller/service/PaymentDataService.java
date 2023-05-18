@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +48,7 @@ public class PaymentDataService {
         if (!payments.contains(hibernatePayment)) {
             hibernatePayment.setCustomer(hibernateCustomer);
             hibernatePayment = paymentDataRepository.save(hibernatePayment);
-        }
+        } else throw new EntityExistsException();
         return hibernatePayment;
     }
 

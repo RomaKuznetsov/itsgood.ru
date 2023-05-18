@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +43,9 @@ public class RoleDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateRole createHibernateRole(RoleRequestCreate request) {
         HibernateRole hibernateRole = roleConverterRequestCreate.convert(request);
-        Set<HibernateRole> roles = hibernateRole.getCustomer().getRoles();
-        if (!roles.contains(hibernateRole)) {
+        if (!hibernateRole.getCustomer().getRoles().contains(hibernateRole)) {
             hibernateRole = roleDataRepository.save(hibernateRole);
-        }
+        } else throw new EntityExistsException();
         return hibernateRole;
     }
 
@@ -57,7 +57,7 @@ public class RoleDataService {
         if (!roles.contains(hibernateRole)) {
             hibernateRole.setCustomer(hibernateCustomer);
             hibernateRole = roleDataRepository.save(hibernateRole);
-        }
+        } else throw new EntityNotFoundException();
         return hibernateRole;
     }
 
@@ -69,7 +69,7 @@ public class RoleDataService {
         if (!roles.contains(hibernateRole)) {
             hibernateRole.setCustomer(hibernateCustomer);
             roleDataRepository.delete(hibernateRole);
-        }
+        } else throw new EntityNotFoundException();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

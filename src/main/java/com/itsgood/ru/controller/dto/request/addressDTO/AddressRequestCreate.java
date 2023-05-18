@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Validated
 public class AddressRequestCreate {
 
-    private int customer_id;
+//    private int customer_id;
     @NotNull
     private String code;
     @NotNull

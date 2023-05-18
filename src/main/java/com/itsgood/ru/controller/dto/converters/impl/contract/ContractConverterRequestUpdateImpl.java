@@ -35,7 +35,6 @@ public class ContractConverterRequestUpdateImpl implements ContractConverterRequ
         }
         return hibernateContract;
     }
-
 }
 
 

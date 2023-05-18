@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"category", "contracts", "contracts_items"})
 @Table(name = "Item")
+@Cacheable("item")
 public class HibernateItem {
     //ctrl+p в аннотации
     @Id

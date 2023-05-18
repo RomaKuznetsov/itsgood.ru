@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -59,12 +60,12 @@ public class ContractDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateContract createHibernateContract(ContractRequestCreate request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateContract> searchResult = hibernateCustomer.getContracts();
         HibernateContract hibernateContract = contractConverterRequestCreate.convert(request);
+        Set<HibernateContract> searchResult = hibernateCustomer.getContracts();
         if (!searchResult.contains(hibernateContract)) {
             hibernateContract.setCustomer(hibernateCustomer);
             hibernateContract = contractDataRepository.save(hibernateContract);
-        } else throw new EntityNotFoundException("such a contract already exists");
+        } else throw new EntityExistsException();
         return hibernateContract;
     }
 
@@ -84,13 +85,7 @@ public class ContractDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContractByAuthenticate(ContractRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateContract> contracts = hibernateCustomer.getContracts();
-        HibernateContract hibernateContract = findHibernateContractById(request.getId());
-        if (!contracts.contains(hibernateContract)) {
-            hibernateContract.setCustomer(hibernateCustomer);
-            contractDataRepository.delete(hibernateContract);
-        } else throw new EntityNotFoundException("no such contract");
+            contractDataRepository.delete(contractConverterRequestUpdate.convert(request));
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

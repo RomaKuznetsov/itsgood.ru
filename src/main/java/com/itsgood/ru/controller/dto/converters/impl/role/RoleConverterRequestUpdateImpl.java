@@ -2,7 +2,9 @@ package com.itsgood.ru.controller.dto.converters.impl.role;
 
 import com.itsgood.ru.controller.dto.converters.RoleConverterRequestUpdate;
 import com.itsgood.ru.controller.dto.request.roleDTO.RoleRequestUpdate;
+import com.itsgood.ru.controller.service.CustomerDataService;
 import com.itsgood.ru.controller.service.RoleDataService;
+import com.itsgood.ru.controller.springDataRepository.CustomerDataRepository;
 import com.itsgood.ru.controller.springDataRepository.RoleDataRepository;
 import com.itsgood.ru.hibernate.domain.HibernateRole;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,6 @@ import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestCreate;
 import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestSearch;
 import com.itsgood.ru.controller.dto.request.deliveryDTO.DeliveryRequestUpdate;
 import com.itsgood.ru.controller.springDataRepository.DeliveryDataRepository;
-import com.itsgood.ru.hibernate.domain.HibernateAddress;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import com.itsgood.ru.hibernate.domain.HibernateDelivery;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.springframework.transaction.annotation.Isolation.DEFAULT;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
@@ -43,35 +41,35 @@ public class DeliveryDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateDelivery createHibernateDelivery(DeliveryRequestCreate request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateDelivery hibernateDelivery = new HibernateDelivery();
-        if (hibernateCustomer.getAddress().contains(addressDataService.
-                findHibernateAddressById(request.getAddress_id()))) {
-            hibernateDelivery = deliveryDataRepository.save(deliveryConverterRequestCreate.convert(request));
-        } else throw new EntityNotFoundException("Ошибка адресата");
+        HibernateDelivery hibernateDelivery = deliveryConverterRequestCreate.convert(request);
+        if (hibernateCustomer.getAddress().contains(hibernateDelivery.getAddress())) {
+            hibernateDelivery = deliveryDataRepository.save(hibernateDelivery);
+        } else throw new EntityNotFoundException();
         return hibernateDelivery;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public HibernateDelivery updateHibernateDelivery(DeliveryRequestUpdate request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateDelivery hibernateDelivery = new HibernateDelivery();
-        if (hibernateCustomer.getAddress().contains(addressDataService.findHibernateAddressById(request.getAddress_id()))) {
-            deliveryDataRepository.save(deliveryConverterRequestUpdate.convert(request));
-        } else throw new EntityNotFoundException("Ошибка адресата");
+        HibernateDelivery hibernateDelivery = deliveryConverterRequestUpdate.convert(request);
+        if (hibernateCustomer.getAddress().contains(hibernateDelivery.getAddress())) {
+            deliveryDataRepository.save(hibernateDelivery);
+        } else throw new EntityNotFoundException();
         return hibernateDelivery;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateDelivery(DeliveryRequestUpdate request) {
         HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        HibernateDelivery hibernateDelivery = deliveryConverterRequestUpdate.convert(request);
         if (hibernateCustomer.getAddress().contains(addressDataService.
                 findHibernateAddressById(request.getAddress_id()))) {
-            deliveryDataRepository.delete(deliveryConverterRequestUpdate.convert(request));
-        } else throw new EntityNotFoundException("Ошибка адресата");
+            deliveryDataRepository.delete(hibernateDelivery);
+        } else throw new EntityNotFoundException();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateDeliveryById(DeliveryRequestUpdate request) {
+    public void deleteHibernateDeliveryById(DeliveryRequestSearch request) {
         deliveryDataRepository.deleteById(request.getId());
     }
 

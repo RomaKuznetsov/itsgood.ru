@@ -65,7 +65,7 @@ public class DeliveryDataController {
     }
 
     @DeleteMapping(value = "/deleteHibernateDeliveryById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateDeliveryById(@Validated @RequestBody DeliveryRequestUpdate request,
+    public ResponseEntity<Object> deleteHibernateDeliveryById(@Validated @RequestBody DeliveryRequestSearch request,
                                                           BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);

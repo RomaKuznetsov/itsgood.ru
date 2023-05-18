@@ -36,7 +36,7 @@ public class CustomerDataService {
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
-    @Cacheable("customer")
+    //    @Cacheable("customer")
     public List<HibernateCustomer> findAllHibernateCustomer() {
         return customerDataRepository.findAll();
     }
@@ -92,13 +92,13 @@ public class CustomerDataService {
         customerDataRepository.delete(findHibernateCustomerByAuthenticationInfo());
     }
 
-    @Cacheable("roles")
+    @Cacheable("role")
     public Set<HibernateRole> findAllRolesHibernateCustomerByAuthenticate() {
         HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
         Set<HibernateRole> roles = hibernateCustomer.getRoles();
         return roles;
     }
-    @Cacheable("roles")
+    @Cacheable("role")
     public Set<HibernateRole> findAllRolesHibernateCustomerById(CustomerRequestSearch request) {
         HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
         Set<HibernateRole> roles = hibernateCustomer.getRoles();

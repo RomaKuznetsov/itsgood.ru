@@ -85,7 +85,7 @@ public class ContractDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContractByAuthenticate(ContractRequestUpdate request) {
-            contractDataRepository.delete(contractConverterRequestUpdate.convert(request));
+        contractDataRepository.delete(contractConverterRequestUpdate.convert(request));
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -112,7 +112,7 @@ public class ContractDataService {
         return hibernateContract.getItems();
     }
 
-    @Cacheable("contract_item")
+    //    @Cacheable("contract_item")
     public Set<HibernateContract_item> findSetHibernateContract_item(Integer id) {
         Optional<HibernateContract> searchResult = contractDataRepository.findById(id);
         HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);

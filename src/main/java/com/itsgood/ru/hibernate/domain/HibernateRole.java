@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @Entity
 @EqualsAndHashCode(exclude = {"customer"})
 @Table(name = "Role")
-@Cacheable("roles")
+@Cacheable("role")
 public class HibernateRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

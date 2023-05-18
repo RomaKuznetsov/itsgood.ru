@@ -21,7 +21,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"address", "payments", "roles", "contracts"})
 @Table(name = "Customer")
-@Cacheable("customer")
+//@Cacheable("customer")
 public class HibernateCustomer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,7 +16,7 @@ public class DeliveryRequestCreate {
     @NotNull
     @Size(min = 2, max = 100)
     private String lastname;
-    @Pattern(regexp = "//d{9}")
+    @Pattern(regexp = "(\\d{9})")
     private int phone;
 
     private int address_id;

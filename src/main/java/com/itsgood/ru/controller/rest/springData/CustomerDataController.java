@@ -1,15 +1,19 @@
 package com.itsgood.ru.controller.rest.springData;
 
 
+
 import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestCreate;
 import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestSearch;
 import com.itsgood.ru.controller.dto.request.customerDTO.CustomerRequestUpdate;
 import com.itsgood.ru.controller.service.CustomerDataService;
+import com.itsgood.ru.controller.springDataRepository.CustomerDataRepository;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import com.itsgood.ru.hibernate.domain.*;
+import com.itsgood.ru.security.configuration.JWTConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +27,11 @@ import java.util.Set;
 public class CustomerDataController {
 
     private final CustomerDataService customerDataService;
+    private final PasswordEncoder passwordEncoder;
 
+    private final JWTConfiguration jwtConfiguration;
+
+    private final CustomerDataRepository customerDataRepository;
 
     //ok
     @GetMapping(value = "/findAllHibernateCustomer", consumes = {"application/xml", "application/json"})
@@ -56,7 +64,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateCustomer> findHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                            BindingResult result) {
+                                                                       BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -65,7 +73,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findHibernateCustomerByMail", consumes = {"application/xml", "application/json"})
     public ResponseEntity<HibernateCustomer> findHibernateCustomerByMail (@Validated @RequestBody CustomerRequestSearch request,
-                                                                       BindingResult result) {
+                                                                          BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -74,7 +82,7 @@ public class CustomerDataController {
 
     @DeleteMapping(value = "/deleteHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> deleteHibernateCustomerById (@Validated @RequestBody CustomerRequestSearch request,
-                                                                          BindingResult result) {
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -90,7 +98,7 @@ public class CustomerDataController {
 
     @DeleteMapping(value = "/deleteHibernateCustomerByMail", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> deleteHibernateCustomerByMail (@Validated @RequestBody CustomerRequestSearch request,
-                                                               BindingResult result) {
+                                                                 BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -100,7 +108,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findRolesHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Set<HibernateRole>> findRolesHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                          BindingResult result) {
+                                                                             BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -114,7 +122,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findContractsHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Set<HibernateContract>> findContractsHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                                  BindingResult result) {
+                                                                                     BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -128,7 +136,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findAddressHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Set<HibernateAddress>> findAddressHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                                BindingResult result) {
+                                                                                  BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -142,7 +150,7 @@ public class CustomerDataController {
 
     @GetMapping(value = "/findPaymentsHibernateCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Set<HibernatePayment>> findPaymentsHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                                BindingResult result) {
+                                                                                   BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -166,6 +174,29 @@ public class CustomerDataController {
     @GetMapping(value = "/findAllContractsHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Set<HibernateContract>> findAllContractsHibernateCustomerByAuthenticate() {
         return new ResponseEntity<>(customerDataService.findAllContractsHibernateCustomerByAuthenticate(), HttpStatus.OK);
+    }
+
+    @PutMapping("/passwords")
+    public ResponseEntity<Object> updateUsersPasswords() {
+
+        List<HibernateCustomer> all = customerDataService.findAllHibernateCustomer();
+
+        for (HibernateCustomer customer : all) {
+
+            AuthenticationInfo authenticationInfo = customer.getAuthenticationInfo();
+
+            String password = authenticationInfo.getPassword();
+            String encodedPassword = passwordEncoder.encode(password + jwtConfiguration.getServerPasswordSalt());
+
+            authenticationInfo.setPassword(encodedPassword);
+
+            customer.setAuthenticationInfo(authenticationInfo);
+
+            customerDataRepository.save(customer);
+        }
+
+        return new ResponseEntity<>(all.size(), HttpStatus.OK);
+
     }
 
     //Domain - Car

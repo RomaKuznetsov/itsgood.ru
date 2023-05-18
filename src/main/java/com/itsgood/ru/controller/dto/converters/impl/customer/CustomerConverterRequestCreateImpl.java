@@ -19,7 +19,7 @@ public class CustomerConverterRequestCreateImpl implements CustomerConverterRequ
 
     private final AuthenticationInfo authenticationInfo;
     private final JWTConfiguration jwtConfiguration;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public HibernateCustomer convert(CustomerRequestCreate request) {
@@ -32,10 +32,9 @@ public class CustomerConverterRequestCreateImpl implements CustomerConverterRequ
         hibernateCustomer.setBirthday(request.getBirthday());
         hibernateCustomer.setGender(request.getGender());
         hibernateCustomer.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        authenticationInfo.setUsername(request.getUsername());
-//        String password = jwtConfiguration.getServerPasswordSalt() + request.getPassword();
-//        String encode = new BCryptPasswordEncoder(6).encode(password);
-        authenticationInfo.setPassword(request.getPassword());
+        String password = jwtConfiguration.getServerPasswordSalt() + request.getPassword();
+        authenticationInfo.setPassword(passwordEncoder.encode(password));
+        authenticationInfo.setPassword(request.getUsername());
         hibernateCustomer.setAuthenticationInfo(authenticationInfo);
         return hibernateCustomer;
 

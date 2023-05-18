@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @EqualsAndHashCode(exclude = {"item", "contract"})
 @Table(name = "Contract_item")
-@Cacheable("contract_item")
+//@Cacheable("contract_item")
 public class HibernateContract_item {
 
     @Id

@@ -2,7 +2,6 @@ package com.itsgood.ru.repository;
 
 
 import com.itsgood.ru.domain.Contract_item;
-import com.itsgood.ru.repositoryCRUD.CRUDRepository;
 
 import java.sql.SQLException;
 

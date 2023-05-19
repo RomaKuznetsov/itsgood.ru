@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.JDBCTemplateImpl;
 import com.itsgood.ru.domain.Role;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.RoleRowMapper;
 import com.itsgood.ru.repository.RoleRepository;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -29,7 +29,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
     @Override
     public List<Role> findOneCustomer(Integer id) {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_LIST_ROLE_ON_CUSTOMER_ID.getCRUD(), roleRowMapper, id);
+            return jdbcTemplate.query(sql_CRUD.SELECT_LIST_ROLE_ON_CUSTOMER_ID.getCRUD(), roleRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +38,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
     @Override
     public Role findMaxIdRole() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_ROLE_ON_MAX_ID.getCRUD(), roleRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_ROLE_ON_MAX_ID.getCRUD(), roleRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -47,7 +47,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
     @Override
     public Role findMinIdRole() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_ROLE_ON_MIN_ID.getCRUD(), roleRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_ROLE_ON_MIN_ID.getCRUD(), roleRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +57,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
     @Override
     public Role findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_ROLE_ON_ID.getCRUD(), roleRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_ROLE_ON_ID.getCRUD(), roleRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +66,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
     @Override
     public List<Role> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_ROLE.getCRUD(), roleRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_ROLE.getCRUD(), roleRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +74,7 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
 
     @Override
     public Role create(Role role) throws SQLException {
-        jdbcTemplate.update(SQL_CRUD.INSERT_ROLE.getCRUD(), role.getRole(), role.getCustomer_id(),
+        jdbcTemplate.update(sql_CRUD.INSERT_ROLE.getCRUD(), role.getRole(), role.getCustomer_id(),
                 new Timestamp(System.currentTimeMillis()), new Date(System.currentTimeMillis()).
                         toLocalDate().plusYears(1));
         return findMaxIdRole();
@@ -82,13 +82,13 @@ public class RoleRepositoryJDBCTemplateImpl implements RoleRepository {
 
     @Override
     public Role update(Role role) throws SQLException {
-        jdbcTemplate.update(SQL_CRUD.UPDATE_ROLE_VALIDITY_ON_ID.getCRUD(), role.getRole(), role.getValidity(),
+        jdbcTemplate.update(sql_CRUD.UPDATE_ROLE_VALIDITY_ON_ID.getCRUD(), role.getRole(), role.getValidity(),
                 new Timestamp(System.currentTimeMillis()));
         return findOne(role.getId());
     }
 
     @Override
     public void delete(Integer id) throws SQLException {
-        jdbcTemplate.update(SQL_CRUD.DELETE_ROLE_ON_ID.getCRUD(), id);
+        jdbcTemplate.update(sql_CRUD.DELETE_ROLE_ON_ID.getCRUD(), id);
     }
 }

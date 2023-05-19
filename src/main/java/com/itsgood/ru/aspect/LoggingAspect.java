@@ -23,7 +23,7 @@ public class LoggingAspect {
 //        log.info("Method " + joinPoint.getSignature().getName() + " finished");
 //    }
 
-    @Pointcut("execution(* com.itsgood.ru.repository.*.*.*(..))")
+    @Pointcut("execution(* com.itsgood.ru.controller.*.*.*(..))")
     public void aroundRepositoryPointcut() {
     }
 

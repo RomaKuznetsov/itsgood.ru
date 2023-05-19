@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.JDBCTemplateImpl;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.repository.CustomerRepository;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.CustomerRowMapper;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +27,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findCustomerByMail(String mail) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_MAIL.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_MAIL.getCRUD(),
                     customerRowMapper, mail);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -37,7 +37,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findCustomerByUsernameMail(Customer customer) {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_USERNAME_MAIL.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_USERNAME_MAIL.getCRUD(),
                     customerRowMapper, customer.getUsername(), customer.getMail());
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -46,7 +46,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findCustomerByUsername(String username) {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_USERNAME.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_USERNAME.getCRUD(),
                     customerRowMapper, username);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -56,7 +56,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_ID.getCRUD(), customerRowMapper, id);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_ID.getCRUD(), customerRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +65,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public List<Customer> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_CUSTOMER.getCRUD(), customerRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CUSTOMER.getCRUD(), customerRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +74,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findMaxIdCustomer() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_MAX_ID.getCRUD(), customerRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_MAX_ID.getCRUD(), customerRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -83,7 +83,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public Customer findMinIdCustomer() throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CUSTOMER_ON_MIN_ID.getCRUD(), customerRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CUSTOMER_ON_MIN_ID.getCRUD(), customerRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -93,7 +93,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     public Customer create(Customer customer) throws SQLException {
         int iterate;
         try {
-                iterate = jdbcTemplate.update(SQL_CRUD.INSERT_CUSTOMER.getCRUD(), customer.getFirstname(),
+                iterate = jdbcTemplate.update(sql_CRUD.INSERT_CUSTOMER.getCRUD(), customer.getFirstname(),
                         customer.getLastname(), customer.getUsername(), customer.getMail(), customer.getPassword(),
                         customer.getPhone(), customer.getBirthday(), customer.getGender(),
                         new Timestamp(System.currentTimeMillis()));
@@ -107,7 +107,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     public Customer update(Customer customer) throws SQLException {
         int iterate;
         try {
-            iterate = jdbcTemplate.update(SQL_CRUD.UPDATE_CUSTOMER_ON_ID.getCRUD(),
+            iterate = jdbcTemplate.update(sql_CRUD.UPDATE_CUSTOMER_ON_ID.getCRUD(),
                     customer.getFirstname(), customer.getLastname(), customer.getUsername(), customer.getMail(),
                     customer.getPassword(), customer.getPhone(), customer.getBirthday(), customer.getGender(),
                     new Timestamp(System.currentTimeMillis()),
@@ -121,7 +121,7 @@ public class CustomerRepositoryJDBCTemplateImpl implements CustomerRepository {
     @Override
     public void delete(Integer id) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.DELETE_CUSTOMER_ON_ID.getCRUD(), id);
+            jdbcTemplate.update(sql_CRUD.DELETE_CUSTOMER_ON_ID.getCRUD(), id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }

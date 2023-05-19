@@ -1,15 +1,12 @@
 package com.itsgood.ru.hibernate.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -48,9 +45,9 @@ public class HibernateCustomer {
     private String gender;
     //  @JsonView
     @Column(name = "create_time")
-    private String create_time;
+    private Timestamp create_time;
     @Column(name = "update_time")
-    private String update_time;
+    private Timestamp update_time;
 
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)

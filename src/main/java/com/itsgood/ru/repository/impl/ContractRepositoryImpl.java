@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.impl;
 import com.itsgood.ru.domain.Contract;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.repository.ContractRepository;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -60,7 +60,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.UPDATE_CONTRACT_PAYMENT_TYPE_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.UPDATE_CONTRACT_PAYMENT_TYPE_ON_ID.getCRUD());
             preparedStatement.setString(1, contract.getPayment_types());
             preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
             flag = preparedStatement.executeUpdate();
@@ -82,7 +82,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.DELETE_CONTRACT_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.DELETE_CONTRACT_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             flag = preparedStatement.executeUpdate();
             if (flag == 1) {
@@ -101,7 +101,7 @@ public class ContractRepositoryImpl implements ContractRepository {
         try {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL_CRUD.INSERT_CONTRACT.getCRUD());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql_CRUD.INSERT_CONTRACT.getCRUD());
             preparedStatement.setInt(1, contract.getCustomer_id());
             preparedStatement.setInt(2, contract.getAddress_id());
             preparedStatement.setInt(3, contract.getPayment_id());
@@ -126,7 +126,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             contract = new Contract();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_CONTRACT_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_CONTRACT_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -155,7 +155,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             contract = new Contract();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_ALL_CONTRACT_ON_USERNAME_MAIL.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_ALL_CONTRACT_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(1, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -186,7 +186,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             contract = new Contract();
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_CRUD.SELECT_ALL_CONTRACT.getCRUD());
+            ResultSet resultSet = statement.executeQuery(sql_CRUD.SELECT_ALL_CONTRACT.getCRUD());
             while (resultSet.next()) {
                 contract.setId(resultSet.getInt(1));
                 contract.setCustomer_id(resultSet.getInt(2));
@@ -210,11 +210,11 @@ public class ContractRepositoryImpl implements ContractRepository {
         try {
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
-            preparedStatement = connection.prepareStatement(SQL_CRUD.INSERT_CONTRACT_CARD.getCRUD());
+            preparedStatement = connection.prepareStatement(sql_CRUD.INSERT_CONTRACT_CARD.getCRUD());
             while (resultSet.next()) {
                 preparedStatement.setInt(1, resultSet.getInt(1));
                 preparedStatement.setInt(2, resultSet.getInt(2));
@@ -242,11 +242,11 @@ public class ContractRepositoryImpl implements ContractRepository {
         try {
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
-            preparedStatement = connection.prepareStatement(SQL_CRUD.INSERT_CONTRACT_CASH.getCRUD());
+            preparedStatement = connection.prepareStatement(sql_CRUD.INSERT_CONTRACT_CASH.getCRUD());
             while (resultSet.next()) {
                 preparedStatement.setInt(1, resultSet.getInt(1));
                 preparedStatement.setInt(2, resultSet.getInt(2));
@@ -275,7 +275,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             contract = new Contract();
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_CRUD.SELECT_CONTRACT_ON_MAX_ID.getCRUD());
+            ResultSet resultSet = statement.executeQuery(sql_CRUD.SELECT_CONTRACT_ON_MAX_ID.getCRUD());
             while (resultSet.next()) {
                 contract.setId(resultSet.getInt(1));
                 contract.setCustomer_id(resultSet.getInt(2));
@@ -300,7 +300,7 @@ public class ContractRepositoryImpl implements ContractRepository {
             contract = new Contract();
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_CRUD.SELECT_CONTRACT_ON_MIN_ID.getCRUD());
+            ResultSet resultSet = statement.executeQuery(sql_CRUD.SELECT_CONTRACT_ON_MIN_ID.getCRUD());
             while (resultSet.next()) {
                 contract.setId(resultSet.getInt(1));
                 contract.setCustomer_id(resultSet.getInt(2));

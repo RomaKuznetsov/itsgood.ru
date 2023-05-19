@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -24,6 +25,7 @@ public class AddressRequestUpdate {
     @NotNull
     private String street;
     @NotNull
+    @Positive
     @Size(min = 1, max = 5)
     private int house;
     private String frame;

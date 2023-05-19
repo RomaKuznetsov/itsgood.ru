@@ -1,6 +1,5 @@
 package com.itsgood.ru.controller.dto.request.roleDTO;
 
-import com.itsgood.ru.enums.StatusPayment;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;

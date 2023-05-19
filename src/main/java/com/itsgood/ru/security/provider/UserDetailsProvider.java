@@ -1,14 +1,11 @@
 package com.itsgood.ru.security.provider;
 
-import com.itsgood.ru.controller.springDataRepository.CustomerDataRepository;
-import com.itsgood.ru.domain.Customer;
-import com.itsgood.ru.domain.Role;
+import com.itsgood.ru.controller.rest.spring.data.repository.CustomerDataRepository;
 import com.itsgood.ru.hibernate.domain.HibernateCustomer;
 import com.itsgood.ru.hibernate.domain.HibernateRole;
 import com.itsgood.ru.service.CustomerService;
 import com.itsgood.ru.service.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

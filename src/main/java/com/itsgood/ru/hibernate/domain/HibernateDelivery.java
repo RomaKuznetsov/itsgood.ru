@@ -32,9 +32,9 @@ public class HibernateDelivery {
     @Column(name = "phone")
     private int phone;
     @Column(name = "loading_time")
-    private String loading_time;
+    private Timestamp loading_time;
     @Column(name = "shipment_time")
-    private String shipment_time;
+    private Timestamp shipment_time;
     @Column(name = "stock_index")
     private int stock_index;
     @Column(name = "distance")
@@ -42,7 +42,7 @@ public class HibernateDelivery {
     @Column(name = "price")
     private int price;
     @Column(name = "validity")
-    private String validity; //Date
+    private Date validity;
 
     @ManyToOne
     @JoinColumn(name = "address_id")

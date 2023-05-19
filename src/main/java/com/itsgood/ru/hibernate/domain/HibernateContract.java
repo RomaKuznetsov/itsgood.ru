@@ -33,9 +33,9 @@ public class HibernateContract {
     @Column(name = "relevance")
     private String relevance;
     @Column(name = "create_time")
-    private String create_time;
+    private Timestamp create_time;
     @Column(name = "update_time")
-    private String update_time;
+    private Timestamp update_time;
 
     @ManyToMany(mappedBy = "contracts", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("contracts")

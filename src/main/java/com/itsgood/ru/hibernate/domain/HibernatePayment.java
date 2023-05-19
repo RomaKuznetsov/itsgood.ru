@@ -31,7 +31,7 @@ public class HibernatePayment {
     @Column(name = "card")
     private String card;
     @Column(name = "validity")
-    private String validity;
+    private Date validity;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

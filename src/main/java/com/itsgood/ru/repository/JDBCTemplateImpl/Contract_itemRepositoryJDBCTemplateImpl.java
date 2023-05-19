@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.JDBCTemplateImpl;
 import com.itsgood.ru.domain.Contract_item;
 import com.itsgood.ru.repository.Contract_itemRepository;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.Contract_itemRowMapper;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -47,7 +47,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public Contract_item findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ITEM_ON_ID.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_ID.getCRUD(),
                     contract_itemRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -57,7 +57,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public List<Contract_item> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_CONTRACT_ITEM.getCRUD(), contract_itemRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CONTRACT_ITEM.getCRUD(), contract_itemRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +66,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public Contract_item create(Contract_item contract_item) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.INSERT_CONTRACT_ITEM.getCRUD(), contract_item.getContract_id(),
+            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT_ITEM.getCRUD(), contract_item.getContract_id(),
                     contract_item.getItem_id(), new Timestamp(System.currentTimeMillis()));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -77,7 +77,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public Contract_item update(Contract_item contract_item) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.UPDATE_CONTRACT_ITEM_ON_ID.getCRUD(), contract_item.getContract_id(),
+            jdbcTemplate.update(sql_CRUD.UPDATE_CONTRACT_ITEM_ON_ID.getCRUD(), contract_item.getContract_id(),
                     contract_item.getItem_id(), new Timestamp(System.currentTimeMillis()));
             return contract_item;
         } catch (DataAccessException e) {
@@ -88,7 +88,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public void delete(Integer id) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.DELETE_CONTRACT_ITEM_ON_ID.getCRUD(), id);
+            jdbcTemplate.update(sql_CRUD.DELETE_CONTRACT_ITEM_ON_ID.getCRUD(), id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -97,7 +97,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public Contract_item findMaxIdContract_Item() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ITEM_ON_MAX_ID.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_MAX_ID.getCRUD(),
                     contract_itemRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -107,7 +107,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     @Override
     public Contract_item findMinIdContract_Item() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ITEM_ON_MIN_ID.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_MIN_ID.getCRUD(),
                     contract_itemRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

@@ -4,7 +4,7 @@ import com.itsgood.ru.domain.Contract;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.repository.ContractRepository;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.ContractRowMapper;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -36,7 +36,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract findMaxIdContract() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ON_MAX_ID.getCRUD(), contractRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ON_MAX_ID.getCRUD(), contractRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -45,7 +45,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract findMinIdContract() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ON_MIN_ID.getCRUD(), contractRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ON_MIN_ID.getCRUD(), contractRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +55,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
         Contract parametersContract;
         try {
             parametersContract = new Contract();
-            parametersContract = jdbcTemplate.query(SQL_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD(),
+            parametersContract = jdbcTemplate.query(sql_CRUD.SELECT_CUSTOMER_ADDRESS_PAYMENT.getCRUD(),
                     new ResultSetExtractor<Contract>() {
                         @Override
                         public Contract extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -81,7 +81,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
         try {
             contract = new Contract();
             contract = findParametersForCreateContract(customer);
-            jdbcTemplate.update(SQL_CRUD.INSERT_CONTRACT_CARD.getCRUD(), contract.getCustomer_id(),
+            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT_CARD.getCRUD(), contract.getCustomer_id(),
                     contract.getAddress_id(), contract.getPayment_id(),
                     new Timestamp(System.currentTimeMillis()));
         } catch (DataAccessException e) {
@@ -96,7 +96,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
         try {
             contract = new Contract();
             contract = findParametersForCreateContract(customer);
-            jdbcTemplate.update(SQL_CRUD.INSERT_CONTRACT_CASH.getCRUD(), contract.getCustomer_id(),
+            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT_CASH.getCRUD(), contract.getCustomer_id(),
                     contract.getAddress_id(), new Timestamp(System.currentTimeMillis()));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -107,7 +107,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract customerFindContractCash(Customer customer) {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ON_USERNAME_MAIL_CASH.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ON_USERNAME_MAIL_CASH.getCRUD(),
                     contractRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -117,7 +117,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract customerFindContractCard(Customer customer) {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ON_USERNAME_MAIL_CARD.getCRUD(),
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ON_USERNAME_MAIL_CARD.getCRUD(),
                     contractRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -127,7 +127,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CONTRACT_ON_ID.getCRUD(), contractRowMapper, id);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ON_ID.getCRUD(), contractRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -136,7 +136,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public List<Contract> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_CONTRACT.getCRUD(), contractRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CONTRACT.getCRUD(), contractRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -145,7 +145,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract create(Contract contract) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.INSERT_CONTRACT.getCRUD(), contract.getCustomer_id(),
+            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT.getCRUD(), contract.getCustomer_id(),
                     contract.getAddress_id(), contract.getPayment_id(), contract.getPayment_types(),
                     new Timestamp(System.currentTimeMillis()));
         } catch (DataAccessException e) {
@@ -157,7 +157,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public List<Contract> findOneCustomer(Customer customer) {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_CONTRACT_ON_USERNAME_MAIL.getCRUD(), contractRowMapper,
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CONTRACT_ON_USERNAME_MAIL.getCRUD(), contractRowMapper,
                     customer.getUsername(), customer.getMail());
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -168,7 +168,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public Contract update(Contract contract) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.UPDATE_CONTRACT_PAYMENT_TYPE_ON_ID.getCRUD(), contract.getId(),
+            jdbcTemplate.update(sql_CRUD.UPDATE_CONTRACT_PAYMENT_TYPE_ON_ID.getCRUD(), contract.getId(),
                     contract.getPayment_types(), new Timestamp(System.currentTimeMillis()), contractRowMapper
             );
             return contract;
@@ -180,7 +180,7 @@ public class ContractRepositoryJDBCTemplateImpl implements ContractRepository {
     @Override
     public void delete(Integer id) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.DELETE_CONTRACT_ON_ID.getCRUD(), id);
+            jdbcTemplate.update(sql_CRUD.DELETE_CONTRACT_ON_ID.getCRUD(), id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }

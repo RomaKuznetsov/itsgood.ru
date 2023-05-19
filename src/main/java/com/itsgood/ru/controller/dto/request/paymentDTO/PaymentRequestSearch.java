@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.dto.request.paymentDTO;
 
-import com.itsgood.ru.enums.StatusPayment;
+import com.itsgood.ru.codes.StatusPayment;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;

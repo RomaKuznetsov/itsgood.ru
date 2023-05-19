@@ -26,11 +26,11 @@ public class HibernateRole {
     @Column(name = "role")
     private String role;
     @Column(name = "create_time")
-    private String create_time;
+    private Timestamp create_time;
     @Column(name = "update_time")
-    private String update_time;
+    private Timestamp update_time;
     @Column(name = "validity")
-    private String validity;
+    private Date validity;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

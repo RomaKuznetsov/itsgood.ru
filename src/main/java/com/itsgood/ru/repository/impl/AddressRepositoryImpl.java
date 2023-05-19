@@ -4,7 +4,7 @@ package com.itsgood.ru.repository.impl;
 import com.itsgood.ru.domain.Address;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.repository.AddressRepository;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -47,7 +47,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.INSERT_ADDRESS.getCRUD());
+                    sql_CRUD.INSERT_ADDRESS.getCRUD());
             preparedStatement.setInt(1, address.getCustomer_id());
             preparedStatement.setString(2, address.getCode());
             preparedStatement.setString(3, address.getCountry());
@@ -76,7 +76,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.UPDATE_ADDRESS_ON_ID.getCRUD());
+                    sql_CRUD.UPDATE_ADDRESS_ON_ID.getCRUD());
             preparedStatement.setString(1, address.getCountry());
             preparedStatement.setString(2, address.getRegion());
             preparedStatement.setString(3, address.getCity());
@@ -104,7 +104,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.DELETE_ADDRESS_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.DELETE_ADDRESS_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             flag = preparedStatement.executeUpdate();
             if (flag == 1) {
@@ -126,7 +126,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_CRUD.SELECT_ALL_ADDRESS.getCRUD());
+            ResultSet resultSet = statement.executeQuery(sql_CRUD.SELECT_ALL_ADDRESS.getCRUD());
             while (resultSet.next()) {
                 address.setId(resultSet.getInt(1));
                 address.setCustomer_id(resultSet.getInt(2));
@@ -155,7 +155,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ADDRESS_ON_ID.getCRUD());
+                    sql_CRUD.SELECT_ADDRESS_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -186,7 +186,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ALL_ADDRESS_ON_USERNAME_MAIL.getCRUD());
+                    sql_CRUD.SELECT_ALL_ADDRESS_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -218,7 +218,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             listCustomerDelivery = new ArrayList<>();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ADDRESS_DEL_ON_USERNAME_MAIL.getCRUD());
+                    sql_CRUD.SELECT_ADDRESS_DEL_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -250,7 +250,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ADDRESS_REG_ON_USERNAME_MAIL.getCRUD());
+                    sql_CRUD.SELECT_ADDRESS_REG_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -280,7 +280,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ADDRESS_ON_MAX_ID.getCRUD());
+                    sql_CRUD.SELECT_ADDRESS_ON_MAX_ID.getCRUD());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 address.setId(resultSet.getInt(1));
@@ -308,7 +308,7 @@ public class AddressRepositoryImpl implements AddressRepository {
             address = new Address();
             Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    SQL_CRUD.SELECT_ADDRESS_ON_MIN_ID.getCRUD());
+                    sql_CRUD.SELECT_ADDRESS_ON_MIN_ID.getCRUD());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 address.setId(resultSet.getInt(1));

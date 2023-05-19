@@ -7,5 +7,4 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Contract_itemRequestCreate {
     private int item_id;
-    private int contract_id;
 }

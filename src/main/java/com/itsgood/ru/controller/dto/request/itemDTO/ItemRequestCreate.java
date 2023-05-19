@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 
@@ -12,8 +13,10 @@ import javax.validation.constraints.Size;
 @Validated
 public class ItemRequestCreate {
     @NotNull
+    @Size(max = 20)
     private String title;
     @NotNull
+    @Positive
     private int price;
     @Size(min = 2, max = 100)
     private String firm;

@@ -3,7 +3,6 @@ package com.itsgood.ru.repository;
 
 import com.itsgood.ru.domain.Contract;
 import com.itsgood.ru.domain.Customer;
-import com.itsgood.ru.repositoryCRUD.CRUDRepository;
 
 import java.sql.SQLException;
 import java.util.List;

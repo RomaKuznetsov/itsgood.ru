@@ -41,9 +41,9 @@ public class HibernateItem {
     @Column(name = "volume")
     private String volume;
     @Column(name = "create_time")
-    private String create_time;
+    private Timestamp create_time;
     @Column(name = "update_time")
-    private String update_time;
+    private Timestamp update_time;
 
     @ManyToMany
     @JoinTable(name = "Contract_item", joinColumns = @JoinColumn(name = "item_id"),

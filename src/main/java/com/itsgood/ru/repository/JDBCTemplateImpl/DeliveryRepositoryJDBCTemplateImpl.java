@@ -4,7 +4,7 @@ import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.domain.Delivery;
 import com.itsgood.ru.repository.DeliveryRepository;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.DeliveryRowMapper;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -31,7 +31,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public Delivery findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_DELIVERY_ON_ID.getCRUD(), deliveryRowMapper, id);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_ID.getCRUD(), deliveryRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -40,7 +40,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public List<Delivery> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_DELIVERY.getCRUD(), deliveryRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_DELIVERY.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +54,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
             customer = (Customer) parameters.get("customer");
             delivery = (Delivery) parameters.get("delivery");
             Delivery parametersDelivery = findParametersForCreateDelivery(customer);
-            jdbcTemplate.update(SQL_CRUD.INSERT_DELIVERY.getCRUD(),
+            jdbcTemplate.update(sql_CRUD.INSERT_DELIVERY.getCRUD(),
                     parametersDelivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
                     delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
                     delivery.getDistance(), delivery.getPrice(),
@@ -69,7 +69,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
         Delivery parametersDelivery;
         try {
             parametersDelivery = new Delivery();
-            parametersDelivery = jdbcTemplate.query(SQL_CRUD.SELECT_ID_CONTRACT_ITEM_ADDRESS_ON_USERNAME_MAIL.getCRUD(),
+            parametersDelivery = jdbcTemplate.query(sql_CRUD.SELECT_ID_CONTRACT_ITEM_ADDRESS_ON_USERNAME_MAIL.getCRUD(),
                     new ResultSetExtractor<Delivery>() {
                         @Override
                         public Delivery extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -91,7 +91,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public Delivery create(Delivery delivery) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.INSERT_DELIVERY.getCRUD(),
+            jdbcTemplate.update(sql_CRUD.INSERT_DELIVERY.getCRUD(),
                     delivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
                     delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
                     delivery.getDistance(), delivery.getPrice(),
@@ -105,7 +105,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public Delivery update(Delivery delivery) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.UPDATE_DELIVERY_ON_ID.getCRUD(),
+            jdbcTemplate.update(sql_CRUD.UPDATE_DELIVERY_ON_ID.getCRUD(),
                     delivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
                     delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
                     delivery.getDistance(), delivery.getPrice(),
@@ -119,7 +119,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public void delete(Integer id) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.DELETE_DELIVERY_ON_ID.getCRUD(), id);
+            jdbcTemplate.update(sql_CRUD.DELETE_DELIVERY_ON_ID.getCRUD(), id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -128,7 +128,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public Delivery findMaxIdDelivery() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_DELIVERY_ON_MAX_ID.getCRUD(), deliveryRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_MAX_ID.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -137,7 +137,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     @Override
     public Delivery findMinIdDelivery() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_DELIVERY_ON_MIN_ID.getCRUD(), deliveryRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_MIN_ID.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }

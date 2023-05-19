@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.JDBCTemplateImpl;
 import com.itsgood.ru.domain.Category;
 import com.itsgood.ru.repository.CategoryRepository;
 import com.itsgood.ru.repository.JDBCTemplateImpl.rowmapper.CategoryRowMapper;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.DataAccessException;
@@ -25,7 +25,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category findOne(Integer id) throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CATEGORY_ON_ID.getCRUD(), categoryRowMapper, id);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CATEGORY_ON_ID.getCRUD(), categoryRowMapper, id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -34,7 +34,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public List<Category> findAll() throws SQLException {
         try {
-            return jdbcTemplate.query(SQL_CRUD.SELECT_ALL_CATEGORY.getCRUD(), categoryRowMapper);
+            return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CATEGORY.getCRUD(), categoryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +43,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category create(Category category) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.INSERT_CATEGORY.getCRUD(), category.getTitle(), category.getDescription());
+            jdbcTemplate.update(sql_CRUD.INSERT_CATEGORY.getCRUD(), category.getTitle(), category.getDescription());
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category update(Category category) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.UPDATE_CATEGORY_ON_ID.getCRUD(), category.getTitle(), category.getDescription());
+            jdbcTemplate.update(sql_CRUD.UPDATE_CATEGORY_ON_ID.getCRUD(), category.getTitle(), category.getDescription());
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -63,7 +63,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public void delete(Integer id) throws SQLException {
         try {
-            jdbcTemplate.update(SQL_CRUD.DELETE_CATEGORY_ON_ID.getCRUD(), id);
+            jdbcTemplate.update(sql_CRUD.DELETE_CATEGORY_ON_ID.getCRUD(), id);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +72,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category findMaxIdCategory() {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CATEGORY_ON_MAX_ID.getCRUD(), categoryRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CATEGORY_ON_MAX_ID.getCRUD(), categoryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +81,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category findMinIdCategory() throws SQLException {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CATEGORY_ON_MIN_ID.getCRUD(), categoryRowMapper);
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CATEGORY_ON_MIN_ID.getCRUD(), categoryRowMapper);
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +90,7 @@ public class CategoryRepositoryJDBCTemplateImpl implements CategoryRepository {
     @Override
     public Category findCategoryOnTitle(Category category) {
         try {
-            return jdbcTemplate.queryForObject(SQL_CRUD.SELECT_CATEGORY_ON_TITLE.getCRUD(), categoryRowMapper,
+            return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CATEGORY_ON_TITLE.getCRUD(), categoryRowMapper,
                     category.getTitle());
         } catch (DataAccessException e) {
             throw new RuntimeException(e);

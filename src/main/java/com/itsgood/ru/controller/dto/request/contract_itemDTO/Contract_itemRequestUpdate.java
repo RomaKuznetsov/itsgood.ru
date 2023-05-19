@@ -15,5 +15,4 @@ public class Contract_itemRequestUpdate {
 
     private int delivery_id;
 
-    private int contract_id;
 }

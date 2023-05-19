@@ -3,7 +3,7 @@ package com.itsgood.ru.repository.impl;
 import com.itsgood.ru.domain.Customer;
 import com.itsgood.ru.domain.Payment;
 import com.itsgood.ru.repository.PaymentRepository;
-import com.itsgood.ru.repositoryCRUD.Enums.SQL_CRUD;
+import com.itsgood.ru.sql.sql_CRUD;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
@@ -46,7 +46,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.INSERT_PAYMENT.getCRUD());
+                    connection.prepareStatement(sql_CRUD.INSERT_PAYMENT.getCRUD());
             preparedStatement.setInt(1, payment.getPhone());
             preparedStatement.setString(2, payment.getStatus());
             preparedStatement.setInt(3, payment.getCustomer_id());
@@ -73,7 +73,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_CRUD.SELECT_ALL_PAYMENT.getCRUD());
+            ResultSet resultSet = statement.executeQuery(sql_CRUD.SELECT_ALL_PAYMENT.getCRUD());
             while (resultSet.next()) {
                 payment.setId(resultSet.getInt(1));
                 payment.setStatus(resultSet.getString(2));
@@ -97,7 +97,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_PAYMENT_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_PAYMENT_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -122,7 +122,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.DELETE_PAYMENT_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.DELETE_PAYMENT_ON_ID.getCRUD());
             preparedStatement.setInt(1, id);
             flag = preparedStatement.executeUpdate();
             if (flag == 1) {
@@ -142,7 +142,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             Connection connection = getConnection();
             connection.setAutoCommit(false);
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.UPDATE_PAYMENT_PHONE_LASTNAME_ON_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.UPDATE_PAYMENT_PHONE_LASTNAME_ON_ID.getCRUD());
             preparedStatement.setString(1, payment.getStatus());
             preparedStatement.setInt(2, payment.getPhone());
             preparedStatement.setString(3, payment.getCard());
@@ -169,7 +169,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_LIST_PAYMENT_ON_USERNAME_MAIL.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_LIST_PAYMENT_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -196,7 +196,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_ID_PAYMENT_ON_ACT_USERNAME_MAIL.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_ID_PAYMENT_ON_ACT_USERNAME_MAIL.getCRUD());
             preparedStatement.setString(1, customer.getUsername());
             preparedStatement.setString(2, customer.getMail());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -222,7 +222,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_PAYMENT_ON_MAX_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_PAYMENT_ON_MAX_ID.getCRUD());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 payment.setId(resultSet.getInt(1));
@@ -246,7 +246,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             payment = new Payment();
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.SELECT_PAYMENT_ON_MIN_ID.getCRUD());
+                    connection.prepareStatement(sql_CRUD.SELECT_PAYMENT_ON_MIN_ID.getCRUD());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 payment.setId(resultSet.getInt(1));
@@ -273,7 +273,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
             customer = (Customer) parameters.get("customer");
             Connection connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement(SQL_CRUD.INSERT_PAYMENT_ON_USERNAME_MAIL.getCRUD());
+                    connection.prepareStatement(sql_CRUD.INSERT_PAYMENT_ON_USERNAME_MAIL.getCRUD());
             preparedStatement.setInt(1, payment.getPhone());
             preparedStatement.setString(2, payment.getStatus());
             preparedStatement.setString(3, customer.getUsername());

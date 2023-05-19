@@ -23,9 +23,9 @@ public class HibernateContract_item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "create_time")
-    private String create_time;
+    private Timestamp create_time;
     @Column(name = "update_time")
-    private String update_time;
+    private Timestamp update_time;
 
     @ManyToOne
     @JoinColumn(name = "contract_id")

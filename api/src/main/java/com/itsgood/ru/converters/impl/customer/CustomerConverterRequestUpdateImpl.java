@@ -3,7 +3,7 @@ package com.itsgood.ru.converters.impl.customer;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
 import com.itsgood.ru.converters.CustomerConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import lombok.RequiredArgsConstructor;
@@ -24,20 +24,20 @@ public class CustomerConverterRequestUpdateImpl implements CustomerConverterRequ
     private final CustomerDataRepository customerDataRepository;
 
     @Override
-    public HibernateCustomer convert(CustomerRequestUpdate request) {
-        Optional<HibernateCustomer> searchResult = customerDataRepository.findById(request.getId());
-        HibernateCustomer hibernateCustomer = searchResult.orElseThrow(EntityNotFoundException::new);
-        hibernateCustomer.setFirstname(request.getFirstname());
-        hibernateCustomer.setLastname(request.getLastname());
-        hibernateCustomer.setMail(request.getMail());
-        hibernateCustomer.setPhone(request.getPhone());
-        hibernateCustomer.setBirthday(request.getBirthday());
-        hibernateCustomer.setGender(request.getGender());
-        hibernateCustomer.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+    public CustomerDTO convert(CustomerRequestUpdate request) {
+        Optional<CustomerDTO> searchResult = customerDataRepository.findById(request.getId());
+        CustomerDTO customerDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        customerDTO.setFirstname(request.getFirstname());
+        customerDTO.setLastname(request.getLastname());
+        customerDTO.setMail(request.getMail());
+        customerDTO.setPhone(request.getPhone());
+        customerDTO.setBirthday(request.getBirthday());
+        customerDTO.setGender(request.getGender());
+        customerDTO.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
         String password = jwtConfiguration.getServerPasswordSalt() + request.getPassword();
         authenticationInfo.setPassword(passwordEncoder.encode(password));
         authenticationInfo.setPassword(request.getUsername());
-        hibernateCustomer.setAuthenticationInfo(authenticationInfo);
-        return hibernateCustomer;
+        customerDTO.setAuthenticationInfo(authenticationInfo);
+        return customerDTO;
     }
 }

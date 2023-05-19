@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.role.RoleRequestCreate;
 import com.itsgood.ru.controller.request.role.RoleRequestSearch;
 import com.itsgood.ru.controller.request.role.RoleRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateRole;
+import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.service.spring.RoleDataService;
 import com.itsgood.ru.repository.spring.RoleDataRepository;
 import com.itsgood.ru.exceptions.IllegalRequestException;
@@ -25,8 +25,8 @@ public class RoleDataController {
     private final RoleDataRepository roleDataRepository;
 
     @PostMapping(value = "/createHibernateRole", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateRole> createHibernateRole(@Validated @RequestBody RoleRequestCreate request,
-                                                             BindingResult result) {
+    public ResponseEntity<RoleDTO> createHibernateRole(@Validated @RequestBody RoleRequestCreate request,
+                                                       BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -34,8 +34,8 @@ public class RoleDataController {
     }
 
     @PatchMapping(value = "/updateHibernateRole", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateRole> updateHibernateRole(@Validated @RequestBody RoleRequestUpdate request,
-                                                             BindingResult result) {
+    public ResponseEntity<RoleDTO> updateHibernateRole(@Validated @RequestBody RoleRequestUpdate request,
+                                                       BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -43,8 +43,8 @@ public class RoleDataController {
     }
 
     @GetMapping(value = "/findHibernateRoleById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateRole> findHibernateRoleById(@Validated @RequestBody RoleRequestSearch request,
-                                                               BindingResult result) {
+    public ResponseEntity<RoleDTO> findHibernateRoleById(@Validated @RequestBody RoleRequestSearch request,
+                                                         BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -52,12 +52,12 @@ public class RoleDataController {
     }
 
     @GetMapping(value = "/findAllRoles", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateRole>> findAllRoles() {
+    public ResponseEntity<List<RoleDTO>> findAllRoles() {
         return new ResponseEntity<>(roleDataService.findAllRoles(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findHibernateRolesByValidity", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateRole>> findHibernateRolesByValidity(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
+    public ResponseEntity<List<RoleDTO>> findHibernateRolesByValidity(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

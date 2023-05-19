@@ -1,7 +1,7 @@
 package com.itsgood.ru.service.hibernate.impl;
 
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.repository.hibernate.HibernateContractRepository;
 import com.itsgood.ru.service.hibernate.HibernateContractService;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +18,22 @@ public class HibernateContractServiceImpl implements HibernateContractService {
 
 
     @Override
-    public HibernateContract findOne(Integer id) throws SQLException {
+    public ContractDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateContract> findAll() throws SQLException {
+    public List<ContractDTO> findAll() throws SQLException {
         return hibernateContractRepository.findAll();
     }
 
     @Override
-    public HibernateContract create(HibernateContract contract) throws SQLException {
+    public ContractDTO create(ContractDTO contract) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateContract update(HibernateContract contract) throws SQLException {
+    public ContractDTO update(ContractDTO contract) throws SQLException {
         return null;
     }
 

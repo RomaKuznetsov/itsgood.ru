@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.hibernate.HibernateCustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
@@ -21,24 +21,24 @@ public class HibernateCustomerRepositoryImpl implements HibernateCustomerReposit
 
 
     @Override
-    public HibernateCustomer findOne(Integer id) throws SQLException {
+    public CustomerDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateCustomer> findAll() throws SQLException {
-        final String findAllHQL = "select u from HibernateCustomer u";
+    public List<CustomerDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from CustomerDTO u";
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateCustomer.class).getResultList();
+        return entityManager.createQuery(findAllHQL, CustomerDTO.class).getResultList();
     }
 
     @Override
-    public HibernateCustomer create(HibernateCustomer object) throws SQLException {
+    public CustomerDTO create(CustomerDTO object) throws SQLException {
         return update(object);
     }
 
     @Override
-    public HibernateCustomer update(HibernateCustomer object) throws SQLException {
+    public CustomerDTO update(CustomerDTO object) throws SQLException {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();

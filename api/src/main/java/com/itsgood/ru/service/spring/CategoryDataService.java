@@ -5,8 +5,8 @@ import com.itsgood.ru.controller.request.category.CategoryRequestSearch;
 import com.itsgood.ru.controller.request.category.CategoryRequestUpdate;
 import com.itsgood.ru.converters.CategoryConverterRequestCreate;
 import com.itsgood.ru.converters.CategoryConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.spring.CategoryDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -30,58 +30,58 @@ public class CategoryDataService {
     private final CategoryConverterRequestUpdate categoryConverterRequestUpdate;
     private final CategoryConverterRequestCreate categoryConverterRequestCreate;
 
-    public HibernateCategory findHibernateCategoryById(Integer id) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findById(id);
+    public CategoryDTO findHibernateCategoryById(Integer id) {
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateCategory findHibernateCategoryByTitle(String title) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findHibernateCategoryByTitle(title);
+    public CategoryDTO findHibernateCategoryByTitle(String title) {
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findHibernateCategoryByTitle(title);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateCategory findHibernateCategoryByTitleOrId(CategoryRequestSearch request) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findHibernateCategoryByTitleOrId(request.getTitle(), request.getId());
+    public CategoryDTO findHibernateCategoryByTitleOrId(CategoryRequestSearch request) {
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findHibernateCategoryByTitleOrId(request.getTitle(), request.getId());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Cacheable("category")
-    public List<HibernateCategory> findAllHibernateCategories() {
+    public List<CategoryDTO> findAllHibernateCategories() {
         return categoryDataRepository.findAll();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateCategory createHibernateCategory(CategoryRequestCreate request) {
-        HibernateCategory hibernateCategory = categoryConverterRequestCreate.convert(request);
-        if (!findAllHibernateCategories().contains(hibernateCategory)) {
-            hibernateCategory = categoryDataRepository.save(hibernateCategory);
+    public CategoryDTO createHibernateCategory(CategoryRequestCreate request) {
+        CategoryDTO categoryDTO = categoryConverterRequestCreate.convert(request);
+        if (!findAllHibernateCategories().contains(categoryDTO)) {
+            categoryDTO = categoryDataRepository.save(categoryDTO);
         } else throw new EntityExistsException();
-        return hibernateCategory;
+        return categoryDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateCategory updateHibernateCategoryById(CategoryRequestUpdate request) {
+    public CategoryDTO updateHibernateCategoryById(CategoryRequestUpdate request) {
         return categoryDataRepository.save(categoryConverterRequestUpdate.convert(request));
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateCategoryByTitleOrId(CategoryRequestSearch request) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findHibernateCategoryByTitleOrId(request.getTitle(), request.getId());
-        HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        categoryDataRepository.deleteByTitleOrId(hibernateCategory.getTitle(), hibernateCategory.getId());
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findHibernateCategoryByTitleOrId(request.getTitle(), request.getId());
+        CategoryDTO categoryDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        categoryDataRepository.deleteByTitleOrId(categoryDTO.getTitle(), categoryDTO.getId());
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateCategoryById(CategoryRequestUpdate request) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findById(request.getId());
-        HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        categoryDataRepository.delete(hibernateCategory);
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findById(request.getId());
+        CategoryDTO categoryDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        categoryDataRepository.delete(categoryDTO);
     }
 
-    public Set<HibernateItem> findAllItemsHibernateCategoryById(Integer id) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findById(id);
-        HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        Set<HibernateItem> items = hibernateCategory.getItems();
+    public Set<ItemDTO> findAllItemsHibernateCategoryById(Integer id) {
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findById(id);
+        CategoryDTO categoryDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        Set<ItemDTO> items = categoryDTO.getItems();
         return items;
     }
 

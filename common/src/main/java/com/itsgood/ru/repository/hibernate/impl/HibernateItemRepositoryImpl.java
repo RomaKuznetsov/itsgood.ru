@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.hibernate.HibernateItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
@@ -21,22 +21,22 @@ public class HibernateItemRepositoryImpl implements HibernateItemRepository {
     private final EntityManagerFactory entityManagerFactory;
 
     @Override
-    public HibernateItem findOne(Integer id) throws SQLException {
+    public ItemDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateItem> findAll() throws SQLException {
-        final String findAllHQL = "select u from HibernateItem u";
+    public List<ItemDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from ItemDTO u";
 //        try (Session session = sessionFactory.openSession()) {
 //            return session.createQuery(findAllHQL, HibernateItem.class).getResultList();
 //        }
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateItem.class).getResultList();
+        return entityManager.createQuery(findAllHQL, ItemDTO.class).getResultList();
     }
 
     @Override
-    public HibernateItem create(HibernateItem object) throws SQLException {
+    public ItemDTO create(ItemDTO object) throws SQLException {
         try (Session session = sessionFactory.openSession()) {
             session.save(object); // во время сохранения происходит запись id в object
             return object;
@@ -44,7 +44,7 @@ public class HibernateItemRepositoryImpl implements HibernateItemRepository {
     }
 
     @Override
-    public HibernateItem update(HibernateItem object) throws SQLException {
+    public ItemDTO update(ItemDTO object) throws SQLException {
         try (Session session = sessionFactory.openSession()) {
             session.saveOrUpdate(object);
             return object;

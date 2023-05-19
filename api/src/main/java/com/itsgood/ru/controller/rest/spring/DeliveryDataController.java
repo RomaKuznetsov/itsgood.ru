@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.delivery.DeliveryRequestCreate;
 import com.itsgood.ru.controller.request.delivery.DeliveryRequestSearch;
 import com.itsgood.ru.controller.request.delivery.DeliveryRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.service.spring.DeliveryDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 
@@ -24,8 +24,8 @@ public class DeliveryDataController {
     private final DeliveryDataService deliveryDataService;
 
     @GetMapping(value = "/findHibernateDeliveryById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateDelivery> findHibernateCustomerById(@Validated @RequestBody DeliveryRequestSearch request,
-                                                                       BindingResult result) {
+    public ResponseEntity<DeliveryDTO> findHibernateCustomerById(@Validated @RequestBody DeliveryRequestSearch request,
+                                                                 BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -33,13 +33,13 @@ public class DeliveryDataController {
     }
 
     @GetMapping(value = "/findAll", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateDelivery>> findAll() {
+    public ResponseEntity<List<DeliveryDTO>> findAll() {
         return new ResponseEntity<>(deliveryDataService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createHibernateDelivery", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateDelivery> createHibernateDelivery(@Validated @RequestBody DeliveryRequestCreate request,
-                                                                     BindingResult result) {
+    public ResponseEntity<DeliveryDTO> createHibernateDelivery(@Validated @RequestBody DeliveryRequestCreate request,
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -47,8 +47,8 @@ public class DeliveryDataController {
     }
 
     @PatchMapping(value = "/updateHibernateDelivery", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateDelivery> updateHibernateDelivery(@Validated @RequestBody DeliveryRequestUpdate request,
-                                                                     BindingResult result) {
+    public ResponseEntity<DeliveryDTO> updateHibernateDelivery(@Validated @RequestBody DeliveryRequestUpdate request,
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

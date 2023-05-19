@@ -1,7 +1,7 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.repository.hibernate.HibernateDeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -21,24 +21,24 @@ public class HibernateDeliveryRepositoryImpl implements HibernateDeliveryReposit
     private final EntityManagerFactory entityManagerFactory;
 
     @Override
-    public HibernateDelivery findOne(Integer id) throws SQLException {
+    public DeliveryDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateDelivery> findAll() throws SQLException {
-        final String findAllHQL = "select u from HibernateDelivery u";
+    public List<DeliveryDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from DeliveryDTO u";
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateDelivery.class).getResultList();
+        return entityManager.createQuery(findAllHQL, DeliveryDTO.class).getResultList();
     }
 
     @Override
-    public HibernateDelivery create(HibernateDelivery object) throws SQLException {
+    public DeliveryDTO create(DeliveryDTO object) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateDelivery update(HibernateDelivery object) throws SQLException {
+    public DeliveryDTO update(DeliveryDTO object) throws SQLException {
         return null;
     }
 
@@ -48,7 +48,7 @@ public class HibernateDeliveryRepositoryImpl implements HibernateDeliveryReposit
     }
 
     @Override
-    public HibernateContract findDeliveryListItem() throws SQLException {
+    public ContractDTO findDeliveryListItem() throws SQLException {
 
 
 //  SELECT_ID_CONTRACT_ITEM_ADDRESS_ON_USERNAME_MAIL("SELECT Contract_Item.id, Contract.Address_id FROM Contract_Item " +

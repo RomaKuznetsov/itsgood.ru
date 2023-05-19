@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.role;
 
 import com.itsgood.ru.controller.request.role.RoleRequestUpdate;
 import com.itsgood.ru.converters.RoleConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateRole;
+import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.repository.spring.RoleDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,12 +18,12 @@ public class RoleConverterRequestUpdateImpl implements RoleConverterRequestUpdat
     private final RoleDataRepository roleDataRepository;
 
     @Override
-    public HibernateRole convert(RoleRequestUpdate request) {
-        Optional<HibernateRole> searchResult = roleDataRepository.findById(request.getId());
-        HibernateRole hibernateRole = searchResult.orElseThrow(EntityNotFoundException::new);
-        hibernateRole.setRole(request.getRole());
-        hibernateRole.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        hibernateRole.setValidity(request.getValidity());
-        return hibernateRole;
+    public RoleDTO convert(RoleRequestUpdate request) {
+        Optional<RoleDTO> searchResult = roleDataRepository.findById(request.getId());
+        RoleDTO roleDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        roleDTO.setRole(request.getRole());
+        roleDTO.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+        roleDTO.setValidity(request.getValidity());
+        return roleDTO;
     }
 }

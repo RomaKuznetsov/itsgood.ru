@@ -3,9 +3,9 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.controller.request.contract.ContractRequestSearch;
 import com.itsgood.ru.controller.request.contract.ContractRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateContract_item;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.ContractDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +26,14 @@ public class ContractDataController {
     private final ContractDataService contractDataService;
 
     @GetMapping(value = "/findAllHibernateContract", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateContract>> findAllHibernateContract() {
+    public ResponseEntity<List<ContractDTO>> findAllHibernateContract() {
         return new ResponseEntity<>(contractDataService.findAllHibernateContract(), HttpStatus.OK);
     }
 
 
     @GetMapping(value = "/findHibernateContractById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract> findHibernateContractById(@Validated @RequestBody ContractRequestSearch request,
-                                                                       BindingResult result) {
+    public ResponseEntity<ContractDTO> findHibernateContractById(@Validated @RequestBody ContractRequestSearch request,
+                                                                 BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -41,13 +41,13 @@ public class ContractDataController {
     }
 
     @GetMapping(value = "/findHibernateContractByCustomerAuthenticateRelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract> findHibernateContractByCustomerAuthenticateRelevance() {
+    public ResponseEntity<ContractDTO> findHibernateContractByCustomerAuthenticateRelevance() {
         return new ResponseEntity<>(contractDataService.findHibernateContractByAuthenticateAndRelevance(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createHibernateContract", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract> createHibernateContract(@Validated @RequestBody ContractRequestCreate request,
-                                                                     BindingResult result) {
+    public ResponseEntity<ContractDTO> createHibernateContract(@Validated @RequestBody ContractRequestCreate request,
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -55,8 +55,8 @@ public class ContractDataController {
     }
 
     @PatchMapping(value = "/updateHibernateContract", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract> updateHibernateContract(@Validated @RequestBody ContractRequestUpdate request,
-                                                                     BindingResult result) {
+    public ResponseEntity<ContractDTO> updateHibernateContract(@Validated @RequestBody ContractRequestUpdate request,
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -84,18 +84,18 @@ public class ContractDataController {
     }
 
     @GetMapping(value = "/findSetHibernateContract_itemsByCustomerAuthenticateAndRelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateContract_item>> findSetHibernateContract_itemsByCustomerAuthenticateAndRelevance() {
+    public ResponseEntity<Set<Contract_itemDTO>> findSetHibernateContract_itemsByCustomerAuthenticateAndRelevance() {
         return new ResponseEntity<>(contractDataService.findSetHibernateContract_itemsByAuthenticateAndRelevance(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findSetItemsByCustomerAuthenticateAndRelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateItem>> findSetItemsByCustomerAuthenticateAndRelevance() {
+    public ResponseEntity<List<ItemDTO>> findSetItemsByCustomerAuthenticateAndRelevance() {
         return new ResponseEntity<>(contractDataService.findSetItemsByCustomerAuthenticateAndRelevance(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findSetHibernateContract_item", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateContract_item>> findSetHibernateContract_item(@Validated @RequestBody ContractRequestSearch request,
-                                                                                     BindingResult result) {
+    public ResponseEntity<Set<Contract_itemDTO>> findSetHibernateContract_item(@Validated @RequestBody ContractRequestSearch request,
+                                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -103,7 +103,7 @@ public class ContractDataController {
     }
 
     @GetMapping(value = "/findAllHibernateContractsByAuthenticateAndIrrelevance", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateContract>> findAllHibernateContractsByAuthenticateAndIrrelevance() {
+    public ResponseEntity<List<ContractDTO>> findAllHibernateContractsByAuthenticateAndIrrelevance() {
         return new ResponseEntity<>(contractDataService.findAllHibernateContractsByAuthenticateAndIrrelevance(), HttpStatus.OK);
     }
 

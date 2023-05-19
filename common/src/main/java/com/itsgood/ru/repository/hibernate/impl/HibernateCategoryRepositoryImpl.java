@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 import com.itsgood.ru.repository.hibernate.HibernateCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -21,24 +21,24 @@ public class HibernateCategoryRepositoryImpl implements HibernateCategoryReposit
 
 
     @Override
-    public HibernateCategory findOne(Integer id) throws SQLException {
+    public CategoryDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateCategory> findAll() throws SQLException {
-        final String findAllHQL = "select u from HibernateCategory u";
+    public List<CategoryDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from CategoryDTO u";
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateCategory.class).getResultList();
+        return entityManager.createQuery(findAllHQL, CategoryDTO.class).getResultList();
     }
 
     @Override
-    public HibernateCategory create(HibernateCategory object) throws SQLException {
+    public CategoryDTO create(CategoryDTO object) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateCategory update(HibernateCategory object) throws SQLException {
+    public CategoryDTO update(CategoryDTO object) throws SQLException {
         return null;
     }
 

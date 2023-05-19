@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.service.hibernate.HibernateContractService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class HibernateContractRest {
 
     @GetMapping(value = "/findAllContracts", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> findAllContracts() throws SQLException {
-            List<HibernateContract> contracts = contractService.findAll();
+            List<ContractDTO> contracts = contractService.findAll();
        return new ResponseEntity<>(contracts, HttpStatus.OK);
     }
 

@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.contract;
 
 import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.converters.ContractConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.HibernateContract;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.codes.ContractRelevance;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,15 @@ public class ContractConverterRequestCreateImpl implements ContractConverterRequ
     private final AddressDataService addressDataService;
 
     @Override
-    public HibernateContract convert(ContractRequestCreate request) {
-        HibernateContract hibernateContract = new HibernateContract();
-        hibernateContract.setSum_order(request.getSum_order());
-        hibernateContract.setPayment_types("cash");
-        hibernateContract.setRelevance(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
-        hibernateContract.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        hibernateContract.setAddress(addressDataService.findHibernateAddressByAuthenticateAndRegistration());
-        hibernateContract.setPayment(null);
-        return hibernateContract;
+    public ContractDTO convert(ContractRequestCreate request) {
+        ContractDTO contractDTO = new ContractDTO();
+        contractDTO.setSum_order(request.getSum_order());
+        contractDTO.setPayment_types("cash");
+        contractDTO.setRelevance(ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
+        contractDTO.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+        contractDTO.setAddress(addressDataService.findHibernateAddressByAuthenticateAndRegistration());
+        contractDTO.setPayment(null);
+        return contractDTO;
     }
 
 }

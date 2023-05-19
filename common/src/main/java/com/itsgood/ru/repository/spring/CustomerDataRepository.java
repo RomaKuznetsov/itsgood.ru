@@ -1,18 +1,18 @@
 package com.itsgood.ru.repository.spring;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface CustomerDataRepository extends JpaRepository<HibernateCustomer, Integer>,
-        PagingAndSortingRepository<HibernateCustomer, Integer>,
-        CrudRepository<HibernateCustomer, Integer> {
+public interface CustomerDataRepository extends JpaRepository<CustomerDTO, Integer>,
+        PagingAndSortingRepository<CustomerDTO, Integer>,
+        CrudRepository<CustomerDTO, Integer> {
 
-    Optional<HibernateCustomer> findByMail(String mail);
+    Optional<CustomerDTO> findByMail(String mail);
 
-    Optional<HibernateCustomer> findByAuthenticationInfoUsername(String username);
+    Optional<CustomerDTO> findByAuthenticationInfoUsername(String username);
 
 }

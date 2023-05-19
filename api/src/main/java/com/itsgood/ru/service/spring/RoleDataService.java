@@ -5,8 +5,8 @@ import com.itsgood.ru.controller.request.role.RoleRequestSearch;
 import com.itsgood.ru.controller.request.role.RoleRequestUpdate;
 import com.itsgood.ru.converters.RoleConverterRequestCreate;
 import com.itsgood.ru.converters.RoleConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
-import com.itsgood.ru.domain.hibernate.HibernateRole;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.repository.spring.RoleDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,47 +31,47 @@ public class RoleDataService {
     private final RoleConverterRequestUpdate roleConverterRequestUpdate;
 
 
-    public List<HibernateRole> findAllRoles() {
+    public List<RoleDTO> findAllRoles() {
         return roleDataRepository.findAll();
     }
 
-    public HibernateRole findHibernateRoleById(Integer id) {
-        Optional<HibernateRole> searchResult = roleDataRepository.findById(id);
+    public RoleDTO findHibernateRoleById(Integer id) {
+        Optional<RoleDTO> searchResult = roleDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateRole createHibernateRole(RoleRequestCreate request) {
-        HibernateRole hibernateRole = roleConverterRequestCreate.convert(request);
-        if (hibernateRole.getCustomer() == null) {
-            hibernateRole.setCustomer(customerDataService.findHibernateCustomerByAuthenticationInfo());
+    public RoleDTO createHibernateRole(RoleRequestCreate request) {
+        RoleDTO roleDTO = roleConverterRequestCreate.convert(request);
+        if (roleDTO.getCustomer() == null) {
+            roleDTO.setCustomer(customerDataService.findHibernateCustomerByAuthenticationInfo());
         }
-        if (!hibernateRole.getCustomer().getRoles().contains(hibernateRole)) {
-            hibernateRole = roleDataRepository.save(hibernateRole);
+        if (!roleDTO.getCustomer().getRoles().contains(roleDTO)) {
+            roleDTO = roleDataRepository.save(roleDTO);
         } else throw new EntityExistsException();
-        return hibernateRole;
+        return roleDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateRole updateHibernateRole(RoleRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerById(request.getCustomer_id());
-        HibernateRole hibernateRole = roleConverterRequestUpdate.convert(request);
-        Set<HibernateRole> roles = hibernateCustomer.getRoles();
-        if (!roles.contains(hibernateRole)) {
-            hibernateRole.setCustomer(hibernateCustomer);
-            hibernateRole = roleDataRepository.save(hibernateRole);
+    public RoleDTO updateHibernateRole(RoleRequestUpdate request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerById(request.getCustomer_id());
+        RoleDTO roleDTO = roleConverterRequestUpdate.convert(request);
+        Set<RoleDTO> roles = customerDTO.getRoles();
+        if (!roles.contains(roleDTO)) {
+            roleDTO.setCustomer(customerDTO);
+            roleDTO = roleDataRepository.save(roleDTO);
         } else throw new EntityNotFoundException();
-        return hibernateRole;
+        return roleDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateRole(RoleRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerById(request.getCustomer_id());
-        HibernateRole hibernateRole = roleConverterRequestUpdate.convert(request);
-        Set<HibernateRole> roles = hibernateCustomer.getRoles();
-        if (!roles.contains(hibernateRole)) {
-            hibernateRole.setCustomer(hibernateCustomer);
-            roleDataRepository.delete(hibernateRole);
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerById(request.getCustomer_id());
+        RoleDTO roleDTO = roleConverterRequestUpdate.convert(request);
+        Set<RoleDTO> roles = customerDTO.getRoles();
+        if (!roles.contains(roleDTO)) {
+            roleDTO.setCustomer(customerDTO);
+            roleDataRepository.delete(roleDTO);
         } else throw new EntityNotFoundException();
     }
 
@@ -80,10 +80,10 @@ public class RoleDataService {
         roleDataRepository.deleteById(request.getId());
     }
 
-    public List<HibernateRole> findHibernateRoleByAuthenticateAndValidity(RoleRequestSearch request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<List<HibernateRole>> searchResult = roleDataRepository.
-                findHibernateRolesByCustomerAndValidityIsAfter(hibernateCustomer, request.getValidity());
+    public List<RoleDTO> findHibernateRoleByAuthenticateAndValidity(RoleRequestSearch request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<RoleDTO>> searchResult = roleDataRepository.
+                findHibernateRolesByCustomerAndValidityIsAfter(customerDTO, request.getValidity());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 }

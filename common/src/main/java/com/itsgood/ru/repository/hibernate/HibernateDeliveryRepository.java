@@ -1,13 +1,13 @@
 package com.itsgood.ru.repository.hibernate;
 
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.old.repository.CRUDRepository;
 
 import java.sql.SQLException;
 
-public interface HibernateDeliveryRepository extends CRUDRepository<Integer, HibernateDelivery> {
+public interface HibernateDeliveryRepository extends CRUDRepository<Integer, DeliveryDTO> {
 
-    HibernateContract findDeliveryListItem() throws SQLException;
+    ContractDTO findDeliveryListItem() throws SQLException;
 }

@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.address;
 
 import com.itsgood.ru.controller.request.address.AddressRequestCreate;
 import com.itsgood.ru.converters.AddressConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.HibernateAddress;
+import com.itsgood.ru.domain.hibernate.AddressDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,16 +11,16 @@ import org.springframework.stereotype.Component;
 public class AddressConverterRequestCreateImpl implements AddressConverterRequestCreate {
 
     @Override
-    public HibernateAddress convert(AddressRequestCreate request) {
-      HibernateAddress hibernateAddress = new HibernateAddress();
-      hibernateAddress.setCode(request.getCode());
-      hibernateAddress.setCountry(request.getCountry());
-      hibernateAddress.setRegion(request.getRegion());
-      hibernateAddress.setCity(request.getCity());
-      hibernateAddress.setStreet(request.getStreet());
-      hibernateAddress.setHouse(request.getHouse());
-      hibernateAddress.setFrame(request.getFrame());
-      hibernateAddress.setApartment(request.getApartment());
-        return hibernateAddress;
+    public AddressDTO convert(AddressRequestCreate request) {
+      AddressDTO addressDTO = new AddressDTO();
+      addressDTO.setCode(request.getCode());
+      addressDTO.setCountry(request.getCountry());
+      addressDTO.setRegion(request.getRegion());
+      addressDTO.setCity(request.getCity());
+      addressDTO.setStreet(request.getStreet());
+      addressDTO.setHouse(request.getHouse());
+      addressDTO.setFrame(request.getFrame());
+      addressDTO.setApartment(request.getApartment());
+        return addressDTO;
     }
 }

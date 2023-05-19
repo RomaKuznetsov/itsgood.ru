@@ -1,22 +1,22 @@
 package com.itsgood.ru.basic;
 
 import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerCreateConverter extends CustomerBaseConverter<CustomerCreateRequest, HibernateCustomer> {
+public class CustomerCreateConverter extends CustomerBaseConverter<CustomerCreateRequest, CustomerDTO> {
 
     @Override
-    public HibernateCustomer convert(CustomerCreateRequest request) {
+    public CustomerDTO convert(CustomerCreateRequest request) {
         AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         authenticationInfo.setPassword(request.getPassword());
         authenticationInfo.setUsername(request.getUsername());
-        HibernateCustomer hibernateCustomer = new HibernateCustomer();
-        hibernateCustomer.setAuthenticationInfo(authenticationInfo);
-        return doConvert(hibernateCustomer, request);
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setAuthenticationInfo(authenticationInfo);
+        return doConvert(customerDTO, request);
 
     }
 

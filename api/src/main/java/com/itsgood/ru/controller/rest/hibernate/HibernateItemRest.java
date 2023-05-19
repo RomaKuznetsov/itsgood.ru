@@ -1,7 +1,7 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
 import com.itsgood.ru.domain.Item;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.hibernate.HibernateItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class HibernateItemRest {
 
     @GetMapping(value = "/findAllItems", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> findAllItems() {
-        List<HibernateItem> listAllItem;
+        List<ItemDTO> listAllItem;
         try {
             listAllItem = itemService.findAll();
             return new ResponseEntity<>(listAllItem, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class HibernateItemRest {
             //Spring converter: request -> entity
             //HibernateItem hibernateItem = converterService.convert(request.HibernateItem.class)
 
-           HibernateItem hibernateItem = HibernateItem.builder().title(request.getTitle()).
+           ItemDTO itemDTO = ItemDTO.builder().title(request.getTitle()).
                     price(request.getPrice()).
                     firm(request.getFirm()).
                     weight(request.getWeight()).
@@ -45,10 +45,10 @@ public class HibernateItemRest {
                     create_time(new Timestamp(System.currentTimeMillis())).build();
 
 //                   setCategory_id(request.getCategory_id());
-            itemService.create(hibernateItem);
+            itemService.create(itemDTO);
 
-            hibernateItem = itemService.create(hibernateItem);
-            return new ResponseEntity<>(hibernateItem, HttpStatus.OK);
+            itemDTO = itemService.create(itemDTO);
+            return new ResponseEntity<>(itemDTO, HttpStatus.OK);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,6 @@
 package com.itsgood.ru.service.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.hibernate.HibernateCustomerRepository;
 import com.itsgood.ru.service.hibernate.HibernateCustomerService;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +17,22 @@ public class HibernateCustomerServiceImpl implements HibernateCustomerService {
 
 
     @Override
-    public HibernateCustomer findOne(Integer id) throws SQLException {
+    public CustomerDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateCustomer> findAll() throws SQLException {
+    public List<CustomerDTO> findAll() throws SQLException {
         return hibernateCustomerRepository.findAll();
     }
 
     @Override
-    public HibernateCustomer create(HibernateCustomer object) throws SQLException {
+    public CustomerDTO create(CustomerDTO object) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateCustomer update(HibernateCustomer object) throws SQLException {
+    public CustomerDTO update(CustomerDTO object) throws SQLException {
         return null;
     }
 

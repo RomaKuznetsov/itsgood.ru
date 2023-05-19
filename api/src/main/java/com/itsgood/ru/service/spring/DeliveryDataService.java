@@ -5,8 +5,8 @@ import com.itsgood.ru.controller.request.delivery.DeliveryRequestSearch;
 import com.itsgood.ru.controller.request.delivery.DeliveryRequestUpdate;
 import com.itsgood.ru.converters.DeliveryConverterRequestCreate;
 import com.itsgood.ru.converters.DeliveryConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.repository.spring.DeliveryDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,42 +29,42 @@ public class DeliveryDataService {
     private final DeliveryConverterRequestUpdate deliveryConverterRequestUpdate;
     private final DeliveryConverterRequestCreate deliveryConverterRequestCreate;
 
-    public HibernateDelivery findHibernateDeliveryById(Integer id) {
-        Optional<HibernateDelivery> searchResult = deliveryDataRepository.findById(id);
+    public DeliveryDTO findHibernateDeliveryById(Integer id) {
+        Optional<DeliveryDTO> searchResult = deliveryDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<HibernateDelivery> findAll() {
+    public List<DeliveryDTO> findAll() {
         return deliveryDataRepository.findAll();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateDelivery createHibernateDelivery(DeliveryRequestCreate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateDelivery hibernateDelivery = deliveryConverterRequestCreate.convert(request);
-        if (hibernateCustomer.getAddress().contains(hibernateDelivery.getAddress())) {
-            hibernateDelivery = deliveryDataRepository.save(hibernateDelivery);
+    public DeliveryDTO createHibernateDelivery(DeliveryRequestCreate request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        DeliveryDTO deliveryDTO = deliveryConverterRequestCreate.convert(request);
+        if (customerDTO.getAddress().contains(deliveryDTO.getAddress())) {
+            deliveryDTO = deliveryDataRepository.save(deliveryDTO);
         } else throw new EntityNotFoundException();
-        return hibernateDelivery;
+        return deliveryDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateDelivery updateHibernateDelivery(DeliveryRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateDelivery hibernateDelivery = deliveryConverterRequestUpdate.convert(request);
-        if (hibernateCustomer.getAddress().contains(hibernateDelivery.getAddress())) {
-            deliveryDataRepository.save(hibernateDelivery);
+    public DeliveryDTO updateHibernateDelivery(DeliveryRequestUpdate request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        DeliveryDTO deliveryDTO = deliveryConverterRequestUpdate.convert(request);
+        if (customerDTO.getAddress().contains(deliveryDTO.getAddress())) {
+            deliveryDataRepository.save(deliveryDTO);
         } else throw new EntityNotFoundException();
-        return hibernateDelivery;
+        return deliveryDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateDelivery(DeliveryRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateDelivery hibernateDelivery = deliveryConverterRequestUpdate.convert(request);
-        if (hibernateCustomer.getAddress().contains(addressDataService.
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        DeliveryDTO deliveryDTO = deliveryConverterRequestUpdate.convert(request);
+        if (customerDTO.getAddress().contains(addressDataService.
                 findHibernateAddressById(request.getAddress_id()))) {
-            deliveryDataRepository.delete(hibernateDelivery);
+            deliveryDataRepository.delete(deliveryDTO);
         } else throw new EntityNotFoundException();
     }
 

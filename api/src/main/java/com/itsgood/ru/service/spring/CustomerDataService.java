@@ -30,44 +30,44 @@ public class CustomerDataService {
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
     //    @Cacheable("customer")
-    public List<HibernateCustomer> findAllHibernateCustomer() {
+    public List<CustomerDTO> findAllHibernateCustomer() {
         return customerDataRepository.findAll();
     }
 
-    public HibernateCustomer findHibernateCustomerById(Integer id) {
-        Optional<HibernateCustomer> searchResult = customerDataRepository.findById(id);
+    public CustomerDTO findHibernateCustomerById(Integer id) {
+        Optional<CustomerDTO> searchResult = customerDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateCustomer findHibernateCustomerByMail(String mail) {
-        Optional<HibernateCustomer> searchResult = customerDataRepository.
+    public CustomerDTO findHibernateCustomerByMail(String mail) {
+        Optional<CustomerDTO> searchResult = customerDataRepository.
                 findByMail(mail);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateCustomer findHibernateCustomerByAuthenticationInfo() {
-        Optional<HibernateCustomer> searchResult = customerDataRepository.
+    public CustomerDTO findHibernateCustomerByAuthenticationInfo() {
+        Optional<CustomerDTO> searchResult = customerDataRepository.
                 findByAuthenticationInfoUsername(authenticationInfo.getUsername());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateCustomer createHibernateCustomer(CustomerRequestCreate request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByMail(request.getMail());
-        if (!hibernateCustomer.getAuthenticationInfo().getUsername().equals(request.getUsername())) {
-            hibernateCustomer = customerDataRepository.save(
+    public CustomerDTO createHibernateCustomer(CustomerRequestCreate request) {
+        CustomerDTO customerDTO = findHibernateCustomerByMail(request.getMail());
+        if (!customerDTO.getAuthenticationInfo().getUsername().equals(request.getUsername())) {
+            customerDTO = customerDataRepository.save(
                     customerConverterRequestCreate.convert(request));
         } else throw new EntityExistsException();
-        return hibernateCustomer;
+        return customerDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateCustomer updateHibernateCustomerById(CustomerRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
-        if (request.getId() == hibernateCustomer.getId()) {
-            hibernateCustomer = customerDataRepository.save(customerConverterRequestUpdate.convert(request));
+    public CustomerDTO updateHibernateCustomerById(CustomerRequestUpdate request) {
+        CustomerDTO customerDTO = findHibernateCustomerByAuthenticationInfo();
+        if (request.getId() == customerDTO.getId()) {
+            customerDTO = customerDataRepository.save(customerConverterRequestUpdate.convert(request));
         } //ебалово
-        return hibernateCustomer;
+        return customerDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -86,53 +86,53 @@ public class CustomerDataService {
     }
 
     @Cacheable("role")
-    public Set<HibernateRole> findAllRolesHibernateCustomerByAuthenticate() {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateRole> roles = hibernateCustomer.getRoles();
+    public Set<RoleDTO> findAllRolesHibernateCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findHibernateCustomerByAuthenticationInfo();
+        Set<RoleDTO> roles = customerDTO.getRoles();
         return roles;
     }
     @Cacheable("role")
-    public Set<HibernateRole> findAllRolesHibernateCustomerById(CustomerRequestSearch request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
-        Set<HibernateRole> roles = hibernateCustomer.getRoles();
+    public Set<RoleDTO> findAllRolesHibernateCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findHibernateCustomerById(request.getId());
+        Set<RoleDTO> roles = customerDTO.getRoles();
         return roles;
     }
 
     @Cacheable("address")
-    public Set<HibernateAddress> findAllAddressHibernateCustomerByAuthenticate() {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateAddress> addresses = hibernateCustomer.getAddress();
+    public Set<AddressDTO> findAllAddressHibernateCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findHibernateCustomerByAuthenticationInfo();
+        Set<AddressDTO> addresses = customerDTO.getAddress();
         return addresses;
     }
     @Cacheable("address")
-    public Set<HibernateAddress> findAllAddressHibernateCustomerById(CustomerRequestSearch request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
-        Set<HibernateAddress> addresses = hibernateCustomer.getAddress();
+    public Set<AddressDTO> findAllAddressHibernateCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findHibernateCustomerById(request.getId());
+        Set<AddressDTO> addresses = customerDTO.getAddress();
         return addresses;
     }
     @Cacheable("payment")
-    public Set<HibernatePayment> findAllPaymentsHibernateCustomerByAuthenticate() {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
-        Set<HibernatePayment> payments = hibernateCustomer.getPayments();
+    public Set<PaymentDTO> findAllPaymentsHibernateCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findHibernateCustomerByAuthenticationInfo();
+        Set<PaymentDTO> payments = customerDTO.getPayments();
         return payments;
     }
 
     @Cacheable("payment")
-    public Set<HibernatePayment> findAllPaymentsHibernateCustomerById(CustomerRequestSearch request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
-        Set<HibernatePayment> payments = hibernateCustomer.getPayments();
+    public Set<PaymentDTO> findAllPaymentsHibernateCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findHibernateCustomerById(request.getId());
+        Set<PaymentDTO> payments = customerDTO.getPayments();
         return payments;
     }
     @Cacheable("contract")
-    public Set<HibernateContract> findAllContractsHibernateCustomerByAuthenticate() {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateContract> contracts = hibernateCustomer.getContracts();
+    public Set<ContractDTO> findAllContractsHibernateCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findHibernateCustomerByAuthenticationInfo();
+        Set<ContractDTO> contracts = customerDTO.getContracts();
         return contracts;
     }
     @Cacheable("contract")
-    public Set<HibernateContract> findAllContractsHibernateCustomerById(CustomerRequestSearch request) {
-        HibernateCustomer hibernateCustomer = findHibernateCustomerById(request.getId());
-        Set<HibernateContract> contracts = hibernateCustomer.getContracts();
+    public Set<ContractDTO> findAllContractsHibernateCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findHibernateCustomerById(request.getId());
+        Set<ContractDTO> contracts = customerDTO.getContracts();
         return contracts;
     }
 }

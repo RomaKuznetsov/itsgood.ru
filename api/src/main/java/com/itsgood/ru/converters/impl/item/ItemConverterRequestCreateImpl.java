@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.item;
 
 import com.itsgood.ru.controller.request.item.ItemRequestCreate;
 import com.itsgood.ru.converters.ItemConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -12,16 +12,16 @@ public class ItemConverterRequestCreateImpl implements ItemConverterRequestCreat
 
 
     @Override
-    public HibernateItem convert(ItemRequestCreate request) {
-        HibernateItem hibernateItem = new HibernateItem();
-        hibernateItem.setTitle(request.getTitle());
-        hibernateItem.setPrice(request.getPrice());
-        hibernateItem.setFirm(request.getFirm());
-        hibernateItem.setLink(request.getLink());
-        hibernateItem.setDescription(request.getDescription());
-        hibernateItem.setWeight(request.getWeight());
-        hibernateItem.setVolume(request.getVolume());
-        hibernateItem.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        return hibernateItem;
+    public ItemDTO convert(ItemRequestCreate request) {
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setTitle(request.getTitle());
+        itemDTO.setPrice(request.getPrice());
+        itemDTO.setFirm(request.getFirm());
+        itemDTO.setLink(request.getLink());
+        itemDTO.setDescription(request.getDescription());
+        itemDTO.setWeight(request.getWeight());
+        itemDTO.setVolume(request.getVolume());
+        itemDTO.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+        return itemDTO;
     }
 }

@@ -4,9 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>api</module>
         <module>common</module>
+        <module>api</module>
     </modules>
+
+    <!--Первый вопрос как правильно сделать redirect и forward на другую страницу-->
+    <!--и можно ли использовать spring URI-->
+    <!--Сортировка по входным параметрам, как в зависимости от заполненных полей @RequestBody выбрать нужный метод rest controller-->
+    <!--Связано с payment при update если нет активной карты нужно перекинуть на страницу создания-->
+    <!--Связано с delivery при update если нет адреса доставки нужно перекинуть на страницу создания -->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -63,11 +69,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
@@ -107,11 +108,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
         </dependency>
 
         <!-- Utils-->
@@ -174,11 +170,11 @@
             <version>0.9.1</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.flywaydb</groupId>-->
-<!--            <artifactId>flyway-core</artifactId>-->
-<!--            <version>9.16.1</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.flywaydb</groupId>-->
+        <!--            <artifactId>flyway-core</artifactId>-->
+        <!--            <version>9.16.1</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>log4j</groupId>

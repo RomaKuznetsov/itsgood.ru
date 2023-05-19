@@ -5,9 +5,9 @@ import com.itsgood.ru.controller.request.item.ItemRequestSearch;
 import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
 import com.itsgood.ru.converters.ItemConverterRequestCreate;
 import com.itsgood.ru.converters.ItemConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
-import com.itsgood.ru.domain.hibernate.HibernateContract_item;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.spring.ItemDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
@@ -31,52 +31,52 @@ public class ItemDataService {
     private final ItemConverterRequestCreate itemConverterRequestCreate;
     private final ItemConverterRequestUpdate itemConverterRequestUpdate;
     @Cacheable("item")
-    public List<HibernateItem> findAllHibernateItem() {
+    public List<ItemDTO> findAllHibernateItem() {
         return itemDataRepository.findAll();
     }
 
-    public HibernateItem findHibernateItemById(Integer id) {
-        Optional<HibernateItem> searchResult = itemDataRepository.findById(id);
+    public ItemDTO findHibernateItemById(Integer id) {
+        Optional<ItemDTO> searchResult = itemDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateItem findHibernateItemByIdOrTitle(ItemRequestSearch request) {
-        Optional<HibernateItem> searchResult = itemDataRepository.findHibernateItemByIdOrTitle(request.getId(), request.getTitle());
+    public ItemDTO findHibernateItemByIdOrTitle(ItemRequestSearch request) {
+        Optional<ItemDTO> searchResult = itemDataRepository.findHibernateItemByIdOrTitle(request.getId(), request.getTitle());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateItem createHibernateItem(ItemRequestCreate request) {
-        HibernateCategory hibernateCategory = categoryDataService.findHibernateCategoryById(request.getCategory_id());
-        HibernateItem hibernateItem = itemConverterRequestCreate.convert(request);
-        Set<HibernateItem> searchResult = hibernateCategory.getItems();
-        if (!searchResult.contains(hibernateItem)) {
-            hibernateItem.setCategory(hibernateCategory);
-            hibernateItem = itemDataRepository.save(hibernateItem);
+    public ItemDTO createHibernateItem(ItemRequestCreate request) {
+        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+        ItemDTO itemDTO = itemConverterRequestCreate.convert(request);
+        Set<ItemDTO> searchResult = categoryDTO.getItems();
+        if (!searchResult.contains(itemDTO)) {
+            itemDTO.setCategory(categoryDTO);
+            itemDTO = itemDataRepository.save(itemDTO);
         }
-        return hibernateItem;
+        return itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateItem updateHibernateItem(ItemRequestUpdate request) {
-        HibernateCategory hibernateCategory = categoryDataService.findHibernateCategoryById(request.getCategory_id());
-        HibernateItem hibernateItem = itemConverterRequestUpdate.convert(request);
-        Set<HibernateItem> searchResult = hibernateCategory.getItems();
-        if (!searchResult.contains(hibernateItem)) {
-            hibernateItem.setCategory(hibernateCategory);
-            hibernateItem = itemDataRepository.save(hibernateItem);
+    public ItemDTO updateHibernateItem(ItemRequestUpdate request) {
+        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+        ItemDTO itemDTO = itemConverterRequestUpdate.convert(request);
+        Set<ItemDTO> searchResult = categoryDTO.getItems();
+        if (!searchResult.contains(itemDTO)) {
+            itemDTO.setCategory(categoryDTO);
+            itemDTO = itemDataRepository.save(itemDTO);
         }
-        return hibernateItem;
+        return itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateItem(ItemRequestUpdate request) {
-        HibernateCategory hibernateCategory = categoryDataService.findHibernateCategoryById(request.getCategory_id());
-        HibernateItem hibernateItem = itemConverterRequestUpdate.convert(request);
-        Set<HibernateItem> searchResult = hibernateCategory.getItems();
-        if (!searchResult.contains(hibernateItem)) {
-            hibernateItem.setCategory(hibernateCategory);
-            itemDataRepository.delete(hibernateItem);
+        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+        ItemDTO itemDTO = itemConverterRequestUpdate.convert(request);
+        Set<ItemDTO> searchResult = categoryDTO.getItems();
+        if (!searchResult.contains(itemDTO)) {
+            itemDTO.setCategory(categoryDTO);
+            itemDataRepository.delete(itemDTO);
         }
     }
 
@@ -87,22 +87,22 @@ public class ItemDataService {
 
     //    @Cacheable("contract_item")
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public Set<HibernateContract_item> findSetHibernateContract_itemById(Integer id) {
+    public Set<Contract_itemDTO> findSetHibernateContract_itemById(Integer id) {
         return findHibernateItemById(id).getContracts_items();
     }
 
-    public List<HibernateItem> findHibernateItemByTitleAndPriceAfterOrFirm(ItemRequestSearch request) {
-        Optional<List<HibernateItem>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceAfterOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
+    public List<ItemDTO> findHibernateItemByTitleAndPriceAfterOrFirm(ItemRequestSearch request) {
+        Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceAfterOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<HibernateItem> findHibernateItemByTitleAndPriceBeforeOrFirm(ItemRequestSearch request) {
-        Optional<List<HibernateItem>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceBeforeOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
+    public List<ItemDTO> findHibernateItemByTitleAndPriceBeforeOrFirm(ItemRequestSearch request) {
+        Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceBeforeOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<HibernateItem> findHibernateItemByTitleAndDescription(ItemRequestSearch request) {
-        Optional<List<HibernateItem>> searchResult = itemDataRepository.findHibernateItemByTitleAndDescription(request.getTitle(), request.getDescription());
+    public List<ItemDTO> findHibernateItemByTitleAndDescription(ItemRequestSearch request) {
+        Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndDescription(request.getTitle(), request.getDescription());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 

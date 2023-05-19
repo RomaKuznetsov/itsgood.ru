@@ -4,10 +4,10 @@ import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.controller.request.contract.ContractRequestUpdate;
 import com.itsgood.ru.converters.ContractConverterRequestCreate;
 import com.itsgood.ru.converters.ContractConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateContract_item;
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.spring.ContractDataRepository;
 import com.itsgood.ru.codes.ContractRelevance;
 import lombok.RequiredArgsConstructor;
@@ -31,55 +31,55 @@ public class ContractDataService {
     private final ContractConverterRequestCreate contractConverterRequestCreate;
     private final ContractConverterRequestUpdate contractConverterRequestUpdate;
 
-    public List<HibernateContract> findAllHibernateContract() {
+    public List<ContractDTO> findAllHibernateContract() {
         return contractDataRepository.findAll();
     }
 
-    public HibernateContract findHibernateContractById(Integer id) {
-        Optional<HibernateContract> searchResult = contractDataRepository.findById(id);
+    public ContractDTO findHibernateContractById(Integer id) {
+        Optional<ContractDTO> searchResult = contractDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public HibernateContract findHibernateContractByAuthenticateAndRelevance() {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
+    public ContractDTO findHibernateContractByAuthenticateAndRelevance() {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<ContractDTO> searchResult = contractDataRepository.
+                findHibernateContractByCustomerAndRelevance(customerDTO,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<HibernateContract> findAllHibernateContractsByAuthenticateAndIrrelevance() {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<List<HibernateContract>> searchResult = contractDataRepository.
-                findAllHibernateContractsByCustomerAndRelevance(hibernateCustomer,
+    public List<ContractDTO> findAllHibernateContractsByAuthenticateAndIrrelevance() {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<List<ContractDTO>> searchResult = contractDataRepository.
+                findAllHibernateContractsByCustomerAndRelevance(customerDTO,
                         ContractRelevance.RELEVANCE_CONTRACT_IRRELEVANCE.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateContract createHibernateContract(ContractRequestCreate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        HibernateContract hibernateContract = contractConverterRequestCreate.convert(request);
-        Set<HibernateContract> searchResult = hibernateCustomer.getContracts();
-        if (!searchResult.contains(hibernateContract)) {
-            hibernateContract.setCustomer(hibernateCustomer);
-            hibernateContract = contractDataRepository.save(hibernateContract);
+    public ContractDTO createHibernateContract(ContractRequestCreate request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        ContractDTO contractDTO = contractConverterRequestCreate.convert(request);
+        Set<ContractDTO> searchResult = customerDTO.getContracts();
+        if (!searchResult.contains(contractDTO)) {
+            contractDTO.setCustomer(customerDTO);
+            contractDTO = contractDataRepository.save(contractDTO);
         } else throw new EntityExistsException();
-        return hibernateContract;
+        return contractDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateContract updateHibernateContract(ContractRequestUpdate request) {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Set<HibernateContract> searchRequest = hibernateCustomer.getContracts();
-        HibernateContract hibernateContract = contractConverterRequestUpdate.convert(request);
+    public ContractDTO updateHibernateContract(ContractRequestUpdate request) {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Set<ContractDTO> searchRequest = customerDTO.getContracts();
+        ContractDTO contractDTO = contractConverterRequestUpdate.convert(request);
         if (!searchRequest.contains(findHibernateContractById(request.getId()))) {
-            List<HibernateItem> items = hibernateContract.getItems();
-            hibernateContract.setSum_order(Math.toIntExact(items.stream().map(item -> item.getPrice()).count()));
-            hibernateContract.setCustomer(hibernateCustomer);
-            contractDataRepository.save(hibernateContract);
+            List<ItemDTO> items = contractDTO.getItems();
+            contractDTO.setSum_order(Math.toIntExact(items.stream().map(item -> item.getPrice()).count()));
+            contractDTO.setCustomer(customerDTO);
+            contractDataRepository.save(contractDTO);
         }
-        return hibernateContract;
+        return contractDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -93,29 +93,29 @@ public class ContractDataService {
     }
 
 
-    public Set<HibernateContract_item> findSetHibernateContract_itemsByAuthenticateAndRelevance() {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
+    public Set<Contract_itemDTO> findSetHibernateContract_itemsByAuthenticateAndRelevance() {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<ContractDTO> searchResult = contractDataRepository.
+                findHibernateContractByCustomerAndRelevance(customerDTO,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
-        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
-        return hibernateContract.getContracts_items();
+        ContractDTO contractDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        return contractDTO.getContracts_items();
     }
 
-    public List<HibernateItem> findSetItemsByCustomerAuthenticateAndRelevance() {
-        HibernateCustomer hibernateCustomer = customerDataService.findHibernateCustomerByAuthenticationInfo();
-        Optional<HibernateContract> searchResult = contractDataRepository.
-                findHibernateContractByCustomerAndRelevance(hibernateCustomer,
+    public List<ItemDTO> findSetItemsByCustomerAuthenticateAndRelevance() {
+        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+        Optional<ContractDTO> searchResult = contractDataRepository.
+                findHibernateContractByCustomerAndRelevance(customerDTO,
                         ContractRelevance.RELEVANCE_CONTRACT_RELEVANT.getStatus());
-        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
-        return hibernateContract.getItems();
+        ContractDTO contractDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        return contractDTO.getItems();
     }
 
     //    @Cacheable("contract_item")
-    public Set<HibernateContract_item> findSetHibernateContract_item(Integer id) {
-        Optional<HibernateContract> searchResult = contractDataRepository.findById(id);
-        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
-        return hibernateContract.getContracts_items();
+    public Set<Contract_itemDTO> findSetHibernateContract_item(Integer id) {
+        Optional<ContractDTO> searchResult = contractDataRepository.findById(id);
+        ContractDTO contractDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        return contractDTO.getContracts_items();
     }
 
 }

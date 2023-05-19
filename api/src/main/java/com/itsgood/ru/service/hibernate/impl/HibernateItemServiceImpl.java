@@ -1,7 +1,7 @@
 package com.itsgood.ru.service.hibernate.impl;
 
 
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.hibernate.HibernateItemRepository;
 import com.itsgood.ru.service.hibernate.HibernateItemService;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +17,22 @@ public class HibernateItemServiceImpl implements HibernateItemService {
     private final HibernateItemRepository hibernateItemRepository;
 
     @Override
-    public HibernateItem findOne(Integer id) throws SQLException {
+    public ItemDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateItem> findAll() throws SQLException {
+    public List<ItemDTO> findAll() throws SQLException {
         return hibernateItemRepository.findAll();
     }
 
     @Override
-    public HibernateItem create(HibernateItem object) throws SQLException {
+    public ItemDTO create(ItemDTO object) throws SQLException {
         return hibernateItemRepository.create(object);
     }
 
     @Override
-    public HibernateItem update(HibernateItem object) throws SQLException {
+    public ItemDTO update(ItemDTO object) throws SQLException {
         return hibernateItemRepository.update(object);
     }
 

@@ -3,8 +3,8 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.category.CategoryRequestCreate;
 import com.itsgood.ru.controller.request.category.CategoryRequestSearch;
 import com.itsgood.ru.controller.request.category.CategoryRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
-import com.itsgood.ru.domain.hibernate.HibernateItem;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.CategoryDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class CategoryDataController {
     private final CategoryDataService categoryDataService;
 
     @GetMapping(value = "/findHibernateCategoryById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateCategory> findHibernateCategoryById(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
+    public ResponseEntity<CategoryDTO> findHibernateCategoryById(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -33,7 +33,7 @@ public class CategoryDataController {
     }
 
     @GetMapping(value = "/findHibernateCategoryByTitle", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateCategory> findHibernateCategoryByTitle(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
+    public ResponseEntity<CategoryDTO> findHibernateCategoryByTitle(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -41,7 +41,7 @@ public class CategoryDataController {
     }
 
     @GetMapping(value = "/findHibernateCategoryByTitleOrId", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateCategory> findHibernateCategoryByTitleOrId(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
+    public ResponseEntity<CategoryDTO> findHibernateCategoryByTitleOrId(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -49,12 +49,12 @@ public class CategoryDataController {
     }
 
     @GetMapping(value = "/findAllHibernateCategories", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateCategory>> findAllHibernateCategories() {
+    public ResponseEntity<List<CategoryDTO>> findAllHibernateCategories() {
         return new ResponseEntity<>(categoryDataService.findAllHibernateCategories(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createHibernateCategory", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateCategory> createHibernateCategory(@Validated @RequestBody CategoryRequestCreate request, BindingResult result) {
+    public ResponseEntity<CategoryDTO> createHibernateCategory(@Validated @RequestBody CategoryRequestCreate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -62,7 +62,7 @@ public class CategoryDataController {
     }
 
     @PutMapping(value = "/updateHibernateCategoryById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateCategory> updateHibernateCategoryById(@Validated @RequestBody CategoryRequestUpdate request, BindingResult result) {
+    public ResponseEntity<CategoryDTO> updateHibernateCategoryById(@Validated @RequestBody CategoryRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -87,7 +87,7 @@ public class CategoryDataController {
     }
 
     @GetMapping(value = "/findAllItemsHibernateCategoryById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateItem>> findAllHibernateCategories(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
+    public ResponseEntity<Set<ItemDTO>> findAllHibernateCategories(@Validated @RequestBody CategoryRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

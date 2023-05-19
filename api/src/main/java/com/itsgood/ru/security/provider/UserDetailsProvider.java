@@ -1,7 +1,7 @@
 package com.itsgood.ru.security.provider;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
-import com.itsgood.ru.domain.hibernate.HibernateRole;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.old.service.CustomerService;
 import com.itsgood.ru.old.service.RoleService;
@@ -26,18 +26,18 @@ public class UserDetailsProvider implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            Optional<HibernateCustomer> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
+            Optional<CustomerDTO> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
             if (searchResult.isPresent()) {
-                HibernateCustomer hibernateCustomer = searchResult.get();
+                CustomerDTO customerDTO = searchResult.get();
                 //конвертни его через поиск в Hibernate
                 return new org.springframework.security.core.userdetails.User(
-                        hibernateCustomer.getMail(),
-                        hibernateCustomer.getAuthenticationInfo().getPassword(),
+                        customerDTO.getMail(),
+                        customerDTO.getAuthenticationInfo().getPassword(),
 //                        ["ROLE_USER", "ROLE_ADMIN"]
                         AuthorityUtils.commaSeparatedStringToAuthorityList(
-                                hibernateCustomer.getRoles()
+                                customerDTO.getRoles()
                                         .stream()
-                                        .map(HibernateRole::getRole)
+                                        .map(RoleDTO::getRole)
                                         .collect(Collectors.joining(","))
                         )
                 );

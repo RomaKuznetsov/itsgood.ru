@@ -1,7 +1,7 @@
 package com.itsgood.ru.service.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.repository.hibernate.HibernateDeliveryRepository;
 import com.itsgood.ru.service.hibernate.HibernateDeliveryService;
 import lombok.RequiredArgsConstructor;
@@ -17,22 +17,22 @@ public class HibernateDeliveryServiceImpl implements HibernateDeliveryService {
 
 
     @Override
-    public HibernateDelivery findOne(Integer id) throws SQLException {
+    public DeliveryDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateDelivery> findAll() throws SQLException {
+    public List<DeliveryDTO> findAll() throws SQLException {
         return  deliveryRepository.findAll();
     }
 
     @Override
-    public HibernateDelivery create(HibernateDelivery delivery) throws SQLException {
+    public DeliveryDTO create(DeliveryDTO delivery) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateDelivery update(HibernateDelivery delivery) throws SQLException {
+    public DeliveryDTO update(DeliveryDTO delivery) throws SQLException {
         return null;
     }
 
@@ -42,7 +42,7 @@ public class HibernateDeliveryServiceImpl implements HibernateDeliveryService {
     }
 
     @Override
-    public HibernateContract findDeliveryListItem() throws SQLException {
+    public ContractDTO findDeliveryListItem() throws SQLException {
         return null;
     }
 }

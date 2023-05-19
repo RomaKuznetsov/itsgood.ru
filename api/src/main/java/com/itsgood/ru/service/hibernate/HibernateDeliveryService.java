@@ -1,24 +1,24 @@
 package com.itsgood.ru.service.hibernate;
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface HibernateDeliveryService {
-    HibernateDelivery findOne(Integer id) throws SQLException;
+    DeliveryDTO findOne(Integer id) throws SQLException;
 
-    List<HibernateDelivery> findAll() throws SQLException;
+    List<DeliveryDTO> findAll() throws SQLException;
 
-    HibernateDelivery create(HibernateDelivery delivery) throws SQLException;
+    DeliveryDTO create(DeliveryDTO delivery) throws SQLException;
 
-    HibernateDelivery update(HibernateDelivery delivery) throws SQLException;
+    DeliveryDTO update(DeliveryDTO delivery) throws SQLException;
 
     void delete(Integer id) throws SQLException;
 
-    HibernateContract findDeliveryListItem() throws SQLException;
+    ContractDTO findDeliveryListItem() throws SQLException;
 
 
 }

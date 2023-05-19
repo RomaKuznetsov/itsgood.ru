@@ -1,19 +1,19 @@
 package com.itsgood.ru.service.hibernate;
 
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface HibernateCategoryService {
 
-    HibernateCategory findOne(Integer id) throws SQLException;
+    CategoryDTO findOne(Integer id) throws SQLException;
 
-    List<HibernateCategory> findAll() throws SQLException;
+    List<CategoryDTO> findAll() throws SQLException;
 
-    HibernateCategory create(HibernateCategory contract) throws SQLException;
+    CategoryDTO create(CategoryDTO contract) throws SQLException;
 
-    HibernateCategory update(HibernateCategory contract) throws SQLException;
+    CategoryDTO update(CategoryDTO contract) throws SQLException;
 
     void delete(Integer id) throws SQLException;
 }

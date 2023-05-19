@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.contract;
 
 import com.itsgood.ru.controller.request.contract.ContractRequestUpdate;
 import com.itsgood.ru.converters.ContractConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateContract;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.service.spring.PaymentDataService;
 import com.itsgood.ru.repository.spring.ContractDataRepository;
@@ -21,20 +21,20 @@ public class ContractConverterRequestUpdateImpl implements ContractConverterRequ
     private final ContractDataRepository contractDataRepository;
 
     @Override
-    public HibernateContract convert(ContractRequestUpdate request) {
-        Optional<HibernateContract> searchResult = contractDataRepository.findById(request.getId());
-        HibernateContract hibernateContract = searchResult.orElseThrow(EntityNotFoundException::new);
-        hibernateContract.setPayment_types(request.getPayment_types());
-        hibernateContract.setRelevance(request.getRelevance());
-        hibernateContract.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        hibernateContract.setAddress(addressDataService.findHibernateAddressByAuthenticateAndRegistration());
+    public ContractDTO convert(ContractRequestUpdate request) {
+        Optional<ContractDTO> searchResult = contractDataRepository.findById(request.getId());
+        ContractDTO contractDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        contractDTO.setPayment_types(request.getPayment_types());
+        contractDTO.setRelevance(request.getRelevance());
+        contractDTO.setUpdate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
+        contractDTO.setAddress(addressDataService.findHibernateAddressByAuthenticateAndRegistration());
         if (request.getPayment_types().contains("card")) {
-            hibernateContract.setPayment(paymentDataService.findHibernatePaymentByAuthenticateAndStatusActive());
+            contractDTO.setPayment(paymentDataService.findHibernatePaymentByAuthenticateAndStatusActive());
             //если такой карты нет то нужен forward на страницу создания активной карты
         } else if (request.getPayment_types().contains("cash")) {
-            hibernateContract.setPayment(null);
+            contractDTO.setPayment(null);
         }
-        return hibernateContract;
+        return contractDTO;
     }
 }
 

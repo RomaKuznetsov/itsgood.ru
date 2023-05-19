@@ -4,7 +4,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.payment.PaymentRequestCreate;
 import com.itsgood.ru.controller.request.payment.PaymentRequestSearch;
 import com.itsgood.ru.controller.request.payment.PaymentRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernatePayment;
+import com.itsgood.ru.domain.hibernate.PaymentDTO;
 import com.itsgood.ru.service.spring.PaymentDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,13 @@ public class PaymentDataController {
 
 
     @GetMapping(value = "/findAllHibernatePayments", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernatePayment>> findAllHibernatePayments() {
+    public ResponseEntity<List<PaymentDTO>> findAllHibernatePayments() {
         return new ResponseEntity<>(paymentDataService.findAllHibernatePayments(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createHibernatePayment", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernatePayment> createHibernatePayment(@Validated @RequestBody PaymentRequestCreate request,
-                                                                   BindingResult result) {
+    public ResponseEntity<PaymentDTO> createHibernatePayment(@Validated @RequestBody PaymentRequestCreate request,
+                                                             BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -49,8 +49,8 @@ public class PaymentDataController {
     }
 
     @PatchMapping(value = "/updateHibernatePayment", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernatePayment> updateHibernatePayment(@Validated @RequestBody PaymentRequestUpdate request,
-                                                                   BindingResult result) {
+    public ResponseEntity<PaymentDTO> updateHibernatePayment(@Validated @RequestBody PaymentRequestUpdate request,
+                                                             BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -58,8 +58,8 @@ public class PaymentDataController {
     }
 
     @GetMapping(value = "/findHibernatePaymentByCustomerAndValidity", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernatePayment>> findHibernatePaymentByCustomerAndValidity(@Validated @RequestBody PaymentRequestSearch request,
-                                                                                            BindingResult result) {
+    public ResponseEntity<List<PaymentDTO>> findHibernatePaymentByCustomerAndValidity(@Validated @RequestBody PaymentRequestSearch request,
+                                                                                      BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -67,8 +67,8 @@ public class PaymentDataController {
     }
 
     @GetMapping(value = "/findHibernatePaymentByCustomerAndStatus", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernatePayment>> findHibernatePaymentByCustomerAndStatus(@Validated @RequestBody PaymentRequestSearch request,
-                                                                                          BindingResult result) {
+    public ResponseEntity<List<PaymentDTO>> findHibernatePaymentByCustomerAndStatus(@Validated @RequestBody PaymentRequestSearch request,
+                                                                                    BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -76,8 +76,8 @@ public class PaymentDataController {
     }
 
     @GetMapping(value = "/findHibernatePaymentById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernatePayment> findHibernatePaymentById(@Validated @RequestBody PaymentRequestSearch request,
-                                                                     BindingResult result) {
+    public ResponseEntity<PaymentDTO> findHibernatePaymentById(@Validated @RequestBody PaymentRequestSearch request,
+                                                               BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -85,7 +85,7 @@ public class PaymentDataController {
     }
 
     @GetMapping(value = "/findHibernatePaymentByAuthenticateAndActive", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernatePayment> findHibernatePaymentByAuthenticateAndActive() {
+    public ResponseEntity<PaymentDTO> findHibernatePaymentByAuthenticateAndActive() {
         return new ResponseEntity<>(paymentDataService.findHibernatePaymentByAuthenticateAndStatusActive(), HttpStatus.OK);
     }
 

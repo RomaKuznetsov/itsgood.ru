@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.category;
 
 import com.itsgood.ru.controller.request.category.CategoryRequestUpdate;
 import com.itsgood.ru.converters.CategoryConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 import com.itsgood.ru.repository.spring.CategoryDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ public class CategoryConverterRequestUpdateImpl implements CategoryConverterRequ
 
     private final CategoryDataRepository categoryDataRepository;
     @Override
-    public HibernateCategory convert(CategoryRequestUpdate request) {
-        Optional<HibernateCategory> searchResult = categoryDataRepository.findById(request.getId());
-        HibernateCategory hibernateCategory = searchResult.orElseThrow(EntityNotFoundException::new);
-        hibernateCategory.setTitle(request.getTitle());
-        hibernateCategory.setDescription(request.getDescription());
-        return hibernateCategory;
+    public CategoryDTO convert(CategoryRequestUpdate request) {
+        Optional<CategoryDTO> searchResult = categoryDataRepository.findById(request.getId());
+        CategoryDTO categoryDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        categoryDTO.setTitle(request.getTitle());
+        categoryDTO.setDescription(request.getDescription());
+        return categoryDTO;
     }
 }

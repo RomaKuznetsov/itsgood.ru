@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.service.hibernate.HibernateCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,13 +21,13 @@ public class HibernateCustomerRest {
 
     @GetMapping(value = "/findAllCustomers", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> findAllCustomers() throws SQLException {
-        List<HibernateCustomer> customers = customerService.findAll();
+        List<CustomerDTO> customers = customerService.findAll();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     @GetMapping(value = "/saveCustomer", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> saveCustomer() throws SQLException {
-        List<HibernateCustomer> customers = customerService.findAll();
+        List<CustomerDTO> customers = customerService.findAll();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }

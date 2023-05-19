@@ -6,9 +6,9 @@ import com.itsgood.ru.controller.request.contract_item.Contract_itemRequestUpdat
 import com.itsgood.ru.controller.request.delivery.DeliveryRequestCreate;
 import com.itsgood.ru.converters.Contract_itemConverterRequestCreate;
 import com.itsgood.ru.converters.Contract_itemConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateContract;
-import com.itsgood.ru.domain.hibernate.HibernateContract_item;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.repository.spring.Contract_itemDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,31 +30,31 @@ public class Contract_itemDataService {
     private final Contract_itemConverterRequestCreate contract_itemConverterRequestCreate;
     private final Contract_itemConverterRequestUpdate contract_itemConverterRequestUpdate;
 
-    public HibernateContract_item findHibernateContract_itemById(Integer id) {
-        Optional<HibernateContract_item> searchResult = contract_itemDataRepository.findById(id);
+    public Contract_itemDTO findHibernateContract_itemById(Integer id) {
+        Optional<Contract_itemDTO> searchResult = contract_itemDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateContract_item createHibernateContract_item(Contract_itemRequestCreate request) {
-        HibernateContract_item hibernateContract_item = contract_itemConverterRequestCreate.convert(request);
-        HibernateContract hibernateContract = contractDataService.findHibernateContractByAuthenticateAndRelevance();
-        if (hibernateContract.getId() != 0) {
-            hibernateContract_item.setContract(hibernateContract);
-        } else hibernateContract = contractDataService.createHibernateContract(new ContractRequestCreate());
-        hibernateContract_item.setContract(hibernateContract);
-        return hibernateContract_item;
+    public Contract_itemDTO createHibernateContract_item(Contract_itemRequestCreate request) {
+        Contract_itemDTO contract_itemDTO = contract_itemConverterRequestCreate.convert(request);
+        ContractDTO contractDTO = contractDataService.findHibernateContractByAuthenticateAndRelevance();
+        if (contractDTO.getId() != 0) {
+            contract_itemDTO.setContract(contractDTO);
+        } else contractDTO = contractDataService.createHibernateContract(new ContractRequestCreate());
+        contract_itemDTO.setContract(contractDTO);
+        return contract_itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public HibernateContract_item updateHibernateContract_item(Contract_itemRequestUpdate request) {
-        HibernateDelivery hibernateDelivery = new HibernateDelivery();
-        HibernateContract_item hibernateContract_item = contract_itemConverterRequestUpdate.convert(request);
-        if (hibernateContract_item.getDelivery().getId() != 0) {
-            contract_itemDataRepository.save(hibernateContract_item);
-        } else hibernateDelivery = deliveryDataService.createHibernateDelivery(new DeliveryRequestCreate());
-        hibernateContract_item.setDelivery(hibernateDelivery);
-        return hibernateContract_item;
+    public Contract_itemDTO updateHibernateContract_item(Contract_itemRequestUpdate request) {
+        DeliveryDTO deliveryDTO = new DeliveryDTO();
+        Contract_itemDTO contract_itemDTO = contract_itemConverterRequestUpdate.convert(request);
+        if (contract_itemDTO.getDelivery().getId() != 0) {
+            contract_itemDataRepository.save(contract_itemDTO);
+        } else deliveryDTO = deliveryDataService.createHibernateDelivery(new DeliveryRequestCreate());
+        contract_itemDTO.setDelivery(deliveryDTO);
+        return contract_itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -64,10 +64,10 @@ public class Contract_itemDataService {
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteHibernateContract_item(Contract_itemRequestUpdate request) {
-        HibernateContract_item hibernateContract_item = contract_itemConverterRequestUpdate.convert(request);
+        Contract_itemDTO contract_itemDTO = contract_itemConverterRequestUpdate.convert(request);
         if (contractDataService.findSetHibernateContract_item(request.getContract_id()).
-                contains(hibernateContract_item)) {
-            contract_itemDataRepository.delete(hibernateContract_item);
+                contains(contract_itemDTO)) {
+            contract_itemDataRepository.delete(contract_itemDTO);
         }
     }
 }

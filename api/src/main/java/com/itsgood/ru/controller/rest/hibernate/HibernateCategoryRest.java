@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.hibernate.HibernateCategory;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 import com.itsgood.ru.service.hibernate.HibernateCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class HibernateCategoryRest {
 
     @GetMapping(value = "/findAllCategories", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> findAllCategories() throws SQLException {
-        List<HibernateCategory> categories = categoryService.findAll();
+        List<CategoryDTO> categories = categoryService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 

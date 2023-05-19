@@ -3,8 +3,8 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.address.AddressRequestCreate;
 import com.itsgood.ru.controller.request.address.AddressRequestSearch;
 import com.itsgood.ru.controller.request.address.AddressRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateAddress;
-import com.itsgood.ru.domain.hibernate.HibernateDelivery;
+import com.itsgood.ru.domain.hibernate.AddressDTO;
+import com.itsgood.ru.domain.hibernate.DeliveryDTO;
 import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class AddressDataController {
     private final AddressDataService addressDataService;
 
     @PostMapping(value = "/createHibernateAddress", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateAddress> createHibernateAddress(@Validated @RequestBody AddressRequestCreate request, BindingResult result) {
+    public ResponseEntity<AddressDTO> createHibernateAddress(@Validated @RequestBody AddressRequestCreate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -32,7 +32,7 @@ public class AddressDataController {
     }
 
     @PutMapping(value = "/updateHibernateAddress", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateAddress> updateHibernateAddress(@Validated @RequestBody AddressRequestUpdate request, BindingResult result) {
+    public ResponseEntity<AddressDTO> updateHibernateAddress(@Validated @RequestBody AddressRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -40,7 +40,7 @@ public class AddressDataController {
     }
 
     @GetMapping(value = "/findHibernateAddressById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateAddress> findHibernateAddressById(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+    public ResponseEntity<AddressDTO> findHibernateAddressById(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -57,12 +57,12 @@ public class AddressDataController {
     }
 
     @GetMapping(value = "/findListHibernateAddressByCode", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateAddress>> findListHibernateAddressByCode() {
+    public ResponseEntity<List<AddressDTO>> findListHibernateAddressByCode() {
         return new ResponseEntity<>(addressDataService.findListHibernateAddressRegistration(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findAllHibernateAddress", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateAddress>> findAllHibernateAddress() {
+    public ResponseEntity<List<AddressDTO>> findAllHibernateAddress() {
         return new ResponseEntity<>(addressDataService.findAllHibernateAddress(), HttpStatus.OK);
     }
 
@@ -76,7 +76,7 @@ public class AddressDataController {
     }
 
     @GetMapping(value = "/findSetHibernateDelivery", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateDelivery>> findSetHibernateDelivery(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+    public ResponseEntity<Set<DeliveryDTO>> findSetHibernateDelivery(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -84,12 +84,12 @@ public class AddressDataController {
     }
 
     @GetMapping(value = "/findHibernateAddressByCustomerAuthenticateAndRegistration", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateAddress> findHibernateAddressByCustomerAuthenticateAndRegistration() {
+    public ResponseEntity<AddressDTO> findHibernateAddressByCustomerAuthenticateAndRegistration() {
         return new ResponseEntity<>(addressDataService.findHibernateAddressByAuthenticateAndRegistration(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findAllHibernateAddressByAuthenticateAndCode", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<HibernateAddress>> findAllHibernateAddressByAuthenticateAndCode(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+    public ResponseEntity<List<AddressDTO>> findAllHibernateAddressByAuthenticateAndCode(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -97,7 +97,7 @@ public class AddressDataController {
     }
 
     @GetMapping(value = "/findListHibernateDeliveryOneAddress", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<HibernateDelivery>> findListHibernateDeliveryOneAddress(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
+    public ResponseEntity<Set<DeliveryDTO>> findListHibernateDeliveryOneAddress(@Validated @RequestBody AddressRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

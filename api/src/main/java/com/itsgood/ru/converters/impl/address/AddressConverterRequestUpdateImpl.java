@@ -4,9 +4,9 @@ import com.itsgood.ru.controller.request.address.AddressRequestUpdate;
 import com.itsgood.ru.converters.AddressConverterRequestUpdate;
 import com.itsgood.ru.repository.spring.AddressDataRepository;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
-import com.itsgood.ru.domain.hibernate.HibernateAddress;
+import com.itsgood.ru.domain.hibernate.AddressDTO;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -20,19 +20,19 @@ public class AddressConverterRequestUpdateImpl implements AddressConverterReques
 
     private final CustomerDataRepository customerDataRepository;
     @Override
-    public HibernateAddress convert(AddressRequestUpdate request) {
-        Optional<HibernateAddress> searchAddress = addressDataRepository.findById(request.getId());
-        HibernateAddress hibernateAddress = searchAddress.orElseThrow(EntityNotFoundException::new);
-        Optional<HibernateCustomer> searchCustomer = customerDataRepository.findById(request.getId());
-        hibernateAddress.setCustomer(searchCustomer.orElseThrow(EntityNotFoundException::new));
-        hibernateAddress.setCode(request.getCode());
-        hibernateAddress.setCountry(request.getCountry());
-        hibernateAddress.setRegion(request.getRegion());
-        hibernateAddress.setCity(request.getCity());
-        hibernateAddress.setStreet(request.getStreet());
-        hibernateAddress.setHouse(request.getHouse());
-        hibernateAddress.setFrame(request.getFrame());
-        hibernateAddress.setApartment(request.getApartment());
-        return hibernateAddress;
+    public AddressDTO convert(AddressRequestUpdate request) {
+        Optional<AddressDTO> searchAddress = addressDataRepository.findById(request.getId());
+        AddressDTO addressDTO = searchAddress.orElseThrow(EntityNotFoundException::new);
+        Optional<CustomerDTO> searchCustomer = customerDataRepository.findById(request.getId());
+        addressDTO.setCustomer(searchCustomer.orElseThrow(EntityNotFoundException::new));
+        addressDTO.setCode(request.getCode());
+        addressDTO.setCountry(request.getCountry());
+        addressDTO.setRegion(request.getRegion());
+        addressDTO.setCity(request.getCity());
+        addressDTO.setStreet(request.getStreet());
+        addressDTO.setHouse(request.getHouse());
+        addressDTO.setFrame(request.getFrame());
+        addressDTO.setApartment(request.getApartment());
+        return addressDTO;
     }
 }

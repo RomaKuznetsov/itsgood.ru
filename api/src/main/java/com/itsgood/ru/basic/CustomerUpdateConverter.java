@@ -1,6 +1,6 @@
 package com.itsgood.ru.basic;
 
-import com.itsgood.ru.domain.hibernate.HibernateCustomer;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerUpdateConverter extends CustomerBaseConverter<CustomerUpdateRequest, HibernateCustomer> {
+public class CustomerUpdateConverter extends CustomerBaseConverter<CustomerUpdateRequest, CustomerDTO> {
 
     private final CustomerDataRepository dataRepository;
 
     @Override
-    public HibernateCustomer convert(CustomerUpdateRequest request) {
-        Optional<HibernateCustomer> hibernateCustomer = dataRepository.findById(Math.toIntExact(request.getId()));
+    public CustomerDTO convert(CustomerUpdateRequest request) {
+        Optional<CustomerDTO> hibernateCustomer = dataRepository.findById(Math.toIntExact(request.getId()));
         return doConvert(hibernateCustomer.orElseThrow(EntityNotFoundException::new), request);
     }
 

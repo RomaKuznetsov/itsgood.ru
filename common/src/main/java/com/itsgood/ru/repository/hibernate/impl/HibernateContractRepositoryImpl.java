@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.hibernate.HibernateContract;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.repository.hibernate.HibernateContractRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -20,24 +20,24 @@ public class HibernateContractRepositoryImpl implements HibernateContractReposit
     private final EntityManagerFactory entityManagerFactory;
 
     @Override
-    public HibernateContract findOne(Integer id) throws SQLException {
+    public ContractDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<HibernateContract> findAll() throws SQLException {
-        final String findAllHQL = "select u from HibernateContract u";
+    public List<ContractDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from ContractDTO u";
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, HibernateContract.class).getResultList();
+        return entityManager.createQuery(findAllHQL, ContractDTO.class).getResultList();
     }
 
     @Override
-    public HibernateContract create(HibernateContract contract) throws SQLException {
+    public ContractDTO create(ContractDTO contract) throws SQLException {
         return null;
     }
 
     @Override
-    public HibernateContract update(HibernateContract contract) throws SQLException {
+    public ContractDTO update(ContractDTO contract) throws SQLException {
         return null;
     }
 

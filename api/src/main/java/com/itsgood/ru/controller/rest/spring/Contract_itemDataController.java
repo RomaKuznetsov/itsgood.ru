@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.contract_item.Contract_itemRequestCreate;
 import com.itsgood.ru.controller.request.contract_item.Contract_itemRequestSearch;
 import com.itsgood.ru.controller.request.contract_item.Contract_itemRequestUpdate;
-import com.itsgood.ru.domain.hibernate.HibernateContract_item;
+import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
 import com.itsgood.ru.service.spring.Contract_itemDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class Contract_itemDataController {
     private final Contract_itemDataService contract_itemDataService;
 
     @GetMapping(value = "/findHibernateContract_itemById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract_item> findHibernateContract_itemById(@Validated @RequestBody Contract_itemRequestSearch request, BindingResult result) {
+    public ResponseEntity<Contract_itemDTO> findHibernateContract_itemById(@Validated @RequestBody Contract_itemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -29,7 +29,7 @@ public class Contract_itemDataController {
     }
 
     @PostMapping(value = "/createHibernateContract_item", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract_item> createHibernateContract_item(@Validated @RequestBody
+    public ResponseEntity<Contract_itemDTO> createHibernateContract_item(@Validated @RequestBody
                                                                                     Contract_itemRequestCreate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
@@ -39,7 +39,7 @@ public class Contract_itemDataController {
     }
 
     @PatchMapping(value = "/updateHibernateContract_item", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<HibernateContract_item> updateHibernateContract_item(@Validated @RequestBody Contract_itemRequestUpdate request, BindingResult result) {
+    public ResponseEntity<Contract_itemDTO> updateHibernateContract_item(@Validated @RequestBody Contract_itemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Contract_item;
+import com.itsgood.ru.domain.Bucket;
 import com.itsgood.ru.old.repository.Contract_itemRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.Contract_itemRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;
@@ -31,21 +31,21 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     private final Contract_itemRowMapper contract_itemRowMapper;
 
     @Override
-    public Contract_item createContract_itemCustomer(Contract_item contract_item) {
+    public Bucket createContract_itemCustomer(Bucket bucket) {
         try {
             simpleJdbcCall.withFunctionName("SUM_NUMBER_ITEM_ON_CONTRACT_ITEM_ID");
             SqlParameterSource in = new MapSqlParameterSource()
-                    .addValue("id_contract", contract_item.getContract_id())
-                    .addValue("id_item", contract_item.getItem_id());
+                    .addValue("id_contract", bucket.getContract_id())
+                    .addValue("id_item", bucket.getItem_id());
             simpleJdbcCall.executeFunction(Integer.class, in);
-            return findOne(contract_item.getId());
+            return findOne(bucket.getId());
         } catch (DataAccessException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Contract_item findOne(Integer id) throws SQLException {
+    public Bucket findOne(Integer id) throws SQLException {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_ID.getCRUD(),
                     contract_itemRowMapper, id);
@@ -55,7 +55,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     }
 
     @Override
-    public List<Contract_item> findAll() throws SQLException {
+    public List<Bucket> findAll() throws SQLException {
         try {
             return jdbcTemplate.query(sql_CRUD.SELECT_ALL_CONTRACT_ITEM.getCRUD(), contract_itemRowMapper);
         } catch (DataAccessException e) {
@@ -64,10 +64,10 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     }
 
     @Override
-    public Contract_item create(Contract_item contract_item) throws SQLException {
+    public Bucket create(Bucket bucket) throws SQLException {
         try {
-            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT_ITEM.getCRUD(), contract_item.getContract_id(),
-                    contract_item.getItem_id(), new Timestamp(System.currentTimeMillis()));
+            jdbcTemplate.update(sql_CRUD.INSERT_CONTRACT_ITEM.getCRUD(), bucket.getContract_id(),
+                    bucket.getItem_id(), new Timestamp(System.currentTimeMillis()));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -75,11 +75,11 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     }
 
     @Override
-    public Contract_item update(Contract_item contract_item) throws SQLException {
+    public Bucket update(Bucket bucket) throws SQLException {
         try {
-            jdbcTemplate.update(sql_CRUD.UPDATE_CONTRACT_ITEM_ON_ID.getCRUD(), contract_item.getContract_id(),
-                    contract_item.getItem_id(), new Timestamp(System.currentTimeMillis()));
-            return contract_item;
+            jdbcTemplate.update(sql_CRUD.UPDATE_CONTRACT_ITEM_ON_ID.getCRUD(), bucket.getContract_id(),
+                    bucket.getItem_id(), new Timestamp(System.currentTimeMillis()));
+            return bucket;
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -95,7 +95,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     }
 
     @Override
-    public Contract_item findMaxIdContract_Item() {
+    public Bucket findMaxIdContract_Item() {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_MAX_ID.getCRUD(),
                     contract_itemRowMapper);
@@ -105,7 +105,7 @@ public class Contract_itemRepositoryJDBCTemplateImpl implements Contract_itemRep
     }
 
     @Override
-    public Contract_item findMinIdContract_Item() {
+    public Bucket findMinIdContract_Item() {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_CONTRACT_ITEM_ON_MIN_ID.getCRUD(),
                     contract_itemRowMapper);

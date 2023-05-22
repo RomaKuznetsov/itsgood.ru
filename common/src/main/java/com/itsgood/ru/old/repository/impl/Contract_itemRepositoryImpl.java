@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.impl;
 
-import com.itsgood.ru.domain.Contract_item;
+import com.itsgood.ru.domain.Bucket;
 import com.itsgood.ru.old.repository.Contract_itemRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
@@ -38,38 +38,38 @@ public class Contract_itemRepositoryImpl implements Contract_itemRepository {
     }
 
     @Override
-    public Contract_item findMaxIdContract_Item() throws SQLException {
+    public Bucket findMaxIdContract_Item() throws SQLException {
         return null;
     }
 
     @Override
-    public Contract_item findMinIdContract_Item() throws SQLException {
+    public Bucket findMinIdContract_Item() throws SQLException {
         return null;
     }
 
     @Override
-    public Contract_item createContract_itemCustomer(Contract_item contract_item) throws SQLException {
+    public Bucket createContract_itemCustomer(Bucket bucket) throws SQLException {
         return null;
     }
 
 
     @Override
-    public Contract_item findOne(Integer id) throws SQLException {
+    public Bucket findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<Contract_item> findAll() throws SQLException {
+    public List<Bucket> findAll() throws SQLException {
         return null;
     }
 
     @Override
-    public Contract_item create(Contract_item contract_item) throws SQLException {
+    public Bucket create(Bucket bucket) throws SQLException {
         return null;
     }
 
     @Override
-    public Contract_item update(Contract_item contract_item) throws SQLException {
+    public Bucket update(Bucket bucket) throws SQLException {
         return null;
     }
 

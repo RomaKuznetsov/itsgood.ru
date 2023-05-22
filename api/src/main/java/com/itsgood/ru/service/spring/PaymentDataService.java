@@ -31,58 +31,72 @@ public class PaymentDataService {
     private final PaymentConverterRequestCreate paymentCardConverterRequestCreate;
 
 
-    public PaymentDTO findHibernatePaymentById(Integer id) {
+    public PaymentDTO findPaymentById(Integer id) {
         Optional<PaymentDTO> searchResult = paymentDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<PaymentDTO> findAllHibernatePayments() {
+    public List<PaymentDTO> findAllPayments() {
         return paymentDataRepository.findAll();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public PaymentDTO createHibernatePayment(PaymentRequestCreate request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public PaymentDTO createPayment(PaymentRequestCreate request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         PaymentDTO paymentDTO = paymentCardConverterRequestCreate.convert(request);
         Set<PaymentDTO> payments = customerDTO.getPayments();
         if (!payments.contains(paymentDTO)) {
             paymentDTO.setCustomer(customerDTO);
             paymentDTO = paymentDataRepository.save(paymentDTO);
-        } else throw new EntityExistsException();
+            if (paymentDTO.getStatus().contains(StatusPayment.STATUS_PAYMENT_ACTIVE.getStatus())) {
+                customerDTO.getContract().setPayment(paymentDTO);
+            }
+        } else throw new EntityExistsException("Such payment is already");
         return paymentDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernatePayment(PaymentRequestUpdate request) {
+    public void deletePayment(PaymentRequestUpdate request) {
         PaymentDTO paymentDTO = paymentConverterRequestUpdate.convert(request);
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
+        Set<PaymentDTO> payments = customerDTO.getPayments();
+        if (!payments.contains(paymentDTO)) {
+            paymentDTO.setCustomer(customerDTO);
             paymentDataRepository.delete(paymentDTO);
+        } else throw new EntityExistsException("No such payment");
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public PaymentDTO updateHibernatePayment(PaymentRequestUpdate request) {
+    public PaymentDTO updatePayment(PaymentRequestUpdate request) {
         PaymentDTO paymentDTO = paymentConverterRequestUpdate.convert(request);
-            return paymentDataRepository.save(paymentDTO);
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
+        Set<PaymentDTO> payments = customerDTO.getPayments();
+        if (!payments.contains(paymentDTO)) {
+            paymentDTO.setCustomer(customerDTO);
+            paymentDataRepository.save(paymentDTO);
+        } else throw new EntityExistsException("No such payment");
+        return paymentDataRepository.save(paymentDTO);
     }
 
-    public List<PaymentDTO> findHibernatePaymentByAuthenticateAndStatus(PaymentRequestSearch request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public List<PaymentDTO> findPaymentByAuthenticateAndStatus(PaymentRequestSearch request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<PaymentDTO>> searchResult = paymentDataRepository.
-                findHibernatePaymentByCustomerAndStatus(customerDTO, request.getStatus());
+                findPaymentByCustomerAndStatus(customerDTO, request.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public PaymentDTO findHibernatePaymentByAuthenticateAndStatusActive() {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public PaymentDTO findPaymentByAuthenticateAndStatusActive() {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<PaymentDTO>> searchResult = paymentDataRepository.
-                findHibernatePaymentByCustomerAndStatus(customerDTO,
+                findPaymentByCustomerAndStatus(customerDTO,
                         StatusPayment.STATUS_PAYMENT_ACTIVE.getStatus());
         return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
     }
 
-    public List<PaymentDTO> findHibernatePaymentByAuthenticateAndValidity(PaymentRequestSearch request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public List<PaymentDTO> findPaymentByAuthenticateAndValidity(PaymentRequestSearch request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<PaymentDTO>> searchResult = paymentDataRepository.
-                findHibernatePaymentByCustomerAndValidity(customerDTO, request.getValidation());
+                findPaymentByCustomerAndValidity(customerDTO, request.getValidation());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 }

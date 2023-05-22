@@ -1,7 +1,7 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
 import com.itsgood.ru.domain.hibernate.ContractDTO;
-import com.itsgood.ru.domain.hibernate.DeliveryDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.hibernate.HibernateDeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -21,24 +21,24 @@ public class HibernateDeliveryRepositoryImpl implements HibernateDeliveryReposit
     private final EntityManagerFactory entityManagerFactory;
 
     @Override
-    public DeliveryDTO findOne(Integer id) throws SQLException {
+    public EquipmentDTO findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<DeliveryDTO> findAll() throws SQLException {
-        final String findAllHQL = "select u from DeliveryDTO u";
+    public List<EquipmentDTO> findAll() throws SQLException {
+        final String findAllHQL = "select u from EquipmentDTO u";
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        return entityManager.createQuery(findAllHQL, DeliveryDTO.class).getResultList();
+        return entityManager.createQuery(findAllHQL, EquipmentDTO.class).getResultList();
     }
 
     @Override
-    public DeliveryDTO create(DeliveryDTO object) throws SQLException {
+    public EquipmentDTO create(EquipmentDTO object) throws SQLException {
         return null;
     }
 
     @Override
-    public DeliveryDTO update(DeliveryDTO object) throws SQLException {
+    public EquipmentDTO update(EquipmentDTO object) throws SQLException {
         return null;
     }
 

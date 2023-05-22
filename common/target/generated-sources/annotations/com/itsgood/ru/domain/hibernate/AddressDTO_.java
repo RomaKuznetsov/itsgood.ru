@@ -10,6 +10,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class AddressDTO_ {
 
 	public static volatile SingularAttribute<AddressDTO, String> country;
+	public static volatile SetAttribute<AddressDTO, EquipmentDTO> equipments;
 	public static volatile SingularAttribute<AddressDTO, String> code;
 	public static volatile SingularAttribute<AddressDTO, String> city;
 	public static volatile SingularAttribute<AddressDTO, String> street;
@@ -20,9 +21,9 @@ public abstract class AddressDTO_ {
 	public static volatile SingularAttribute<AddressDTO, Integer> apartment;
 	public static volatile SingularAttribute<AddressDTO, String> frame;
 	public static volatile SingularAttribute<AddressDTO, CustomerDTO> customer;
-	public static volatile SetAttribute<AddressDTO, DeliveryDTO> deliveries;
 
 	public static final String COUNTRY = "country";
+	public static final String EQUIPMENTS = "equipments";
 	public static final String CODE = "code";
 	public static final String CITY = "city";
 	public static final String STREET = "street";
@@ -33,7 +34,6 @@ public abstract class AddressDTO_ {
 	public static final String APARTMENT = "apartment";
 	public static final String FRAME = "frame";
 	public static final String CUSTOMER = "customer";
-	public static final String DELIVERIES = "deliveries";
 
 }
 

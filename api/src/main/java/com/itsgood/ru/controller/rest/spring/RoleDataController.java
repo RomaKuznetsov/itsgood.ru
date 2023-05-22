@@ -17,38 +17,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/springData/role")
+@RequestMapping("/rest/spring/role")
 @RequiredArgsConstructor
 public class RoleDataController {
     private final RoleDataService roleDataService;
 
-    private final RoleDataRepository roleDataRepository;
-
-    @PostMapping(value = "/createHibernateRole", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<RoleDTO> createHibernateRole(@Validated @RequestBody RoleRequestCreate request,
+    @PostMapping(value = "/createRole", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<RoleDTO> createRole(@Validated @RequestBody RoleRequestCreate request,
                                                        BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(roleDataService.createHibernateRole(request), HttpStatus.OK);
+        return new ResponseEntity<>(roleDataService.createRole(request), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/updateHibernateRole", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<RoleDTO> updateHibernateRole(@Validated @RequestBody RoleRequestUpdate request,
+    @PatchMapping(value = "/updateRole", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<RoleDTO> updateRole(@Validated @RequestBody RoleRequestUpdate request,
                                                        BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(roleDataService.updateHibernateRole(request), HttpStatus.OK);
+        return new ResponseEntity<>(roleDataService.updateRole(request), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateRoleById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<RoleDTO> findHibernateRoleById(@Validated @RequestBody RoleRequestSearch request,
+    @GetMapping(value = "/findRoleById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<RoleDTO> findRoleById(@Validated @RequestBody RoleRequestSearch request,
                                                          BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(roleDataService.findHibernateRoleById(request.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(roleDataService.findRoleById(request.getId()), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findAllRoles", consumes = {"application/xml", "application/json"})
@@ -56,29 +54,29 @@ public class RoleDataController {
         return new ResponseEntity<>(roleDataService.findAllRoles(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateRolesByValidity", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<RoleDTO>> findHibernateRolesByValidity(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findRolesByValidity", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<RoleDTO>> findRolesByValidity(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(roleDataService.findHibernateRoleByAuthenticateAndValidity(request), HttpStatus.OK);
+        return new ResponseEntity<>(roleDataService.findRoleByAuthenticateAndValidity(request), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteHibernateRolesById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateRolesById(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
+    @DeleteMapping(value = "/deleteRolesById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteRolesById(@Validated @RequestBody RoleRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        roleDataService.deleteHibernateRoleById(request);
+        roleDataService.deleteRoleById(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteHibernateRoles", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateRoles(@Validated @RequestBody RoleRequestUpdate request, BindingResult result) {
+    @DeleteMapping(value = "/deleteRoles", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteRoles(@Validated @RequestBody RoleRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        roleDataService.deleteHibernateRole(request);
+        roleDataService.deleteRole(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

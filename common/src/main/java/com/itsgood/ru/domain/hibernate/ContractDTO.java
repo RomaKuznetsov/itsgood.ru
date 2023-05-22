@@ -17,21 +17,17 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@ToString(exclude = {"items", "customer", "address", "payment", "contracts_items"})
+@ToString(exclude = {"items", "customer", "address", "payment", "buckets"})
 @Entity
-@EqualsAndHashCode(exclude = {"id", "items", "customer", "address", "payment", "contracts_items"})
+@EqualsAndHashCode(exclude = {"id", "items", "customer", "address", "payment", "buckets"})
 @Table(name = "Contract")
 @Cacheable("contract")
 public class ContractDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "sum_order")
-    private int sum_order;
     @Column(name = "payment_types")
     private String payment_types;
-    @Column(name = "relevance")
-    private String relevance;
     @Column(name = "create_time")
     private Timestamp create_time;
     @Column(name = "update_time")
@@ -41,7 +37,7 @@ public class ContractDTO {
     @JsonIgnoreProperties("contracts")
     private List<ItemDTO> items = Collections.emptyList();
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     private CustomerDTO customer;
@@ -58,5 +54,5 @@ public class ContractDTO {
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
-    private Set<Contract_itemDTO> contracts_items = Collections.emptySet();
+    private Set<BucketDTO> buckets = Collections.emptySet();
 }

@@ -1,11 +1,11 @@
 package com.itsgood.ru.old.service;
 
 import com.itsgood.ru.domain.Customer;
-import com.itsgood.ru.domain.Delivery;
+import com.itsgood.ru.domain.Equipment;
 
 import java.sql.SQLException;
 
 public interface DeliveryService {
 
-    Delivery createDeliveryCustomerParameters(Customer customer, Delivery delivery) throws SQLException;
+    Equipment createDeliveryCustomerParameters(Customer customer, Equipment equipment) throws SQLException;
 }

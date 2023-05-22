@@ -35,55 +35,55 @@ public class RoleDataService {
         return roleDataRepository.findAll();
     }
 
-    public RoleDTO findHibernateRoleById(Integer id) {
+    public RoleDTO findRoleById(Integer id) {
         Optional<RoleDTO> searchResult = roleDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
-
+//ok
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public RoleDTO createHibernateRole(RoleRequestCreate request) {
+    public RoleDTO createRole(RoleRequestCreate request) {
         RoleDTO roleDTO = roleConverterRequestCreate.convert(request);
         if (roleDTO.getCustomer() == null) {
-            roleDTO.setCustomer(customerDataService.findHibernateCustomerByAuthenticationInfo());
+            roleDTO.setCustomer(customerDataService.findCustomerByAuthenticationInfo());
         }
         if (!roleDTO.getCustomer().getRoles().contains(roleDTO)) {
             roleDTO = roleDataRepository.save(roleDTO);
-        } else throw new EntityExistsException();
+        } else throw new EntityExistsException("User has this role");
         return roleDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public RoleDTO updateHibernateRole(RoleRequestUpdate request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerById(request.getCustomer_id());
+    public RoleDTO updateRole(RoleRequestUpdate request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerById(request.getCustomer_id());
         RoleDTO roleDTO = roleConverterRequestUpdate.convert(request);
         Set<RoleDTO> roles = customerDTO.getRoles();
-        if (!roles.contains(roleDTO)) {
+        if (roles.contains(roleDTO)) {
             roleDTO.setCustomer(customerDTO);
             roleDTO = roleDataRepository.save(roleDTO);
-        } else throw new EntityNotFoundException();
+        } else throw new EntityNotFoundException("User does not have this role");
         return roleDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateRole(RoleRequestUpdate request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerById(request.getCustomer_id());
+    public void deleteRole(RoleRequestUpdate request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerById(request.getCustomer_id());
         RoleDTO roleDTO = roleConverterRequestUpdate.convert(request);
         Set<RoleDTO> roles = customerDTO.getRoles();
-        if (!roles.contains(roleDTO)) {
+        if (roles.contains(roleDTO)) {
             roleDTO.setCustomer(customerDTO);
             roleDataRepository.delete(roleDTO);
-        } else throw new EntityNotFoundException();
+        } else throw new EntityNotFoundException("User does not have this role");
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateRoleById(RoleRequestSearch request) {
+    public void deleteRoleById(RoleRequestSearch request) {
         roleDataRepository.deleteById(request.getId());
     }
 
-    public List<RoleDTO> findHibernateRoleByAuthenticateAndValidity(RoleRequestSearch request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public List<RoleDTO> findRoleByAuthenticateAndValidity(RoleRequestSearch request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<RoleDTO>> searchResult = roleDataRepository.
-                findHibernateRolesByCustomerAndValidityIsAfter(customerDTO, request.getValidity());
+                findRolesByCustomerAndValidityIsAfter(customerDTO, request.getValidity());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 }

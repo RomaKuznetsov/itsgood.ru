@@ -18,13 +18,10 @@ import java.util.Optional;
 public class AddressConverterRequestUpdateImpl implements AddressConverterRequestUpdate {
     private final AddressDataRepository addressDataRepository;
 
-    private final CustomerDataRepository customerDataRepository;
     @Override
     public AddressDTO convert(AddressRequestUpdate request) {
         Optional<AddressDTO> searchAddress = addressDataRepository.findById(request.getId());
         AddressDTO addressDTO = searchAddress.orElseThrow(EntityNotFoundException::new);
-        Optional<CustomerDTO> searchCustomer = customerDataRepository.findById(request.getId());
-        addressDTO.setCustomer(searchCustomer.orElseThrow(EntityNotFoundException::new));
         addressDTO.setCode(request.getCode());
         addressDTO.setCountry(request.getCountry());
         addressDTO.setRegion(request.getRegion());

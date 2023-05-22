@@ -6,7 +6,7 @@ import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
 import com.itsgood.ru.converters.ItemConverterRequestCreate;
 import com.itsgood.ru.converters.ItemConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.CategoryDTO;
-import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
 import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.spring.ItemDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -35,73 +36,73 @@ public class ItemDataService {
         return itemDataRepository.findAll();
     }
 
-    public ItemDTO findHibernateItemById(Integer id) {
+    public ItemDTO findItemById(Integer id) {
         Optional<ItemDTO> searchResult = itemDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public ItemDTO findHibernateItemByIdOrTitle(ItemRequestSearch request) {
-        Optional<ItemDTO> searchResult = itemDataRepository.findHibernateItemByIdOrTitle(request.getId(), request.getTitle());
+    public ItemDTO findItemByIdOrTitle(ItemRequestSearch request) {
+        Optional<ItemDTO> searchResult = itemDataRepository.findItemByIdOrTitle(request.getId(), request.getTitle());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public ItemDTO createHibernateItem(ItemRequestCreate request) {
-        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+    public ItemDTO createItem(ItemRequestCreate request) {
+        CategoryDTO categoryDTO = categoryDataService.findCategoryById(request.getCategory_id());
         ItemDTO itemDTO = itemConverterRequestCreate.convert(request);
         Set<ItemDTO> searchResult = categoryDTO.getItems();
         if (!searchResult.contains(itemDTO)) {
             itemDTO.setCategory(categoryDTO);
             itemDTO = itemDataRepository.save(itemDTO);
-        }
+        } else throw new EntityExistsException("This item already exists");
         return itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public ItemDTO updateHibernateItem(ItemRequestUpdate request) {
-        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+    public ItemDTO updateItem(ItemRequestUpdate request) {
+        CategoryDTO categoryDTO = categoryDataService.findCategoryById(request.getCategory_id());
         ItemDTO itemDTO = itemConverterRequestUpdate.convert(request);
         Set<ItemDTO> searchResult = categoryDTO.getItems();
-        if (!searchResult.contains(itemDTO)) {
+        if (searchResult.contains(itemDTO)) {
             itemDTO.setCategory(categoryDTO);
             itemDTO = itemDataRepository.save(itemDTO);
-        }
+        } else throw new EntityNotFoundException("There is no such item in this category");
         return itemDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateItem(ItemRequestUpdate request) {
-        CategoryDTO categoryDTO = categoryDataService.findHibernateCategoryById(request.getCategory_id());
+    public void deleteItem(ItemRequestUpdate request) {
+        CategoryDTO categoryDTO = categoryDataService.findCategoryById(request.getCategory_id());
         ItemDTO itemDTO = itemConverterRequestUpdate.convert(request);
         Set<ItemDTO> searchResult = categoryDTO.getItems();
-        if (!searchResult.contains(itemDTO)) {
+        if (searchResult.contains(itemDTO)) {
             itemDTO.setCategory(categoryDTO);
             itemDataRepository.delete(itemDTO);
-        }
+        } else throw new EntityNotFoundException("There is no such item in this category");
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateItemById(Integer id) {
+    public void deleteItemById(Integer id) {
         itemDataRepository.deleteById(id);
     }
 
-    //    @Cacheable("contract_item")
+    //    @Cacheable("bucket")
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public Set<Contract_itemDTO> findSetHibernateContract_itemById(Integer id) {
-        return findHibernateItemById(id).getContracts_items();
+    public Set<BucketDTO> findSetBucketById(Integer id) {
+        return findItemById(id).getBuckets();
     }
 
-    public List<ItemDTO> findHibernateItemByTitleAndPriceAfterOrFirm(ItemRequestSearch request) {
+    public List<ItemDTO> findItemByTitleAndPriceAfterOrFirm(ItemRequestSearch request) {
         Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceAfterOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<ItemDTO> findHibernateItemByTitleAndPriceBeforeOrFirm(ItemRequestSearch request) {
+    public List<ItemDTO> findItemByTitleAndPriceBeforeOrFirm(ItemRequestSearch request) {
         Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndPriceBeforeOrFirm(request.getTitle(), request.getPrice(), request.getFirm());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public List<ItemDTO> findHibernateItemByTitleAndDescription(ItemRequestSearch request) {
+    public List<ItemDTO> findItemByTitleAndDescription(ItemRequestSearch request) {
         Optional<List<ItemDTO>> searchResult = itemDataRepository.findHibernateItemByTitleAndDescription(request.getTitle(), request.getDescription());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }

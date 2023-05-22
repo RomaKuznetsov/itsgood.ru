@@ -10,6 +10,4 @@ import javax.validation.constraints.NotNull;
 public class ContractRequestSearch {
 @NotNull
     private int id;
-
-    private String relevance;
 }

@@ -6,6 +6,11 @@
       "sourceType": "com.itsgood.ru.configuration.AmazonProperties"
     },
     {
+      "name": "application-cache.yaml",
+      "type": "com.itsgood.ru.configuration.CacheConfiguration",
+      "sourceType": "com.itsgood.ru.configuration.CacheConfiguration"
+    },
+    {
       "name": "google.servers",
       "type": "com.itsgood.ru.configuration.GoogleConfig",
       "sourceType": "com.itsgood.ru.configuration.GoogleConfig"

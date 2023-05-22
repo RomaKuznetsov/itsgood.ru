@@ -1,6 +1,7 @@
 package com.itsgood.ru.controller.request.customer;
 
 import lombok.Getter;
+import org.checkerframework.checker.regex.qual.Regex;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
@@ -24,7 +25,7 @@ public class CustomerRequestCreate {
     private String mail;
     @NotNull
     private String password;
-    @Pattern(regexp = "//d{9}")
+//    @Pattern(regexp = "\\d{9}")
     private int phone;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")

@@ -16,9 +16,9 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@ToString(exclude = {"category", "contracts", "contracts_items"})
+@ToString(exclude = {"category", "contracts", "buckets"})
 @Entity
-@EqualsAndHashCode(exclude = {"category", "contracts", "contracts_items"})
+@EqualsAndHashCode(exclude = {"category", "contracts", "buckets"})
 @Table(name = "Item")
 @Cacheable("item")
 public class ItemDTO {
@@ -46,7 +46,7 @@ public class ItemDTO {
     private Timestamp update_time;
 
     @ManyToMany
-    @JoinTable(name = "Contract_item", joinColumns = @JoinColumn(name = "item_id"),
+    @JoinTable(name = "Bucket", joinColumns = @JoinColumn(name = "item_id"),
     inverseJoinColumns = @JoinColumn(name = "contract_id"))
     @JsonIgnoreProperties("items")
     private Set<ContractDTO> contracts = Collections.emptySet();
@@ -58,6 +58,6 @@ public class ItemDTO {
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
-    private Set<Contract_itemDTO> contracts_items = Collections.emptySet();
+    private Set<BucketDTO> buckets = Collections.emptySet();
 
 }

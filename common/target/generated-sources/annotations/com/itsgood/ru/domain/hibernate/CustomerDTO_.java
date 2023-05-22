@@ -20,7 +20,7 @@ public abstract class CustomerDTO_ {
 	public static volatile SingularAttribute<CustomerDTO, Timestamp> create_time;
 	public static volatile SetAttribute<CustomerDTO, PaymentDTO> payments;
 	public static volatile SetAttribute<CustomerDTO, RoleDTO> roles;
-	public static volatile SetAttribute<CustomerDTO, ContractDTO> contracts;
+	public static volatile SingularAttribute<CustomerDTO, ContractDTO> contract;
 	public static volatile SingularAttribute<CustomerDTO, String> lastname;
 	public static volatile SingularAttribute<CustomerDTO, Timestamp> update_time;
 	public static volatile SingularAttribute<CustomerDTO, Integer> phone;
@@ -35,7 +35,7 @@ public abstract class CustomerDTO_ {
 	public static final String CREATE_TIME = "create_time";
 	public static final String PAYMENTS = "payments";
 	public static final String ROLES = "roles";
-	public static final String CONTRACTS = "contracts";
+	public static final String CONTRACT = "contract";
 	public static final String LASTNAME = "lastname";
 	public static final String UPDATE_TIME = "update_time";
 	public static final String PHONE = "phone";

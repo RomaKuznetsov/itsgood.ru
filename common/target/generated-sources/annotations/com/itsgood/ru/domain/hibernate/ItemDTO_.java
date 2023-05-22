@@ -10,8 +10,8 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ItemDTO.class)
 public abstract class ItemDTO_ {
 
-	public static volatile SetAttribute<ItemDTO, Contract_itemDTO> contracts_items;
 	public static volatile SingularAttribute<ItemDTO, Timestamp> create_time;
+	public static volatile SetAttribute<ItemDTO, BucketDTO> buckets;
 	public static volatile SingularAttribute<ItemDTO, String> link;
 	public static volatile SingularAttribute<ItemDTO, String> description;
 	public static volatile SingularAttribute<ItemDTO, Integer> weight;
@@ -24,8 +24,8 @@ public abstract class ItemDTO_ {
 	public static volatile SingularAttribute<ItemDTO, Integer> id;
 	public static volatile SingularAttribute<ItemDTO, CategoryDTO> category;
 
-	public static final String CONTRACTS_ITEMS = "contracts_items";
 	public static final String CREATE_TIME = "create_time";
+	public static final String BUCKETS = "buckets";
 	public static final String LINK = "link";
 	public static final String DESCRIPTION = "description";
 	public static final String WEIGHT = "weight";

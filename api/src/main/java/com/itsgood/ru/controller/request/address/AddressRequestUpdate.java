@@ -13,8 +13,6 @@ public class AddressRequestUpdate {
     @NotNull
     private int id;
     @NotNull
-    private int customer_id;
-    @NotNull
     private String code;
     @NotNull
     private String country;

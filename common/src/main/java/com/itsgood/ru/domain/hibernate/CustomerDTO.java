@@ -14,9 +14,9 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@ToString(exclude = {"address", "payments", "roles", "contracts"})
+@ToString(exclude = {"address", "payments", "roles", "contract"})
 @Entity
-@EqualsAndHashCode(exclude = {"address", "payments", "roles", "contracts"})
+@EqualsAndHashCode(exclude = {"address", "payments", "roles", "contract"})
 @Table(name = "Customer")
 //@Cacheable("customer")
 public class CustomerDTO {
@@ -62,8 +62,8 @@ public class CustomerDTO {
     @JsonManagedReference
     private Set<RoleDTO> roles = Collections.emptySet();
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = false)
     @JsonManagedReference
-    private Set<ContractDTO> contracts = Collections.emptySet();
+    private ContractDTO contract;
 
 }

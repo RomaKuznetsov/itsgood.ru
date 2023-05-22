@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.item.ItemRequestCreate;
 import com.itsgood.ru.controller.request.item.ItemRequestSearch;
 import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
-import com.itsgood.ru.domain.hibernate.Contract_itemDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
 import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.ItemDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
@@ -18,100 +18,95 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/rest/springData/item")
+@RequestMapping("/rest/spring/item")
 @RequiredArgsConstructor
 public class ItemDataController {
 
     private final ItemDataService itemDataService;
 
-    @GetMapping(value = "/findAllHibernateItem", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<ItemDTO>> findAllHibernateItem() {
+    @GetMapping(value = "/findAllItem", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<ItemDTO>> findAllItem() {
         return new ResponseEntity<>(itemDataService.findAllHibernateItem(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateItemById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<ItemDTO> findHibernateItemById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findItemById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ItemDTO> findItemById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findHibernateItemById(request.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findItemById(request.getId()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateItemByIdOrTitle", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<ItemDTO> findHibernateItemByIdOrTitle(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findItemByIdOrTitle", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ItemDTO> findItemByIdOrTitle(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findHibernateItemByIdOrTitle(request), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findItemByIdOrTitle(request), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createHibernateItem", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<ItemDTO> createHibernateItem(@Validated @RequestBody ItemRequestCreate request, BindingResult result) {
+    @PostMapping(value = "/createItem", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ItemDTO> createItem(@Validated @RequestBody ItemRequestCreate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.createHibernateItem(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(itemDataService.createItem(request), HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/createHibernateItem", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<ItemDTO> updateHibernateItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
+    @PatchMapping(value = "/createItem", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ItemDTO> updateItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.updateHibernateItem(request), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.updateItem(request), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteHibernateItem", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
+    @DeleteMapping(value = "/deleteItem", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        itemDataService.deleteHibernateItem(request);
+        itemDataService.deleteItem(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/deleteHibernateItemById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateItemById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @DeleteMapping(value = "/deleteItemById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteItemById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        itemDataService.deleteHibernateItemById(request.getId());
+        itemDataService.deleteItemById(request.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findSetHibernateContract_itemById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<Contract_itemDTO>> findSetHibernateContract_itemById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findSetBucketById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<BucketDTO>> findSetBucketById(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findSetHibernateContract_itemById(request.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findSetBucketById(request.getId()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateItemByTitleAndPriceAfterOrFirm", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<ItemDTO>> findHibernateItemByTitleAndPriceAfterOrFirm(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findItemByTitleAndPriceAfterOrFirm", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<ItemDTO>> findByTitleAndPriceAfterOrFirm(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findHibernateItemByTitleAndPriceAfterOrFirm(request), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findItemByTitleAndPriceAfterOrFirm(request), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateItemByTitleAndPriceBeforeOrFirm", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<ItemDTO>> findHibernateItemByTitleAndPriceBeforeOrFirm(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findItemByTitleAndPriceBeforeOrFirm", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<ItemDTO>> findItemByTitleAndPriceBeforeOrFirm(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findHibernateItemByTitleAndPriceBeforeOrFirm(request), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findItemByTitleAndPriceBeforeOrFirm(request), HttpStatus.OK);
     }
-    @GetMapping(value = "/findHibernateItemByTitleAndDescription", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<ItemDTO>> findHibernateItemByTitleAndDescription(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    @GetMapping(value = "/findItemByTitleAndDescription", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<ItemDTO>> findItemByTitleAndDescription(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(itemDataService.findHibernateItemByTitleAndDescription(request), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findItemByTitleAndDescription(request), HttpStatus.OK);
     }
-
-    //
-    ////     Optional<List<HibernateItem>> findHibernateItemByTitleAndPriceAfterOrFirm(String title, int price, String firm);
-    ////    Optional<List<HibernateItem>> findHibernateItemByTitleAndPriceBeforeOrFirm(String title, int price, String firm);
-    ////    Optional<List<HibernateItem>> findHibernateItemByTitleAndDescription(String title, String description);
 }

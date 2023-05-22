@@ -14,7 +14,7 @@ public interface PaymentDataRepository extends JpaRepository<PaymentDTO, Integer
         PagingAndSortingRepository<PaymentDTO, Integer>,
         CrudRepository<PaymentDTO, Integer> {
 
-    Optional<List<PaymentDTO>> findHibernatePaymentByCustomerAndStatus(CustomerDTO customer, String status);
-    Optional<List<PaymentDTO>> findHibernatePaymentByCustomerAndValidity(CustomerDTO customer, Date validity);
+    Optional<List<PaymentDTO>> findPaymentByCustomerAndStatus(CustomerDTO customer, String status);
+    Optional<List<PaymentDTO>> findPaymentByCustomerAndValidity(CustomerDTO customer, Date validity);
 }
 

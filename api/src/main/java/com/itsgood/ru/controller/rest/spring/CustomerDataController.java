@@ -1,13 +1,17 @@
 package com.itsgood.ru.controller.rest.spring;
 
+import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestSearch;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
+import com.itsgood.ru.controller.request.role.RoleRequestCreate;
 import com.itsgood.ru.domain.hibernate.*;
-import com.itsgood.ru.service.spring.CustomerDataService;
-import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.exceptions.IllegalRequestException;
+import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
+import com.itsgood.ru.service.spring.ContractDataService;
+import com.itsgood.ru.service.spring.CustomerDataService;
+import com.itsgood.ru.service.spring.RoleDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,164 +24,151 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/rest/springData/customer")
+@RequestMapping("/rest/spring/customer")
 @RequiredArgsConstructor
 public class CustomerDataController {
-
-    private final CustomerDataService customerDataService;
     private final PasswordEncoder passwordEncoder;
-
     private final JWTConfiguration jwtConfiguration;
-
+    private final CustomerDataService customerDataService;
+    private final RoleDataService roleDataService;
+    private final ContractDataService contractDataService;
     private final CustomerDataRepository customerDataRepository;
 
     //ok
-    @GetMapping(value = "/findAllHibernateCustomer", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<CustomerDTO>> findAllHibernateCustomer() {
-        List<CustomerDTO> customers = customerDataService.findAllHibernateCustomer();
+    @GetMapping(value = "/findAllCustomer", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<CustomerDTO>> findAllCustomer() {
+        List<CustomerDTO> customers = customerDataService.findAllCustomer();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     //ok
-    @PostMapping(value = "/createHibernateCustomer", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<CustomerDTO> createHibernateCustomer(@Validated @RequestBody CustomerRequestCreate request,
-                                                               BindingResult result) {
+    @PostMapping(value = "/createCustomer", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<CustomerDTO> createCustomer(@Validated @RequestBody CustomerRequestCreate request,
+                                                      BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        CustomerDTO customerDTO = customerDataService.createHibernateCustomer(request);
-
+        CustomerDTO customerDTO = customerDataService.createCustomer(request);
+        roleDataService.createRole(new RoleRequestCreate());
+        contractDataService.createContract(new ContractRequestCreate());
         return new ResponseEntity<>(customerDTO, HttpStatus.CREATED);
     }
 
     //ok
-    @PatchMapping(value = "/updateHibernateCustomer", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<CustomerDTO> updateHibernateCustomer(@Validated @RequestBody CustomerRequestUpdate request,
-                                                               BindingResult result) {
+    @PatchMapping(value = "/updateCustomer", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<CustomerDTO> updateCustomer(@Validated @RequestBody CustomerRequestUpdate request,
+                                                      BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(customerDataService.updateHibernateCustomerById(request), HttpStatus.OK);
+        return new ResponseEntity<>(customerDataService.updateCustomerById(request), HttpStatus.OK);
     }
-
-    @GetMapping(value = "/findHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<CustomerDTO> findHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                 BindingResult result) {
+    //ok
+    @GetMapping(value = "/findCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<CustomerDTO> findCustomerById(@Validated @RequestBody CustomerRequestSearch request,
+                                                        BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(customerDataService.findHibernateCustomerById(request.getId()), HttpStatus.OK);
+        return new ResponseEntity<>(customerDataService.findCustomerById(request.getId()), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findCustomerByMail", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<CustomerDTO> findCustomerByMail(@Validated @RequestBody CustomerRequestSearch request,
+                                                          BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(customerDataService.findCustomerByMail(request.getMail()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findHibernateCustomerByMail", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<CustomerDTO> findHibernateCustomerByMail (@Validated @RequestBody CustomerRequestSearch request,
+    //ok
+    @DeleteMapping(value = "/deleteCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteCustomerById(@Validated @RequestBody CustomerRequestSearch request,
+                                                     BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        customerDataService.deleteCustomerById(request.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/deleteCustomerByAuthentication", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteCustomerByAuthentication() {
+        customerDataService.deleteCustomerByAuthenticationInfo();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    //ok
+    @DeleteMapping(value = "/deleteCustomerByMail", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> deleteCustomerByMail(@Validated @RequestBody CustomerRequestSearch request,
+                                                       BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        customerDataService.deleteCustomerByMail(request.getMail());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findRolesCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<RoleDTO>> findRolesCustomerById(@Validated @RequestBody CustomerRequestSearch request,
+                                                              BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(customerDataService.findAllRolesCustomerById(request), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findRolesCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<RoleDTO>> findRolesCustomerByAuthenticate() {
+        return new ResponseEntity<>(customerDataService.findAllRolesCustomerByAuthenticate(), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findContractCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ContractDTO> findContractCustomerById(@Validated @RequestBody CustomerRequestSearch request,
+                                                                BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(customerDataService.findContractCustomerById(request), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findContractCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<ContractDTO> findContractCustomerByAuthenticate() {
+        return new ResponseEntity<>(customerDataService.findContractCustomerByAuthenticate(), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findAddressCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<AddressDTO>> findAddressCustomerById(@Validated @RequestBody CustomerRequestSearch request,
+                                                                   BindingResult result) {
+        if (result.hasErrors()) {
+            throw new IllegalRequestException(result);
+        }
+        return new ResponseEntity<>(customerDataService.findAllAddressCustomerById(request), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findAddressCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<AddressDTO>> findAddressCustomerByAuthenticate() {
+        return new ResponseEntity<>(customerDataService.findAllAddressCustomerByAuthenticate(), HttpStatus.OK);
+    }
+    //ok
+    @GetMapping(value = "/findPaymentsCustomerById", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<PaymentDTO>> findPaymentsCustomerById(@Validated @RequestBody CustomerRequestSearch request,
                                                                     BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
-        return new ResponseEntity<>(customerDataService.findHibernateCustomerByMail(request.getMail()), HttpStatus.OK);
+        return new ResponseEntity<>(customerDataService.findAllPaymentsCustomerById(request), HttpStatus.OK);
     }
-
-    @DeleteMapping(value = "/deleteHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateCustomerById (@Validated @RequestBody CustomerRequestSearch request,
-                                                               BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        customerDataService.deleteHibernateCustomerById(request.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
+    //ok
+    @GetMapping(value = "/findPaymentsCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Set<PaymentDTO>> findPaymentsCustomerByAuthenticate() {
+        return new ResponseEntity<>(customerDataService.findAllPaymentCustomerByAuthenticate(), HttpStatus.OK);
     }
-
-    @DeleteMapping(value = "/deleteHibernateCustomerByAuthentication", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateCustomerByAuthentication () {
-        customerDataService.deleteHibernateCustomerByAuthenticationInfo();
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @DeleteMapping(value = "/deleteHibernateCustomerByMail", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Object> deleteHibernateCustomerByMail (@Validated @RequestBody CustomerRequestSearch request,
-                                                                 BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        customerDataService.deleteHibernateCustomerByMail(request.getMail());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findRolesHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<RoleDTO>> findRolesHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                       BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(customerDataService.findAllRolesHibernateCustomerById(request), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findRolesHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<RoleDTO>> findRolesHibernateCustomerByAuthenticate() {
-        return new ResponseEntity<>(customerDataService.findAllRolesHibernateCustomerByAuthenticate(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findContractsHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<ContractDTO>> findContractsHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                               BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(customerDataService.findAllContractsHibernateCustomerById(request), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findContractsHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<ContractDTO>> findContractsHibernateCustomerByAuthenticate() {
-        return new ResponseEntity<>(customerDataService.findAllContractsHibernateCustomerByAuthenticate(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findAddressHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<AddressDTO>> findAddressHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                            BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(customerDataService.findAllAddressHibernateCustomerById(request), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findAddressHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<AddressDTO>> findAddressHibernateCustomerByAuthenticate() {
-        return new ResponseEntity<>(customerDataService.findAllAddressHibernateCustomerByAuthenticate(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findPaymentsHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<PaymentDTO>> findPaymentsHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                             BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(customerDataService.findAllPaymentsHibernateCustomerById(request), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findPaymentsHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<PaymentDTO>> findPaymentsHibernateCustomerByAuthenticate() {
-        return new ResponseEntity<>(customerDataService.findAllPaymentsHibernateCustomerByAuthenticate(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findAllContractsHibernateCustomerById", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<ContractDTO>> findAllContractsHibernateCustomerById(@Validated @RequestBody CustomerRequestSearch request,
-                                                                                  BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestException(result);
-        }
-        return new ResponseEntity<>(customerDataService.findAllContractsHibernateCustomerById(request), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/findAllContractsHibernateCustomerByAuthenticate", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<Set<ContractDTO>> findAllContractsHibernateCustomerByAuthenticate() {
-        return new ResponseEntity<>(customerDataService.findAllContractsHibernateCustomerByAuthenticate(), HttpStatus.OK);
-    }
-
+    //ok
     @PutMapping("/passwords")
     public ResponseEntity<Object> updateUsersPasswords() {
 
-        List<CustomerDTO> all = customerDataService.findAllHibernateCustomer();
+        List<CustomerDTO> all = customerDataService.findAllCustomer();
 
         for (CustomerDTO customer : all) {
             AuthenticationInfo authenticationInfo = customer.getAuthenticationInfo();
@@ -188,7 +179,6 @@ public class CustomerDataController {
             customerDataRepository.save(customer);
         }
         return new ResponseEntity<>(all.size(), HttpStatus.OK);
-
     }
     //Domain - Car
     //GET + /rest/cars - findAll

@@ -1,7 +1,7 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
 import com.itsgood.ru.domain.Customer;
-import com.itsgood.ru.domain.Delivery;
+import com.itsgood.ru.domain.Equipment;
 import com.itsgood.ru.old.repository.DeliveryRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.DeliveryRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;
@@ -29,7 +29,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     private final DeliveryRowMapper deliveryRowMapper;
 
     @Override
-    public Delivery findOne(Integer id) throws SQLException {
+    public Equipment findOne(Integer id) throws SQLException {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_ID.getCRUD(), deliveryRowMapper, id);
         } catch (DataAccessException e) {
@@ -38,7 +38,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     }
 
     @Override
-    public List<Delivery> findAll() throws SQLException {
+    public List<Equipment> findAll() throws SQLException {
         try {
             return jdbcTemplate.query(sql_CRUD.SELECT_ALL_DELIVERY.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {
@@ -47,17 +47,17 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     }
 
     @Override
-    public Delivery createDeliveryCustomer(Map<String, Object> parameters) throws SQLException {
+    public Equipment createDeliveryCustomer(Map<String, Object> parameters) throws SQLException {
         Customer customer;
-        Delivery delivery;
+        Equipment equipment;
         try {
             customer = (Customer) parameters.get("customer");
-            delivery = (Delivery) parameters.get("delivery");
-            Delivery parametersDelivery = findParametersForCreateDelivery(customer);
+            equipment = (Equipment) parameters.get("delivery");
+            Equipment parametersEquipment = findParametersForCreateDelivery(customer);
             jdbcTemplate.update(sql_CRUD.INSERT_DELIVERY.getCRUD(),
-                    parametersDelivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
-                    delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
-                    delivery.getDistance(), delivery.getPrice(),
+                    parametersEquipment.getAddress_id(), equipment.getFirstname(), equipment.getLastname(),
+                    equipment.getPhone(), new Timestamp(System.currentTimeMillis()), equipment.getStock_index(),
+                    equipment.getDistance(), equipment.getPrice(),
                     new Date(System.currentTimeMillis()).toLocalDate().plusDays(5));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -65,36 +65,36 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
         return findMaxIdDelivery();
     }
 
-    public Delivery findParametersForCreateDelivery(Customer customer) {
-        Delivery parametersDelivery;
+    public Equipment findParametersForCreateDelivery(Customer customer) {
+        Equipment parametersEquipment;
         try {
-            parametersDelivery = new Delivery();
-            parametersDelivery = jdbcTemplate.query(sql_CRUD.SELECT_ID_CONTRACT_ITEM_ADDRESS_ON_USERNAME_MAIL.getCRUD(),
-                    new ResultSetExtractor<Delivery>() {
+            parametersEquipment = new Equipment();
+            parametersEquipment = jdbcTemplate.query(sql_CRUD.SELECT_ID_CONTRACT_ITEM_ADDRESS_ON_USERNAME_MAIL.getCRUD(),
+                    new ResultSetExtractor<Equipment>() {
                         @Override
-                        public Delivery extractData(ResultSet rs) throws SQLException, DataAccessException {
-                            Delivery parametersDelivery = new Delivery();
+                        public Equipment extractData(ResultSet rs) throws SQLException, DataAccessException {
+                            Equipment parametersEquipment = new Equipment();
                             while (rs.next()) {
-                                parametersDelivery = Delivery.builder().
+                                parametersEquipment = Equipment.builder().
                                         address_id(rs.getInt(2)).build();
                             }
-                            return parametersDelivery;
+                            return parametersEquipment;
                         }
                     }, customer.getUsername(), customer.getMail());
 
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
-        return parametersDelivery;
+        return parametersEquipment;
     }
 
     @Override
-    public Delivery create(Delivery delivery) throws SQLException {
+    public Equipment create(Equipment equipment) throws SQLException {
         try {
             jdbcTemplate.update(sql_CRUD.INSERT_DELIVERY.getCRUD(),
-                    delivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
-                    delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
-                    delivery.getDistance(), delivery.getPrice(),
+                    equipment.getAddress_id(), equipment.getFirstname(), equipment.getLastname(),
+                    equipment.getPhone(), new Timestamp(System.currentTimeMillis()), equipment.getStock_index(),
+                    equipment.getDistance(), equipment.getPrice(),
                     new Date(System.currentTimeMillis()).toLocalDate().plusDays(5));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -103,12 +103,12 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     }
 
     @Override
-    public Delivery update(Delivery delivery) throws SQLException {
+    public Equipment update(Equipment equipment) throws SQLException {
         try {
             jdbcTemplate.update(sql_CRUD.UPDATE_DELIVERY_ON_ID.getCRUD(),
-                    delivery.getAddress_id(), delivery.getFirstname(), delivery.getLastname(),
-                    delivery.getPhone(), new Timestamp(System.currentTimeMillis()), delivery.getStock_index(),
-                    delivery.getDistance(), delivery.getPrice(),
+                    equipment.getAddress_id(), equipment.getFirstname(), equipment.getLastname(),
+                    equipment.getPhone(), new Timestamp(System.currentTimeMillis()), equipment.getStock_index(),
+                    equipment.getDistance(), equipment.getPrice(),
                     new Date(System.currentTimeMillis()).toLocalDate().plusDays(3));
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
@@ -126,7 +126,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     }
 
     @Override
-    public Delivery findMaxIdDelivery() {
+    public Equipment findMaxIdDelivery() {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_MAX_ID.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {
@@ -135,7 +135,7 @@ public class DeliveryRepositoryJDBCTemplateImpl implements DeliveryRepository {
     }
 
     @Override
-    public Delivery findMinIdDelivery() {
+    public Equipment findMinIdDelivery() {
         try {
             return jdbcTemplate.queryForObject(sql_CRUD.SELECT_DELIVERY_ON_MIN_ID.getCRUD(), deliveryRowMapper);
         } catch (DataAccessException e) {

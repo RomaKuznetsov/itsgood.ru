@@ -7,7 +7,7 @@ import com.itsgood.ru.converters.AddressConverterRequestCreate;
 import com.itsgood.ru.converters.AddressConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.AddressDTO;
 import com.itsgood.ru.domain.hibernate.CustomerDTO;
-import com.itsgood.ru.domain.hibernate.DeliveryDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.spring.AddressDataRepository;
 import com.itsgood.ru.codes.CodeAddress;
 import lombok.RequiredArgsConstructor;
@@ -34,64 +34,74 @@ public class AddressDataService {
     private final AddressConverterRequestCreate addressConverterRequestCreate;
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public AddressDTO createHibernateAddress(AddressRequestCreate request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public AddressDTO createAddress(AddressRequestCreate request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         AddressDTO addressDTO = addressConverterRequestCreate.convert(request);
-        if (!customerDTO.getAddress().contains(addressDTO)) {
+        Set<AddressDTO> searchAddress = customerDTO.getAddress();
+        if (!searchAddress.contains(addressDTO)) {
             addressDTO.setCustomer(customerDTO);
             addressDTO = addressDataRepository.save(addressDTO);
-        } else throw new EntityExistsException();
+            if (addressDTO.getCode().contains("REG")) {
+                customerDTO.getContract().setAddress(addressDTO);
+            }
+        } else throw new EntityExistsException("This address already exists");
+
         return addressDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public AddressDTO updateHibernateAddress(AddressRequestUpdate request) {
-        return addressDataRepository.save(addressConverterRequestUpdate.convert(request));
+        AddressDTO updateAddress = addressConverterRequestUpdate.convert(request);
+        return addressDataRepository.save(updateAddress);
     }
 
-    public AddressDTO findHibernateAddressById(Integer id) {
+    public AddressDTO findAddressById(Integer id) {
         Optional<AddressDTO> searchResult = addressDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public Set<DeliveryDTO> findSetHibernateDelivery(AddressRequestSearch request) {
-        return findHibernateAddressById(request.getId()).getDeliveries();
+    public Set<EquipmentDTO> findSetEquipment(AddressRequestSearch request) {
+        return findAddressById(request.getId()).getEquipments();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateAddressById(Integer id) {
+    public void deleteAddressById(Integer id) {
         addressDataRepository.deleteById(id);
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
-    public void deleteHibernateAddress(AddressRequestUpdate request) {
-        addressDataRepository.delete(addressConverterRequestUpdate.convert(request));
+    public void deleteAddress(AddressRequestUpdate request) {
+        AddressDTO deleteAddress = addressConverterRequestUpdate.convert(request);
+        Set<AddressDTO> searchResult = customerDataService.findAllAddressCustomerByAuthenticate();
+        if (searchResult.contains(deleteAddress)) {
+            addressDataRepository.delete(deleteAddress);
+        } else throw new EntityNotFoundException("No such address");
     }
 
-    public List<AddressDTO> findListHibernateAddressRegistration() {
+    public List<AddressDTO> findListAddressRegistration() {
         return addressDataRepository.findAllHibernateAddressByCode(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
     }
 
-    @Cacheable("delivery")
-    public Set<DeliveryDTO> findListHibernateDeliveryOneAddress(AddressRequestSearch request) {
-        return findHibernateAddressById(request.getId()).getDeliveries();
+    @Cacheable("equipment")
+    public Set<EquipmentDTO> findListEquipmentOneAddress(AddressRequestSearch request) {
+        return findAddressById(request.getId()).getEquipments();
     }
 
-    public List<AddressDTO> findAllHibernateAddressByAuthenticateAndCode(AddressRequestSearch request) {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public List<AddressDTO> findAllAddressByAuthenticateAndCode(AddressRequestSearch request) {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<AddressDTO>> searchResult = addressDataRepository.
-                findHibernateAddressByCustomerAndCode(customerDTO, request.getCode());
+                findAddressByCustomerAndCode(customerDTO, request.getCode());
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
 
-    public AddressDTO findHibernateAddressByAuthenticateAndRegistration() {
-        CustomerDTO customerDTO = customerDataService.findHibernateCustomerByAuthenticationInfo();
+    public AddressDTO findAddressByAuthenticateAndRegistration() {
+        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         Optional<List<AddressDTO>> searchResult = addressDataRepository.
-                findHibernateAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
+                findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
         return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
     }
 
-    public List<AddressDTO> findAllHibernateAddress() {
+    public List<AddressDTO> findAllAddress() {
         return addressDataRepository.findAll();
     }
 

@@ -12,7 +12,7 @@ public interface ItemDataRepository extends JpaRepository<ItemDTO, Integer>,
         PagingAndSortingRepository<ItemDTO, Integer>,
         CrudRepository<ItemDTO, Integer> {
 
-    Optional<ItemDTO> findHibernateItemByIdOrTitle(Integer id, String title);
+    Optional<ItemDTO> findItemByIdOrTitle(Integer id, String title);
     Optional<List<ItemDTO>> findHibernateItemByTitleAndPriceAfterOrFirm(String title, int price, String firm);
     Optional<List<ItemDTO>> findHibernateItemByTitleAndPriceBeforeOrFirm(String title, int price, String firm);
     Optional<List<ItemDTO>> findHibernateItemByTitleAndDescription(String title, String description);

@@ -12,6 +12,6 @@ public class PaymentRequestUpdate {
     private int id;
     private String status;
     @NotNull
-    @Pattern(regexp = "//d{9}")
+    @Pattern(regexp = "\\d{9}")
     private int phone;
 }

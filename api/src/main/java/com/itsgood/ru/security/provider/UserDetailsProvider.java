@@ -29,7 +29,6 @@ public class UserDetailsProvider implements UserDetailsService {
             Optional<CustomerDTO> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
             if (searchResult.isPresent()) {
                 CustomerDTO customerDTO = searchResult.get();
-                //конвертни его через поиск в Hibernate
                 return new org.springframework.security.core.userdetails.User(
                         customerDTO.getMail(),
                         customerDTO.getAuthenticationInfo().getPassword(),

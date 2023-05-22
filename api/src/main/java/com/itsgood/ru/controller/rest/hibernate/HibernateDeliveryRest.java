@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.hibernate.DeliveryDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.hibernate.HibernateDeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class HibernateDeliveryRest {
 
     @GetMapping(value = "/findAllDeliveries", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> findAllDeliveries() throws SQLException {
-        List<DeliveryDTO> customers = deliveryService.findAll();
+        List<EquipmentDTO> customers = deliveryService.findAll();
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }

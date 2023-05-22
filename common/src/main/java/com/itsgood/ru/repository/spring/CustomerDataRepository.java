@@ -12,7 +12,7 @@ public interface CustomerDataRepository extends JpaRepository<CustomerDTO, Integ
         CrudRepository<CustomerDTO, Integer> {
 
     Optional<CustomerDTO> findByMail(String mail);
-
     Optional<CustomerDTO> findByAuthenticationInfoUsername(String username);
+    Optional<CustomerDTO> findByPhone(int phone);
 
 }

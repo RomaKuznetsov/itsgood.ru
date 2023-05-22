@@ -12,7 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,23 +28,22 @@ public class AuthenticationController {
     private final TokenProvider provider;
     private final UserDetailsService userProvider;
     private final JWTConfiguration jwtConfiguration;
-
-
+    private final PasswordEncoder passwordEncoder;
+    //ok
     @PostMapping(value = "/authentication", consumes = {"application/xml", "application/json"})
     public ResponseEntity<AuthResponse> loginUser(@AuthenticationPrincipal(expression = "request") @RequestBody AuthRequest request) {
         /*Check login and password*/
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getLogin(),
-                        request.getPassword() + jwtConfiguration.getServerPasswordSalt()
-                ));
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        UserDetails userDetails = userProvider.loadUserByUsername(request.getLogin());
+        if (passwordEncoder.matches(userDetails.getPassword(),request.getPassword() +
+                jwtConfiguration.getServerPasswordSalt())) {
+            Authentication authenticate = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getLogin(), userDetails.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authenticate);
+        }
         /*Generate token with answer to user*/
         return ResponseEntity.ok(
                 AuthResponse.builder().login(request.getLogin())
-                        .token(provider.generateToken(userProvider.loadUserByUsername(request.getLogin()))).build());
-
+                        .token(provider.generateToken(userDetails)).build());
     }
-
-
 }

@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.impl;
 
-import com.itsgood.ru.domain.Delivery;
+import com.itsgood.ru.domain.Equipment;
 import com.itsgood.ru.old.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.log4j.Logger;
@@ -37,22 +37,22 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
         }
     }
     @Override
-    public Delivery findOne(Integer id) throws SQLException {
+    public Equipment findOne(Integer id) throws SQLException {
         return null;
     }
 
     @Override
-    public List<Delivery> findAll() throws SQLException {
+    public List<Equipment> findAll() throws SQLException {
         return null;
     }
 
     @Override
-    public Delivery create(Delivery object) throws SQLException {
+    public Equipment create(Equipment object) throws SQLException {
         return null;
     }
 
     @Override
-    public Delivery update(Delivery object) throws SQLException {
+    public Equipment update(Equipment object) throws SQLException {
         return null;
     }
 
@@ -62,17 +62,17 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
     }
 
     @Override
-    public Delivery findMaxIdDelivery() throws SQLException {
+    public Equipment findMaxIdDelivery() throws SQLException {
         return null;
     }
 
     @Override
-    public Delivery findMinIdDelivery() throws SQLException {
+    public Equipment findMinIdDelivery() throws SQLException {
         return null;
     }
 
     @Override
-    public Delivery createDeliveryCustomer(Map<String, Object> parameters) throws SQLException {
+    public Equipment createDeliveryCustomer(Map<String, Object> parameters) throws SQLException {
         return null;
     }
 }

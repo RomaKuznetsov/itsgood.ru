@@ -12,5 +12,4 @@ public class ContractRequestUpdate {
 
     private String payment_types;
 
-    private String relevance;
 }

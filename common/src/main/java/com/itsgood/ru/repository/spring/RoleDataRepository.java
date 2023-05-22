@@ -14,5 +14,5 @@ public interface RoleDataRepository extends JpaRepository<RoleDTO, Integer>,
         PagingAndSortingRepository<RoleDTO, Integer>,
         CrudRepository<RoleDTO, Integer> {
 
-    Optional<List<RoleDTO>> findHibernateRolesByCustomerAndValidityIsAfter(CustomerDTO customerDTO, Date validity);
+    Optional<List<RoleDTO>> findRolesByCustomerAndValidityIsAfter(CustomerDTO customerDTO, Date validity);
 }

@@ -15,7 +15,6 @@ import java.sql.Timestamp;
 public class RoleRequestCreate {
 
     private String role = RoleCustomer.ROLE_PERSON_USER.getRole();
-    @NotNull
     private int customer_id;
     @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")

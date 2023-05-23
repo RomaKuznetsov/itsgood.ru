@@ -45,15 +45,12 @@ public class ContractDataService {
         Optional<ContractDTO> searchContract = contractDataRepository.findContractByCustomer(customerDTO);
         return searchContract.orElseThrow(EntityNotFoundException::new);
     }
-//ok
+
+    //ok
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public ContractDTO createContract(ContractRequestCreate request) {
-        CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         ContractDTO contractDTO = contractConverterRequestCreate.convert(request);
-        if (customerDTO.getContract() == null) {
-            contractDTO.setCustomer(customerDTO);
-            contractDTO = contractDataRepository.save(contractDTO);
-        } else throw new EntityExistsException("Such a contract already exists");
+        contractDTO = contractDataRepository.save(contractDTO);
         return contractDTO;
     }
 

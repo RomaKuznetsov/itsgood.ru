@@ -9,6 +9,7 @@ import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.spring.EquipmentDataRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +30,15 @@ public class EquipmentDataService {
     private final EquipmentConverterRequestUpdate equipmentConverterRequestUpdate;
     private final EquipmentConverterRequestCreate equipmentConverterRequestCreate;
 
+    @Cacheable("equipment")
+    public List<EquipmentDTO> findAllEquipment() {
+        return equipmentDataRepository.findAll();
+    }
+
     public EquipmentDTO findEquipmentById(Integer id) {
         Optional<EquipmentDTO> searchResult = equipmentDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
     }
-
-    public List<EquipmentDTO> findAll() {
-        return equipmentDataRepository.findAll();
-    }
-
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public EquipmentDTO createEquipment(EquipmentRequestCreate request) {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();

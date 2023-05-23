@@ -6,10 +6,10 @@ import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.repository.hibernate.exception.EntityNotFoundException;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
-import com.itsgood.ru.service.spring.CustomerDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Optional;
 
@@ -22,12 +22,11 @@ public class RoleConverterRequestCreateImpl implements RoleConverterRequestCreat
     public RoleDTO convert(RoleRequestCreate request) {
         RoleDTO roleDTO = new RoleDTO();
         Optional<CustomerDTO> searchCustomer = customerDataRepository.findById(request.getCustomer_id());
-        if (searchCustomer.isPresent()) {
-            roleDTO.setCustomer(searchCustomer.orElseThrow(EntityNotFoundException::new));
-        }
+        CustomerDTO customerDTO = searchCustomer.orElseThrow(EntityNotFoundException::new);
+        roleDTO.setCustomer(customerDTO);
         roleDTO.setRole(request.getRole());
         roleDTO.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-        roleDTO.setValidity(request.getValidity());
+        roleDTO.setValidity(Date.valueOf(new Date(new Timestamp(System.currentTimeMillis()).getTime()).toLocalDate().plusYears(1)));
         return roleDTO;
-    }
+}
 }

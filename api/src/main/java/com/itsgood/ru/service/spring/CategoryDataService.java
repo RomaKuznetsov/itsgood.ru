@@ -30,6 +30,11 @@ public class CategoryDataService {
     private final CategoryConverterRequestUpdate categoryConverterRequestUpdate;
     private final CategoryConverterRequestCreate categoryConverterRequestCreate;
 
+    @Cacheable("category")
+    public List<CategoryDTO> findAllCategories() {
+        return categoryDataRepository.findAll();
+    }
+
     public CategoryDTO findCategoryById(Integer id) {
         Optional<CategoryDTO> searchResult = categoryDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
@@ -43,11 +48,6 @@ public class CategoryDataService {
     public CategoryDTO findCategoryByTitleOrId(CategoryRequestSearch request) {
         Optional<CategoryDTO> searchResult = categoryDataRepository.findCategoryByTitleOrId(request.getTitle(), request.getId());
         return searchResult.orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Cacheable("category")
-    public List<CategoryDTO> findAllCategories() {
-        return categoryDataRepository.findAll();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

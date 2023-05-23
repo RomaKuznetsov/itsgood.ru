@@ -6,6 +6,7 @@ import com.itsgood.ru.controller.request.address.AddressRequestUpdate;
 import com.itsgood.ru.converters.AddressConverterRequestCreate;
 import com.itsgood.ru.converters.AddressConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.AddressDTO;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.spring.AddressDataRepository;
@@ -34,21 +35,23 @@ public class AddressDataService {
     private final AddressConverterRequestUpdate addressConverterRequestUpdate;
     private final AddressConverterRequestCreate addressConverterRequestCreate;
 
+    @Cacheable("address")
+    public List<AddressDTO> findAllAddress() {
+        return addressDataRepository.findAll();
+    }
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public AddressDTO createAddress(AddressRequestCreate request) {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         AddressDTO addressDTO = addressConverterRequestCreate.convert(request);
-//        Set<AddressDTO> searchAddress = customerDTO.getAddress();
-        List<AddressDTO> searchAddress = addressDataRepository.findAddressByCustomerAndCode(customerDTO, request.getCode());
+        Set<AddressDTO> searchAddress = customerDTO.getAddress();
         if (!searchAddress.contains(addressDTO)) {
             addressDTO.setCustomer(customerDTO);
-            addressDTO = addressDataRepository.save(addressDTO);
+            AddressDTO createAddress = addressDataRepository.save(addressDTO);
             if (addressDTO.getCode().contains("REG")) {
-                customerDTO.getContract().setAddress(addressDTO);
-            }
+                ContractDTO contractDTO = customerDTO.getContract();
+                contractDTO.setAddress(createAddress);
+            } return createAddress;
         } else throw new EntityExistsException("This address already exists");
-
-        return addressDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
@@ -84,29 +87,17 @@ public class AddressDataService {
         return addressDataRepository.findAllHibernateAddressByCode(CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
     }
 
-    @Cacheable("equipment")
     public Set<EquipmentDTO> findListEquipmentOneAddress(AddressRequestSearch request) {
         return findAddressById(request.getId()).getEquipments();
     }
 
     public List<AddressDTO> findAllAddressByAuthenticateAndCode(AddressRequestSearch request) {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
-//        Optional<List<AddressDTO>> searchResult = addressDataRepository.
-//                findAddressByCustomerAndCode(customerDTO, request.getCode());
-//        return searchResult.orElseThrow(EntityNotFoundException::new);
         return addressDataRepository.findAddressByCustomerAndCode(customerDTO, request.getCode());
     }
 
     public AddressDTO findAddressByAuthenticateAndRegistration() {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
-//        Optional<List<AddressDTO>> searchResult = addressDataRepository.
-//                findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
-//        return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
         return addressDataRepository.findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode()).get(0);
     }
-
-    public List<AddressDTO> findAllAddress() {
-        return addressDataRepository.findAll();
-    }
-
 }

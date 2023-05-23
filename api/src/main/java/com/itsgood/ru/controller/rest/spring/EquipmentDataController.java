@@ -33,9 +33,9 @@ public class EquipmentDataController {
         return new ResponseEntity<>(equipmentDataService.findEquipmentById(request.getId()), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/findAll", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<List<EquipmentDTO>> findAll() {
-        return new ResponseEntity<>(equipmentDataService.findAll(), HttpStatus.OK);
+    @GetMapping(value = "/findAllEquipment", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<List<EquipmentDTO>> findAllEquipment() {
+        return new ResponseEntity<>(equipmentDataService.findAllEquipment(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/createEquipment", consumes = {"application/xml", "application/json"})

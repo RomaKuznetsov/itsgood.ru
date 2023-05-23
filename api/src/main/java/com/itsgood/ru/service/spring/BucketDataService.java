@@ -7,11 +7,13 @@ import com.itsgood.ru.converters.BucketConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.BucketDTO;
 import com.itsgood.ru.repository.spring.BucketDataRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -30,6 +32,10 @@ public class BucketDataService {
     public BucketDTO findBucketById(Integer id) {
         Optional<BucketDTO> searchResult = bucketDataRepository.findById(id);
         return searchResult.orElseThrow(EntityNotFoundException::new);
+    }
+    @Cacheable("bucket")
+    public List<BucketDTO> findAllBucket() {
+        return bucketDataRepository.findAll();
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

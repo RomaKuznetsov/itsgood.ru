@@ -10,17 +10,15 @@ import com.itsgood.ru.domain.hibernate.*;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.jwt.TokenProvider;
 import com.itsgood.ru.security.util.CustomHeaders;
-import com.itsgood.ru.security.util.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.transaction.annotation.Isolation.DEFAULT;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
@@ -33,8 +31,7 @@ public class CustomerDataService {
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
-
-    //    @Cacheable("customer")
+    @Cacheable("customer")
     public List<CustomerDTO> findAllCustomer() {
         return customerDataRepository.findAll();
     }
@@ -78,54 +75,42 @@ public class CustomerDataService {
     public void deleteCustomerById(Integer id) {
         customerDataRepository.delete(findCustomerById(id));
     }
-
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public void deleteCustomerByAuthenticationInfo() {
         customerDataRepository.delete(findCustomerByAuthenticationInfo());
     }
-
+    public Set<AddressDTO> findAllAddressCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findCustomerByAuthenticationInfo();
+        Set<AddressDTO> addresses = customerDTO.getAddress();
+        return addresses;
+    }
+    public Set<AddressDTO> findAllAddressCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findCustomerById(request.getId());
+        Set<AddressDTO> addresses = customerDTO.getAddress();
+        return addresses;
+    }
+    public Set<PaymentDTO> findAllPaymentCustomerByAuthenticate() {
+        CustomerDTO customerDTO = findCustomerByAuthenticationInfo();
+        Set<PaymentDTO> payments = customerDTO.getPayments();
+        return payments;
+    }
+    public Set<PaymentDTO> findAllPaymentsCustomerById(CustomerRequestSearch request) {
+        CustomerDTO customerDTO = findCustomerById(request.getId());
+        Set<PaymentDTO> payments = customerDTO.getPayments();
+        return payments;
+    }
     @Cacheable("role")
     public Set<RoleDTO> findAllRolesCustomerByAuthenticate() {
         CustomerDTO customerDTO = findCustomerByAuthenticationInfo();
         Set<RoleDTO> roles = customerDTO.getRoles();
         return roles;
     }
-
     @Cacheable("role")
     public Set<RoleDTO> findAllRolesCustomerById(CustomerRequestSearch request) {
         CustomerDTO customerDTO = findCustomerById(request.getId());
         Set<RoleDTO> roles = customerDTO.getRoles();
         return roles;
     }
-
-    @Cacheable("address")
-    public Set<AddressDTO> findAllAddressCustomerByAuthenticate() {
-        CustomerDTO customerDTO = findCustomerByAuthenticationInfo();
-        Set<AddressDTO> addresses = customerDTO.getAddress();
-        return addresses;
-    }
-
-    @Cacheable("address")
-    public Set<AddressDTO> findAllAddressCustomerById(CustomerRequestSearch request) {
-        CustomerDTO customerDTO = findCustomerById(request.getId());
-        Set<AddressDTO> addresses = customerDTO.getAddress();
-        return addresses;
-    }
-
-    @Cacheable("payment")
-    public Set<PaymentDTO> findAllPaymentCustomerByAuthenticate() {
-        CustomerDTO customerDTO = findCustomerByAuthenticationInfo();
-        Set<PaymentDTO> payments = customerDTO.getPayments();
-        return payments;
-    }
-
-    @Cacheable("payment")
-    public Set<PaymentDTO> findAllPaymentsCustomerById(CustomerRequestSearch request) {
-        CustomerDTO customerDTO = findCustomerById(request.getId());
-        Set<PaymentDTO> payments = customerDTO.getPayments();
-        return payments;
-    }
-
     @Cacheable("contract")
     public ContractDTO findContractCustomerByAuthenticate() {
         CustomerDTO customerDTO = findCustomerByAuthenticationInfo();

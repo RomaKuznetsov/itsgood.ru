@@ -14,9 +14,7 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class RoleConverterRequestUpdateImpl implements RoleConverterRequestUpdate {
-
     private final RoleDataRepository roleDataRepository;
-
     @Override
     public RoleDTO convert(RoleRequestUpdate request) {
         Optional<RoleDTO> searchResult = roleDataRepository.findById(request.getId());

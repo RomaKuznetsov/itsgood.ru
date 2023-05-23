@@ -1,5 +1,6 @@
 package com.itsgood.ru.domain.hibernate;
 
+import org.springframework.cache.annotation.Cacheable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"address", "payments", "roles", "contract"})
 @Table(name = "Customer")
-//@Cacheable("customer")
+@Cacheable("customer")
 public class CustomerDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

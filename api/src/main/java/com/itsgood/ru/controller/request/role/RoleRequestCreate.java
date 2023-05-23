@@ -18,6 +18,5 @@ public class RoleRequestCreate {
     private int customer_id;
     @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date validity = Date.valueOf(new Date(new Timestamp(System.currentTimeMillis()).getTime()).
-                 toLocalDate().plusYears(1));
+    private Date validity;
 }

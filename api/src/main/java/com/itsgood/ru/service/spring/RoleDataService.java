@@ -43,9 +43,6 @@ public class RoleDataService {
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)
     public RoleDTO createRole(RoleRequestCreate request) {
         RoleDTO roleDTO = roleConverterRequestCreate.convert(request);
-        if (roleDTO.getCustomer() == null) {
-            roleDTO.setCustomer(customerDataService.findCustomerByAuthenticationInfo());
-        }
         if (!roleDTO.getCustomer().getRoles().contains(roleDTO)) {
             roleDTO = roleDataRepository.save(roleDTO);
         } else throw new EntityExistsException("User has this role");
@@ -56,11 +53,6 @@ public class RoleDataService {
     public RoleDTO updateRole(RoleRequestUpdate request) {
         CustomerDTO customerDTO = customerDataService.findCustomerById(request.getCustomer_id());
         RoleDTO roleDTO = roleConverterRequestUpdate.convert(request);
-        Set<RoleDTO> roles = customerDTO.getRoles();
-        if (roles.contains(roleDTO)) {
-            roleDTO.setCustomer(customerDTO);
-            roleDTO = roleDataRepository.save(roleDTO);
-        } else throw new EntityNotFoundException("User does not have this role");
         return roleDTO;
     }
 

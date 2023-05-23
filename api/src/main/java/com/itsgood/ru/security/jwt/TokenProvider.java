@@ -9,12 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.jsonwebtoken.Claims.SUBJECT;
@@ -26,13 +21,9 @@ public class TokenProvider {
 
     /*Generate JWT Token and fields in token. Also add signature into 3-d part of token*/
     public static final String CREATE_VALUE = "created";
-
     public static final String ROLES = "roles";
-
     public static final String JWT = "JWT";
-
     public static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS512;
-
     private final JWTConfiguration jwtTokenConfig;
 
     private String generateToken(Map<String, Object> claims) {
@@ -58,8 +49,10 @@ public class TokenProvider {
     }
 
     public String getUsernameFromToken(String token) {
-        return getClaimsFromToken(token).getSubject();
+        final Claims claims = getClaimsFromToken(token);
+        return claims.getSubject();
     }
+
     public Date getCreatedDateFromToken(String token) {
         return (Date) getClaimsFromToken(token).get(CREATE_VALUE);
     }
@@ -134,7 +127,6 @@ public class TokenProvider {
         final String username = getUsernameFromToken(token);
         return username.equals(userDetails.getUsername());
     }
-
 
 
 }

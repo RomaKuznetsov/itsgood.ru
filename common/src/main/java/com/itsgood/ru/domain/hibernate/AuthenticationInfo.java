@@ -1,12 +1,7 @@
 package com.itsgood.ru.domain.hibernate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.net.httpserver.HttpPrincipal;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.context.annotation.Bean;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Embeddable;

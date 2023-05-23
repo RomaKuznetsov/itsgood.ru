@@ -1,10 +1,9 @@
 package com.itsgood.ru.security.provider;
 
+import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
 import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
-import com.itsgood.ru.old.service.CustomerService;
-import com.itsgood.ru.old.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +17,8 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class UserDetailsProvider implements UserDetailsService {
-    private final CustomerService customerService;
     private final CustomerDataRepository customerDataRepository;
-    private final RoleService roleService;
-
+    private final AuthenticationInfo authenticationInfo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -29,6 +26,7 @@ public class UserDetailsProvider implements UserDetailsService {
             Optional<CustomerDTO> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
             if (searchResult.isPresent()) {
                 CustomerDTO customerDTO = searchResult.get();
+                authenticationInfo.setUsername(customerDTO.getAuthenticationInfo().getUsername());
                 return new org.springframework.security.core.userdetails.User(
                         customerDTO.getMail(),
                         customerDTO.getAuthenticationInfo().getPassword(),

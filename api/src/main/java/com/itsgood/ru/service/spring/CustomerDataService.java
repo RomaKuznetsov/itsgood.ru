@@ -1,24 +1,23 @@
 package com.itsgood.ru.service.spring;
 
-import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestSearch;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
-import com.itsgood.ru.controller.request.role.RoleRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestUpdate;
 import com.itsgood.ru.domain.hibernate.*;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
+import com.itsgood.ru.security.util.PrincipalUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.transaction.annotation.Isolation.DEFAULT;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
@@ -26,7 +25,10 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @Service
 @RequiredArgsConstructor
 public class CustomerDataService {
+
     private final AuthenticationInfo authenticationInfo;
+
+    private final PrincipalUtils principalUtils;
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
     private final CustomerConverterRequestUpdate customerConverterRequestUpdate;
@@ -47,6 +49,8 @@ public class CustomerDataService {
     }
 
     public CustomerDTO findCustomerByAuthenticationInfo() {
+//        String userName = principalUtils.getUsername();
+        //UserBuilder
         Optional<CustomerDTO> searchResult = customerDataRepository.
                 findByAuthenticationInfoUsername(authenticationInfo.getUsername());
         return searchResult.orElseThrow(EntityNotFoundException::new);

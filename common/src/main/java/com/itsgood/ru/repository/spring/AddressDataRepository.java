@@ -15,5 +15,5 @@ public interface AddressDataRepository extends JpaRepository<AddressDTO, Integer
         CrudRepository<AddressDTO, Integer> {
 
     List<AddressDTO> findAllHibernateAddressByCode(String code);
-    Optional<List<AddressDTO>> findAddressByCustomerAndCode(CustomerDTO customerDTO, String code);
+    List<AddressDTO> findAddressByCustomerAndCode(CustomerDTO customerDTO, String code);
 }

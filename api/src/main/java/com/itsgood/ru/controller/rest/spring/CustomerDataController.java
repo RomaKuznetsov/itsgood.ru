@@ -13,6 +13,7 @@ import com.itsgood.ru.service.spring.ContractDataService;
 import com.itsgood.ru.service.spring.CustomerDataService;
 import com.itsgood.ru.service.spring.RoleDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +27,10 @@ import java.util.Set;
 @RestController
 @RequestMapping("/rest/spring/customer")
 @RequiredArgsConstructor
-public class CustomerDataController {
+public class CustomerDataController extends HttpHeaders {
     private final PasswordEncoder passwordEncoder;
-    private final JWTConfiguration jwtConfiguration;
     private final CustomerDataService customerDataService;
+    private final JWTConfiguration jwtConfiguration;
     private final RoleDataService roleDataService;
     private final ContractDataService contractDataService;
     private final CustomerDataRepository customerDataRepository;
@@ -81,7 +82,6 @@ public class CustomerDataController {
         }
         return new ResponseEntity<>(customerDataService.findCustomerByMail(request.getMail()), HttpStatus.OK);
     }
-
     //ok
     @DeleteMapping(value = "/deleteCustomerById", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> deleteCustomerById(@Validated @RequestBody CustomerRequestSearch request,
@@ -92,7 +92,6 @@ public class CustomerDataController {
         customerDataService.deleteCustomerById(request.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @DeleteMapping(value = "/deleteCustomerByAuthentication", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Object> deleteCustomerByAuthentication() {
         customerDataService.deleteCustomerByAuthenticationInfo();
@@ -169,7 +168,6 @@ public class CustomerDataController {
     public ResponseEntity<Object> updateUsersPasswords() {
 
         List<CustomerDTO> all = customerDataService.findAllCustomer();
-
         for (CustomerDTO customer : all) {
             AuthenticationInfo authenticationInfo = customer.getAuthenticationInfo();
             String password = authenticationInfo.getPassword();

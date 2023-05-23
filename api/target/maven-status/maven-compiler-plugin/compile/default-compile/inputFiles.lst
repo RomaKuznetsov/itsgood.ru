@@ -52,6 +52,7 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\re
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\contract\ContractRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\RoleConverterRequestUpdate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\EquipmentConverterRequestUpdate.java
+D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\configuration\HttpRequestConfiguration.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\item\ItemRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\configuration\GoogleConfig.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\customer\CustomerRequestCreate.java
@@ -105,6 +106,7 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\Pa
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\CustomerConverterRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\role\RoleRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\basic\CustomerBaseConverter.java
+D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\security\util\PrincipalUtils.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\spring\AddressDataService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\spring\EquipmentDataService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\rest\spring\CustomerDataController.java

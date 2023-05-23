@@ -1,6 +1,5 @@
 package com.itsgood.ru.security.jwt;
 
-
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

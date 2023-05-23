@@ -59,6 +59,7 @@ com\itsgood\ru\converters\ItemConverterRequestUpdate.class
 com\itsgood\ru\controller\rest\hibernate\HibernateItemRest.class
 com\itsgood\ru\service\spring\CustomerDataService.class
 com\itsgood\ru\controller\request\address\AddressRequestUpdate.class
+com\itsgood\ru\configuration\HttpRequestConfiguration.class
 com\itsgood\ru\controller\rest\hibernate\HibernateCategoryRest.class
 com\itsgood\ru\controller\request\payment\PaymentRequestSearch.class
 com\itsgood\ru\configuration\GoogleConfig.class
@@ -122,6 +123,7 @@ com\itsgood\ru\basic\CustomerCreateConverter.class
 com\itsgood\ru\controller\request\category\CategoryRequestUpdate.class
 com\itsgood\ru\converters\impl\equipment\EquipmentConverterRequestCreateImpl.class
 com\itsgood\ru\exceptions\IllegalRequestException.class
+com\itsgood\ru\security\util\PrincipalUtils.class
 com\itsgood\ru\controller\rest\spring\BucketDataController.class
 com\itsgood\ru\converters\impl\bucket\BucketConverterRequestUpdateImpl.class
 com\itsgood\ru\converters\impl\customer\CustomerConverterRequestUpdateImpl.class

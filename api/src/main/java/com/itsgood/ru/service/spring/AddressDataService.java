@@ -20,6 +20,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.springframework.transaction.annotation.Isolation.DEFAULT;
 import static org.springframework.transaction.annotation.Propagation.REQUIRED;
@@ -37,7 +38,8 @@ public class AddressDataService {
     public AddressDTO createAddress(AddressRequestCreate request) {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
         AddressDTO addressDTO = addressConverterRequestCreate.convert(request);
-        Set<AddressDTO> searchAddress = customerDTO.getAddress();
+//        Set<AddressDTO> searchAddress = customerDTO.getAddress();
+        List<AddressDTO> searchAddress = addressDataRepository.findAddressByCustomerAndCode(customerDTO, request.getCode());
         if (!searchAddress.contains(addressDTO)) {
             addressDTO.setCustomer(customerDTO);
             addressDTO = addressDataRepository.save(addressDTO);
@@ -89,16 +91,18 @@ public class AddressDataService {
 
     public List<AddressDTO> findAllAddressByAuthenticateAndCode(AddressRequestSearch request) {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
-        Optional<List<AddressDTO>> searchResult = addressDataRepository.
-                findAddressByCustomerAndCode(customerDTO, request.getCode());
-        return searchResult.orElseThrow(EntityNotFoundException::new);
+//        Optional<List<AddressDTO>> searchResult = addressDataRepository.
+//                findAddressByCustomerAndCode(customerDTO, request.getCode());
+//        return searchResult.orElseThrow(EntityNotFoundException::new);
+        return addressDataRepository.findAddressByCustomerAndCode(customerDTO, request.getCode());
     }
 
     public AddressDTO findAddressByAuthenticateAndRegistration() {
         CustomerDTO customerDTO = customerDataService.findCustomerByAuthenticationInfo();
-        Optional<List<AddressDTO>> searchResult = addressDataRepository.
-                findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
-        return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
+//        Optional<List<AddressDTO>> searchResult = addressDataRepository.
+//                findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode());
+//        return searchResult.orElseThrow(EntityNotFoundException::new).get(0);
+        return addressDataRepository.findAddressByCustomerAndCode(customerDTO, CodeAddress.CODE_ADDRESS_REGISTRATION.getCode()).get(0);
     }
 
     public List<AddressDTO> findAllAddress() {

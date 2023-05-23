@@ -9,7 +9,6 @@ import com.itsgood.ru.security.jwt.TokenProvider;
 import com.itsgood.ru.security.util.CustomHeaders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/rest")
@@ -34,7 +31,7 @@ public class AuthenticationController extends HttpHeaders {
     private final UserDetailsService userProvider;
     private final JWTConfiguration jwtConfiguration;
     private final PasswordEncoder passwordEncoder;
-    private final HttpRequestConfiguration configuration;
+    private final HttpRequestConfiguration httpRequestConfiguration;
 
     //ok
     @PostMapping(value = "/authentication", consumes = {"application/xml", "application/json"})
@@ -49,11 +46,8 @@ public class AuthenticationController extends HttpHeaders {
             SecurityContextHolder.getContext().setAuthentication(authenticate);
         }
         /*Generate token with answer to user*/
-
         String token = provider.generateToken(userDetails);
-        configuration.getHeaders().add(CustomHeaders.X_AUTH_TOKEN, token);
-        String gd = "dada";
-        super.add(CustomHeaders.X_AUTH_TOKEN, token);
+        httpRequestConfiguration.getHeaders().add(CustomHeaders.X_AUTH_TOKEN, token);
         return ResponseEntity.ok(
                 AuthResponse.builder().login(request.getLogin())
                         .token(token).build());

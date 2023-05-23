@@ -4,7 +4,6 @@ import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.converters.ContractConverterRequestCreate;
 import com.itsgood.ru.domain.hibernate.ContractDTO;
 import com.itsgood.ru.domain.hibernate.PaymentDTO;
-import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.service.spring.PaymentDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

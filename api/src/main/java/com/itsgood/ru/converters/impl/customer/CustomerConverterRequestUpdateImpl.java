@@ -18,13 +18,13 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class CustomerConverterRequestUpdateImpl implements CustomerConverterRequestUpdate {
-    private final AuthenticationInfo authenticationInfo;
     private final JWTConfiguration jwtConfiguration;
     private final PasswordEncoder passwordEncoder;
     private final CustomerDataRepository customerDataRepository;
 
     @Override
     public CustomerDTO convert(CustomerRequestUpdate request) {
+        AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         Optional<CustomerDTO> searchResultById = customerDataRepository.findById(request.getId());
         CustomerDTO customerDTO = searchResultById.orElseThrow(EntityNotFoundException::new);
         customerDTO.setFirstname(request.getFirstname());

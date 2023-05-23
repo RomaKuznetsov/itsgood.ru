@@ -19,13 +19,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerConverterRequestCreateImpl implements CustomerConverterRequestCreate {
     private final CustomerDataRepository customerDataRepository;
-    private final AuthenticationInfo authenticationInfo;
     private final JWTConfiguration jwtConfiguration;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public CustomerDTO convert(CustomerRequestCreate request) {
         CustomerDTO customerDTO = new CustomerDTO();
+        AuthenticationInfo authenticationInfo = new AuthenticationInfo();
         customerDTO.setFirstname(request.getFirstname());
         customerDTO.setLastname(request.getLastname());
         Optional<CustomerDTO> searchCustomerByMail = customerDataRepository.findByMail(request.getMail());
@@ -45,13 +45,6 @@ public class CustomerConverterRequestCreateImpl implements CustomerConverterRequ
         customerDTO.setCreate_time(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
         String password = jwtConfiguration.getServerPasswordSalt() + request.getPassword();
         authenticationInfo.setPassword(passwordEncoder.encode(password));
-        Optional<CustomerDTO> searchCustomerByUserName =
-                customerDataRepository.findByAuthenticationInfoUsername(request.getUsername());
-        if (searchCustomerByUserName.isEmpty()) {
-            authenticationInfo.setUsername(request.getUsername());
-        } else if (searchCustomerByUserName.get().equals(customerDTO)) {
-            authenticationInfo.setUsername(request.getUsername());
-        } else throw new EntityExistsException("User with this username already exists");
         authenticationInfo.setUsername(request.getUsername());
         customerDTO.setAuthenticationInfo(authenticationInfo);
         return customerDTO;

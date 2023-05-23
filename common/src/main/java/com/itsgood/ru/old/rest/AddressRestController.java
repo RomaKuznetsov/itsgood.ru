@@ -21,8 +21,6 @@ public class AddressRestController {
     private final AddressAggregationService addressAggregationService;
     private final AddressService addressService;
     private final CustomerService customerService;
-    private final AuthenticationInfo authenticationInfo;
-
     //OK
     @GetMapping(value = "/findCustomerRegistration", consumes = {"application/xml", "application/json"})
     public ResponseEntity<Address> findCustomerRegistration(@RequestBody Customer customer) {
@@ -73,7 +71,7 @@ public class AddressRestController {
         List<Address> listAllAddressOneCustomer;
         Customer findCustomer;
         try {
-            findCustomer = customerService.findCustomerByUsername(authenticationInfo.getUsername()).get();
+            findCustomer = customerService.findCustomerByMail("kuznecby@mail.ru");
             listAllAddressOneCustomer = addressAggregationService.findListAddressOneCustomer(findCustomer);
             address.setCustomer_id(findCustomer.getId());
             if (listAllAddressOneCustomer.size() == 0) {

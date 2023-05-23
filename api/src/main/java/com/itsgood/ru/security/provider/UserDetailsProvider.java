@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDetailsProvider implements UserDetailsService {
     private final CustomerDataRepository customerDataRepository;
-    private final AuthenticationInfo authenticationInfo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -26,7 +25,6 @@ public class UserDetailsProvider implements UserDetailsService {
             Optional<CustomerDTO> searchResult = customerDataRepository.findByAuthenticationInfoUsername(username);
             if (searchResult.isPresent()) {
                 CustomerDTO customerDTO = searchResult.get();
-                authenticationInfo.setUsername(customerDTO.getAuthenticationInfo().getUsername());
                 return new org.springframework.security.core.userdetails.User(
                         customerDTO.getMail(),
                         customerDTO.getAuthenticationInfo().getPassword(),

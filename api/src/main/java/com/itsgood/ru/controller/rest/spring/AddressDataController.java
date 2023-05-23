@@ -1,25 +1,20 @@
 package com.itsgood.ru.controller.rest.spring;
 
-import com.itsgood.ru.configuration.HttpRequestConfiguration;
 import com.itsgood.ru.controller.request.address.AddressRequestCreate;
 import com.itsgood.ru.controller.request.address.AddressRequestSearch;
 import com.itsgood.ru.controller.request.address.AddressRequestUpdate;
 import com.itsgood.ru.domain.hibernate.AddressDTO;
 import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.exceptions.IllegalRequestException;
-import com.itsgood.ru.security.util.CustomHeaders;
 import com.itsgood.ru.service.spring.AddressDataService;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -29,14 +24,10 @@ import java.util.Set;
 public class AddressDataController extends HttpHeaders {
     private final AddressDataService addressDataService;
 
-    private final HttpRequestConfiguration configuration;
+//    @AuthenticationPrincipal Jwt jwt
 
     @PostMapping(value = "/createAddress", consumes = {"application/xml", "application/json"})
     public ResponseEntity<AddressDTO> createAddress(@Validated @RequestBody AddressRequestCreate request, BindingResult result) {
-        String tor = String.valueOf(configuration.getHeaders().get(CustomHeaders.X_AUTH_TOKEN));
-        String head = tor;
-        String hui = String.valueOf(super.get(CustomHeaders.X_AUTH_TOKEN));
-        String chlen = hui;
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -44,7 +35,7 @@ public class AddressDataController extends HttpHeaders {
     }
 
     @PutMapping(value = "/updateAddress", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<AddressDTO> updateAddress(@AuthenticationPrincipal Jwt jwt, @Validated @RequestBody AddressRequestUpdate request, BindingResult result) {
+    public ResponseEntity<AddressDTO> updateAddress(@Validated @RequestBody AddressRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }

@@ -10,4 +10,6 @@ import javax.validation.constraints.NotNull;
 public class ContractRequestCreate {
     @NotNull
     private String payment_types = "cash";
+    @NotNull
+    private int customer_id;
 }

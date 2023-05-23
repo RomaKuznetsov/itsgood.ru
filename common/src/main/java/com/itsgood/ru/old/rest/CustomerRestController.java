@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerRestController {
     private final CustomerAggregationService customerAggregationService;
-
     private final CustomerService customerService;
 
     @PostMapping(value = "/createCustomers", consumes = {"application/xml", "application/json"})

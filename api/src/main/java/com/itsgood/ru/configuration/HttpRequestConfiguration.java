@@ -6,8 +6,6 @@ import org.springframework.http.HttpHeaders;
 
 @Configuration
 public class HttpRequestConfiguration {
-
-
     @Bean
     public HttpHeaders getHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();

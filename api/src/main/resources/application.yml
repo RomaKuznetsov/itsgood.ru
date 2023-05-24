@@ -14,15 +14,15 @@ spring:
     enabled: false
 #    check-location=true
     baseline-on-migrate: true
-    locations: classpath:/db.migration
+#    locations:
+    classpath: db.migration
     baseline-description: Flyway Scripts
-    #    locations: classpath:/db
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     url: ${spring.datasource.url}
     default-schema: public
     out-of-order: true
-    ignore-migration-patterns: '*:ignored'
+#    ignore-migration-patterns: '*:ignored'
     jpa:
       show-sql: true
       properties:

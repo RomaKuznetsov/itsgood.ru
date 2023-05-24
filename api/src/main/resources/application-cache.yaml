@@ -1,0 +1,6 @@
+#    customize each one
+spring:
+  cache:
+    caffeine:
+      cache-names: role, contract, item, category, address, payment, delivery, bucket, customer
+        spec: maximumSize:100, expireAfterAccess=3s, initialCapacity=10

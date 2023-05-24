@@ -1,0 +1,67 @@
+{
+  "groups": [
+    {
+      "name": "amazon.images",
+      "type": "com.itsgood.ru.configuration.AmazonProperties",
+      "sourceType": "com.itsgood.ru.configuration.AmazonProperties"
+    },
+    {
+      "name": "application-cache.yaml",
+      "type": "com.itsgood.ru.configuration.CacheConfiguration",
+      "sourceType": "com.itsgood.ru.configuration.CacheConfiguration"
+    },
+    {
+      "name": "google.servers",
+      "type": "com.itsgood.ru.configuration.GoogleConfig",
+      "sourceType": "com.itsgood.ru.configuration.GoogleConfig"
+    },
+    {
+      "name": "jwtconfig",
+      "type": "com.itsgood.ru.security.configuration.JWTConfiguration",
+      "sourceType": "com.itsgood.ru.security.configuration.JWTConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "amazon.images.password",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.configuration.AmazonProperties"
+    },
+    {
+      "name": "amazon.images.s3",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.configuration.AmazonProperties"
+    },
+    {
+      "name": "amazon.images.token",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.configuration.AmazonProperties"
+    },
+    {
+      "name": "google.servers.name",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.configuration.GoogleConfig"
+    },
+    {
+      "name": "google.servers.port",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.configuration.GoogleConfig"
+    },
+    {
+      "name": "jwtconfig.expiration",
+      "type": "java.lang.Integer",
+      "sourceType": "com.itsgood.ru.security.configuration.JWTConfiguration"
+    },
+    {
+      "name": "jwtconfig.secret",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.security.configuration.JWTConfiguration"
+    },
+    {
+      "name": "jwtconfig.server-password-salt",
+      "type": "java.lang.String",
+      "sourceType": "com.itsgood.ru.security.configuration.JWTConfiguration"
+    }
+  ],
+  "hints": []
+}

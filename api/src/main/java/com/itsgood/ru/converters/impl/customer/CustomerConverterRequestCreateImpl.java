@@ -2,16 +2,15 @@ package com.itsgood.ru.converters.impl.customer;
 
 import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
-import com.itsgood.ru.domain.hibernate.CustomerDTO;
-import com.itsgood.ru.repository.spring.CustomerDataRepository;
+import com.itsgood.ru.domain.AuthenticationInfo;
+import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.repository.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.util.Optional;
 

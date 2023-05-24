@@ -2,8 +2,8 @@ package com.itsgood.ru.converters.impl.category;
 
 import com.itsgood.ru.controller.request.category.CategoryRequestUpdate;
 import com.itsgood.ru.converters.CategoryConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.CategoryDTO;
-import com.itsgood.ru.repository.spring.CategoryDataRepository;
+import com.itsgood.ru.domain.CategoryDTO;
+import com.itsgood.ru.repository.CategoryDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

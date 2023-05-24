@@ -9,10 +9,6 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 public class BucketRequestUpdate {
     @NotNull
-    private int id;
-
-    private int item_id;
-
     private int equipment_id;
 
 }

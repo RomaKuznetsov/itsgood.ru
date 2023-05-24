@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository;
 
-import com.itsgood.ru.domain.Role;
+import com.itsgood.ru.old.domain.Role;
 
 import java.sql.SQLException;
 import java.util.List;

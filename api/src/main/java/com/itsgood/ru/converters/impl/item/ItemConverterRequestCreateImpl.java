@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.item;
 
 import com.itsgood.ru.controller.request.item.ItemRequestCreate;
 import com.itsgood.ru.converters.ItemConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.ItemDTO;
+import com.itsgood.ru.domain.ItemDTO;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;

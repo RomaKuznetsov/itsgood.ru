@@ -1,7 +1,7 @@
 package com.itsgood.ru.basic;
 
-import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
-import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.AuthenticationInfo;
+import com.itsgood.ru.domain.CustomerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

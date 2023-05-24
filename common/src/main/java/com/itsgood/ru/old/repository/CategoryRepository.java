@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository;
 
-import com.itsgood.ru.domain.Category;
+import com.itsgood.ru.old.domain.Category;
 
 import java.sql.SQLException;
 

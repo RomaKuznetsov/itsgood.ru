@@ -2,10 +2,10 @@ package com.itsgood.ru.converters.impl.role;
 
 import com.itsgood.ru.controller.request.role.RoleRequestCreate;
 import com.itsgood.ru.converters.RoleConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.CustomerDTO;
-import com.itsgood.ru.domain.hibernate.RoleDTO;
-import com.itsgood.ru.repository.hibernate.exception.EntityNotFoundException;
-import com.itsgood.ru.repository.spring.CustomerDataRepository;
+import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.domain.RoleDTO;
+import com.itsgood.ru.exception.EntityNotFoundException;
+import com.itsgood.ru.repository.CustomerDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

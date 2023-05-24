@@ -1,6 +1,6 @@
 package com.itsgood.ru.basic;
 
-import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.CustomerDTO;
 import org.springframework.core.convert.converter.Converter;
 
 import java.sql.Timestamp;

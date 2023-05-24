@@ -2,19 +2,17 @@ package com.itsgood.ru.converters.impl.equipment;
 
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestUpdate;
 import com.itsgood.ru.converters.EquipmentConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.ContractDTO;
-import com.itsgood.ru.domain.hibernate.EquipmentDTO;
-import com.itsgood.ru.domain.hibernate.ItemDTO;
-import com.itsgood.ru.service.spring.AddressDataService;
-import com.itsgood.ru.repository.spring.EquipmentDataRepository;
-import com.itsgood.ru.service.spring.ContractDataService;
+import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.service.AddressDataService;
+import com.itsgood.ru.repository.EquipmentDataRepository;
+import com.itsgood.ru.service.ContractDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor

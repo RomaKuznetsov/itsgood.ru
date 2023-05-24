@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Bucket;
+import com.itsgood.ru.old.domain.Bucket;
 import com.itsgood.ru.old.repository.Contract_itemRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.Contract_itemRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;

@@ -1,7 +1,7 @@
 package com.itsgood.ru.old.repository;
 
 
-import com.itsgood.ru.domain.Equipment;
+import com.itsgood.ru.old.domain.Equipment;
 
 import java.sql.SQLException;
 import java.util.Map;

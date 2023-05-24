@@ -1,7 +1,7 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Customer;
-import com.itsgood.ru.domain.Payment;
+import com.itsgood.ru.old.domain.Customer;
+import com.itsgood.ru.old.domain.Payment;
 import com.itsgood.ru.old.repository.PaymentRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.PaymentRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;

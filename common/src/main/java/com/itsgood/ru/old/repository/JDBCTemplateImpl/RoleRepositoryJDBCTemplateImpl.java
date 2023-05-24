@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Role;
+import com.itsgood.ru.old.domain.Role;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.RoleRowMapper;
 import com.itsgood.ru.old.repository.RoleRepository;
 import com.itsgood.ru.old.sql.sql_CRUD;

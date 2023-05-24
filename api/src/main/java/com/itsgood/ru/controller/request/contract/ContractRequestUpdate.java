@@ -9,7 +9,5 @@ import org.springframework.validation.annotation.Validated;
 public class ContractRequestUpdate {
 
     private int id;
-
     private String payment_types;
-
 }

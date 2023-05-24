@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper;
 
-import com.itsgood.ru.domain.Payment;
+import com.itsgood.ru.old.domain.Payment;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.columns.PaymentColumns;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;

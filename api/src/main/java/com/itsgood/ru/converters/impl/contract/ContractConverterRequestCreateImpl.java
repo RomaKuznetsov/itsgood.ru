@@ -2,11 +2,11 @@ package com.itsgood.ru.converters.impl.contract;
 
 import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.converters.ContractConverterRequestCreate;
-import com.itsgood.ru.domain.hibernate.ContractDTO;
-import com.itsgood.ru.domain.hibernate.CustomerDTO;
-import com.itsgood.ru.domain.hibernate.PaymentDTO;
-import com.itsgood.ru.service.spring.CustomerDataService;
-import com.itsgood.ru.service.spring.PaymentDataService;
+import com.itsgood.ru.domain.ContractDTO;
+import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.domain.PaymentDTO;
+import com.itsgood.ru.service.CustomerDataService;
+import com.itsgood.ru.service.PaymentDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

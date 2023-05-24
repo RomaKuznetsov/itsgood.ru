@@ -12,7 +12,7 @@ import java.sql.Date;
 @Validated
 public class PaymentRequestSearch {
 private int id;
-    private String status = StatusPayment.STATUS_PAYMENT_ACTIVE.getStatus();
+    private String status;
     @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date validation;

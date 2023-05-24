@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Category;
+import com.itsgood.ru.old.domain.Category;
 import com.itsgood.ru.old.repository.CategoryRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.CategoryRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;

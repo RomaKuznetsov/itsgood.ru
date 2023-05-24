@@ -1,7 +1,7 @@
 package com.itsgood.ru.old.repository;
 
 
-import com.itsgood.ru.domain.Bucket;
+import com.itsgood.ru.old.domain.Bucket;
 
 import java.sql.SQLException;
 

@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class BucketRequestSearch {
 
     private int id;
+    private int customer_id;
 }

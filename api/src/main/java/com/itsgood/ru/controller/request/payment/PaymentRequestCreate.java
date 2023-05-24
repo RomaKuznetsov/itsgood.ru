@@ -13,14 +13,12 @@ import java.sql.Date;
 @Validated
 public class PaymentRequestCreate {
 
-    private String status;
     @NotNull
-    @Pattern(regexp = "\\d{9}")
+//    @Pattern(regexp = "\\d{9}")
     private int phone;
     @Pattern(regexp = "\\d{16}")
     private String card;
     @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date validity;
-
 }

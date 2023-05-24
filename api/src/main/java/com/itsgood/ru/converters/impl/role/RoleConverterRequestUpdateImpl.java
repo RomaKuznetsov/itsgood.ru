@@ -2,8 +2,8 @@ package com.itsgood.ru.converters.impl.role;
 
 import com.itsgood.ru.controller.request.role.RoleRequestUpdate;
 import com.itsgood.ru.converters.RoleConverterRequestUpdate;
-import com.itsgood.ru.domain.hibernate.RoleDTO;
-import com.itsgood.ru.repository.spring.RoleDataRepository;
+import com.itsgood.ru.domain.RoleDTO;
+import com.itsgood.ru.repository.RoleDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

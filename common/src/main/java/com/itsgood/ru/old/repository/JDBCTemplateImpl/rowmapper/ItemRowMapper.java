@@ -1,6 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper;
 
-import com.itsgood.ru.domain.Item;
+import com.itsgood.ru.old.domain.Item;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

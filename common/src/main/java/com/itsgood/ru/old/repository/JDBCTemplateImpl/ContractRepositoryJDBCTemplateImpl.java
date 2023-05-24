@@ -1,7 +1,7 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl;
 
-import com.itsgood.ru.domain.Contract;
-import com.itsgood.ru.domain.Customer;
+import com.itsgood.ru.old.domain.Contract;
+import com.itsgood.ru.old.domain.Customer;
 import com.itsgood.ru.old.repository.ContractRepository;
 import com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper.ContractRowMapper;
 import com.itsgood.ru.old.sql.sql_CRUD;

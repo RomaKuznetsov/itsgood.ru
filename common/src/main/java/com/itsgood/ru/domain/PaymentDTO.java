@@ -6,6 +6,8 @@ import lombok.*;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.Set;
@@ -27,9 +29,9 @@ public class PaymentDTO {
     @Column(name = "status")
     private String status;
     @Column(name = "phone")
-    private int phone;
+    private BigInteger phone;
     @Column(name = "card")
-    private String card;
+    private BigInteger card;
     @Column(name = "validity")
     private Date validity;
 

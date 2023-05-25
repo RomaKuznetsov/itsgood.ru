@@ -4,7 +4,7 @@ import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestCreate;
 import com.itsgood.ru.domain.AuthenticationInfo;
 import com.itsgood.ru.domain.CustomerDTO;
-import com.itsgood.ru.repository.CustomerDataRepository;
+import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.*;
+import java.math.BigInteger;
 import java.sql.Date;
 
 @Getter
@@ -25,8 +26,9 @@ public class CustomerRequestCreate {
     private String mail;
     @NotNull
     private String password;
-//    @Pattern(regexp = "\\d{9}")
-    private int phone;
+    @DecimalMax(value = "999999999")
+    @DecimalMin(value = "100000000")
+    private BigInteger phone;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;

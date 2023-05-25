@@ -4,9 +4,9 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 
 @Getter
@@ -14,11 +14,12 @@ import java.sql.Date;
 public class PaymentRequestCreate {
 
     @NotNull
-//    @Pattern(regexp = "\\d{9}")
-    private int phone;
-    @Pattern(regexp = "\\d{16}")
-    private String card;
-    @Positive
+    @DecimalMax(value = "999999999")
+    @DecimalMin(value = "100000000")
+    private BigInteger phone;
+    @DecimalMax(value = "9999999999999999")
+    @DecimalMin(value = "1000000000000000")
+    private BigInteger card;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date validity;
 }

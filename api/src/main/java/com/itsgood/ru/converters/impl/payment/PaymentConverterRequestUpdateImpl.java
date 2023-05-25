@@ -5,8 +5,8 @@ import com.itsgood.ru.controller.request.payment.PaymentRequestUpdate;
 import com.itsgood.ru.converters.PaymentConverterRequestUpdate;
 import com.itsgood.ru.domain.CustomerDTO;
 import com.itsgood.ru.domain.PaymentDTO;
-import com.itsgood.ru.repository.PaymentDataRepository;
-import com.itsgood.ru.service.CustomerDataService;
+import com.itsgood.ru.repository.spring.PaymentDataRepository;
+import com.itsgood.ru.service.spring.CustomerDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,10 +35,7 @@ public class PaymentConverterRequestUpdateImpl implements PaymentConverterReques
             }
         }
         paymentDTO.setStatus(request.getStatus());
-        List<PaymentDTO> searchPaymentsByPhone = paymentDataRepository.findPaymentDTOByPhone(request.getPhone());
-        if (searchPaymentsByPhone.isEmpty()) {
-            paymentDTO.setPhone(request.getPhone());
-        } else throw new EntityExistsException("there is already a payment with this number phone");
+        paymentDTO.setPhone(request.getPhone());
         return paymentDTO;
     }
 }

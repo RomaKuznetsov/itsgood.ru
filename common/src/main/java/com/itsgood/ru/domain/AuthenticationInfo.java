@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
+@Component
 public class AuthenticationInfo {
 
     private String username;

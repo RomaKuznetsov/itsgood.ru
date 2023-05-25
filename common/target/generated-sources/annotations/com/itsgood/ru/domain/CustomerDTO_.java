@@ -1,5 +1,6 @@
 package com.itsgood.ru.domain;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import javax.annotation.Generated;
@@ -23,7 +24,7 @@ public abstract class CustomerDTO_ {
 	public static volatile SingularAttribute<CustomerDTO, ContractDTO> contract;
 	public static volatile SingularAttribute<CustomerDTO, String> lastname;
 	public static volatile SingularAttribute<CustomerDTO, Timestamp> update_time;
-	public static volatile SingularAttribute<CustomerDTO, Integer> phone;
+	public static volatile SingularAttribute<CustomerDTO, BigInteger> phone;
 	public static volatile SingularAttribute<CustomerDTO, Integer> id;
 
 	public static final String BIRTHDAY = "birthday";

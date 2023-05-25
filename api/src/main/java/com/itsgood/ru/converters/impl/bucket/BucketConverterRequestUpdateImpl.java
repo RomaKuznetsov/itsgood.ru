@@ -3,20 +3,14 @@ package com.itsgood.ru.converters.impl.bucket;
 import com.itsgood.ru.controller.request.bucket.BucketRequestUpdate;
 import com.itsgood.ru.converters.BucketConverterRequestUpdate;
 import com.itsgood.ru.domain.BucketDTO;
-import com.itsgood.ru.domain.ContractDTO;
 import com.itsgood.ru.domain.EquipmentDTO;
-import com.itsgood.ru.service.BucketDataService;
-import com.itsgood.ru.service.ContractDataService;
-import com.itsgood.ru.service.EquipmentDataService;
-import com.itsgood.ru.service.ItemDataService;
-import com.itsgood.ru.repository.BucketDataRepository;
+import com.itsgood.ru.service.spring.ContractDataService;
+import com.itsgood.ru.service.spring.EquipmentDataService;
+import com.itsgood.ru.repository.spring.BucketDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Component

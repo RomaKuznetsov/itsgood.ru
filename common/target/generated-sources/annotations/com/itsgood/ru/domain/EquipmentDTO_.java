@@ -1,5 +1,6 @@
 package com.itsgood.ru.domain;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import javax.annotation.Generated;
@@ -15,7 +16,7 @@ public abstract class EquipmentDTO_ {
 	public static volatile SingularAttribute<EquipmentDTO, Timestamp> shipment_time;
 	public static volatile SingularAttribute<EquipmentDTO, AddressDTO> address;
 	public static volatile SingularAttribute<EquipmentDTO, String> distance;
-	public static volatile SingularAttribute<EquipmentDTO, Integer> phone;
+	public static volatile SingularAttribute<EquipmentDTO, BigInteger> phone;
 	public static volatile SingularAttribute<EquipmentDTO, Integer> price;
 	public static volatile SingularAttribute<EquipmentDTO, Timestamp> loading_time;
 	public static volatile SetAttribute<EquipmentDTO, BucketDTO> buckets;

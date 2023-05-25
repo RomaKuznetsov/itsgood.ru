@@ -2,6 +2,7 @@ package com.itsgood.ru.security.controller;
 
 
 import com.itsgood.ru.configuration.HttpRequestConfiguration;
+import com.itsgood.ru.domain.AuthenticationInfo;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import com.itsgood.ru.security.dto.AuthRequest;
 import com.itsgood.ru.security.dto.AuthResponse;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/rest")
 public class AuthenticationController extends HttpHeaders {
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationInfo authenticationInfo;
     private final TokenProvider provider;
     private final UserDetailsService userProvider;
     private final JWTConfiguration jwtConfiguration;
@@ -48,6 +50,7 @@ public class AuthenticationController extends HttpHeaders {
         /*Generate token with answer to user*/
         String token = provider.generateToken(userDetails);
         httpRequestConfiguration.getHeaders().add(CustomHeaders.X_AUTH_TOKEN, token);
+        authenticationInfo.setUsername(userDetails.getUsername());
         return ResponseEntity.ok(
                 AuthResponse.builder().login(request.getLogin())
                         .token(token).build());

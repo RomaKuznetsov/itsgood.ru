@@ -5,7 +5,7 @@ import com.itsgood.ru.converters.RoleConverterRequestCreate;
 import com.itsgood.ru.domain.CustomerDTO;
 import com.itsgood.ru.domain.RoleDTO;
 import com.itsgood.ru.exception.EntityNotFoundException;
-import com.itsgood.ru.repository.CustomerDataRepository;
+import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

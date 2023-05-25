@@ -4,9 +4,9 @@ import com.itsgood.ru.controller.request.equipment.EquipmentRequestUpdate;
 import com.itsgood.ru.converters.EquipmentConverterRequestUpdate;
 import com.itsgood.ru.domain.EquipmentDTO;
 import com.itsgood.ru.domain.ItemDTO;
-import com.itsgood.ru.service.AddressDataService;
-import com.itsgood.ru.repository.EquipmentDataRepository;
-import com.itsgood.ru.service.ContractDataService;
+import com.itsgood.ru.service.spring.AddressDataService;
+import com.itsgood.ru.repository.spring.EquipmentDataRepository;
+import com.itsgood.ru.service.spring.ContractDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

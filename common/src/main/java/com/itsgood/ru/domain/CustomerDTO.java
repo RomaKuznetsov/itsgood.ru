@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class CustomerDTO {
     private AuthenticationInfo authenticationInfo;
 
     @Column(name = "phone")
-    private int phone;
+    private BigInteger phone;
     @Column(name = "birthday")
     private Date birthday;
     @Column(name = "gender")

@@ -4,9 +4,9 @@ import com.itsgood.ru.controller.request.contract.ContractRequestUpdate;
 import com.itsgood.ru.converters.ContractConverterRequestUpdate;
 import com.itsgood.ru.domain.ContractDTO;
 import com.itsgood.ru.domain.PaymentDTO;
-import com.itsgood.ru.repository.ContractDataRepository;
-import com.itsgood.ru.service.AddressDataService;
-import com.itsgood.ru.service.PaymentDataService;
+import com.itsgood.ru.repository.spring.ContractDataRepository;
+import com.itsgood.ru.service.spring.AddressDataService;
+import com.itsgood.ru.service.spring.PaymentDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collections;
@@ -30,7 +31,7 @@ public class EquipmentDTO {
     @Column(name = "lastname")
     private String lastname;
     @Column(name = "phone")
-    private int phone;
+    private BigInteger phone;
     @Column(name = "loading_time")
     private Timestamp loading_time;
     @Column(name = "shipment_time")

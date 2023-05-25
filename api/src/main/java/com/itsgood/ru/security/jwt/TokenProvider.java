@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -49,8 +50,8 @@ public class TokenProvider {
     }
 
     public String getUsernameFromToken(String token) {
-        final Claims claims = getClaimsFromToken(token);
-        return claims.getSubject();
+        String login = getClaimsFromToken(token).getSubject();
+        return login;
     }
 
     public Date getCreatedDateFromToken(String token) {

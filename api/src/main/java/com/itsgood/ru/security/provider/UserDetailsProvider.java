@@ -2,7 +2,7 @@ package com.itsgood.ru.security.provider;
 
 import com.itsgood.ru.domain.CustomerDTO;
 import com.itsgood.ru.domain.RoleDTO;
-import com.itsgood.ru.repository.CustomerDataRepository;
+import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

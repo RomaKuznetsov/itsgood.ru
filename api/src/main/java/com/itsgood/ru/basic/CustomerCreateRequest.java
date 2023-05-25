@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -26,7 +27,7 @@ public class CustomerCreateRequest {
     private String mail;
     @NotNull
     private String password;
-    private int phone;
+    private BigInteger phone;
     private Date birthday;
     private String gender;
     private Timestamp create_time;

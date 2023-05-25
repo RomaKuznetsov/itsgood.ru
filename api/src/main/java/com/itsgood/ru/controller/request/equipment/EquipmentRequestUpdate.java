@@ -4,10 +4,8 @@ import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -22,8 +20,9 @@ public class EquipmentRequestUpdate {
     @NotNull
     @Size(min = 2, max = 100)
     private String lastname;
-//    @Pattern(regexp = "\\d{9}")
-    private int phone;
+    @DecimalMax(value = "999999999")
+    @DecimalMin(value = "100000000")
+    private BigInteger phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Timestamp shipment_time;
     private int stock_index;

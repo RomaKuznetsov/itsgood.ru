@@ -3,7 +3,7 @@ package com.itsgood.ru.converters.impl.item;
 import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
 import com.itsgood.ru.converters.ItemConverterRequestUpdate;
 import com.itsgood.ru.domain.ItemDTO;
-import com.itsgood.ru.repository.ItemDataRepository;
+import com.itsgood.ru.repository.spring.ItemDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

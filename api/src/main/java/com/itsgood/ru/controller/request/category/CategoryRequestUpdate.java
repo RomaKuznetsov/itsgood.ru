@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 @Validated
 public class CategoryRequestUpdate {
     @NotNull
+    @Size(min = 350000)
     private int id;
     @Size(max = 20)
     private String title;

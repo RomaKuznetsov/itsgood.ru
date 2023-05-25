@@ -62,7 +62,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 antMatchers("/guest/**").permitAll().
                 antMatchers("/registration/**").permitAll().
                 antMatchers("/authentication/**").permitAll().
-                antMatchers("/controller/rest/springData/**").permitAll().
+                antMatchers("/controller/rest/spring/**").permitAll().
                 antMatchers("/rest/**").permitAll().
                 antMatchers("/rest/hibernate/**").permitAll().
                 antMatchers("/rest/hibernate/category").permitAll().

@@ -8,13 +8,15 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.sql.Date;
 
 @Getter
 @Validated
 public class PaymentRequestSearch {
-private int id;
+    @Size(min = 250000)
+    private int id;
     private String status;
     @Positive
     @DateTimeFormat(pattern = "yyyy-MM-dd")

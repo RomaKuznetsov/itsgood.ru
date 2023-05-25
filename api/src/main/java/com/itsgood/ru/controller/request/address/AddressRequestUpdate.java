@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Validated
 public class AddressRequestUpdate {
     @NotNull
+    @Size(min = 150000)
     private int id;
     @NotNull
     private String code;

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Validated
 public class ItemRequestUpdate {
-
+    @Size(min = 400000)
     private int id;
     @NotNull
     @Size(min = 20)
@@ -29,7 +29,7 @@ public class ItemRequestUpdate {
     private int weight;
     @NotNull
     private String volume;
-
+    @Size(min = 350000)
     private int category_id;
 
 

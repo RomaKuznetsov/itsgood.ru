@@ -19,9 +19,8 @@ public class EquipmentRequestCreate {
     @DecimalMax(value = "999999999")
     @DecimalMin(value = "100000000")
     private BigInteger phone;
-
+    @Size(min = 150000)
     private int address_id;
-
     private String distance;
     @Positive
     private int price;

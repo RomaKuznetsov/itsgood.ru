@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Getter
 @Validated
 public class EquipmentRequestUpdate {
-
+    @Size(min = 450000)
     private int id;
     @NotNull
     @Size(min = 2, max = 100)
@@ -31,6 +31,7 @@ public class EquipmentRequestUpdate {
     private int price;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date validity;
+    @Size(min = 150000)
     private int address_id;
 
 }

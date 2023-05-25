@@ -29,6 +29,7 @@ public class ItemRequestCreate {
     @NotNull
     private String volume;
     @NotNull
+    @Size(min = 350000)
     private int category_id;
 
 

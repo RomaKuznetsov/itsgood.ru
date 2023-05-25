@@ -3,16 +3,14 @@ package com.itsgood.ru.controller.request.payment;
 import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.math.BigInteger;
 
 @Getter
 @Validated
 public class PaymentRequestUpdate {
     @NotNull
+    @Size(min = 250000)
     private int id;
     @NotNull
     private String status;

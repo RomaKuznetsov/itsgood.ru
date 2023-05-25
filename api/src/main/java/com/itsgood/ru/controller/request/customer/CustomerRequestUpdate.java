@@ -11,7 +11,7 @@ import java.sql.Date;
 @Getter
 @Validated
 public class CustomerRequestUpdate {
-
+    @Size(min = 100000)
     private int id;
     @NotNull
     @Size(min = 2, max = 100)
@@ -31,7 +31,7 @@ public class CustomerRequestUpdate {
     @DecimalMin(value = "100000000")
     private BigInteger phone;
     @NotNull
-    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private String gender;
 

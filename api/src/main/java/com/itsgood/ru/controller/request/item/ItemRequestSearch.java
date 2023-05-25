@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Validated
 public class ItemRequestSearch {
-
+    @Size(min = 400000)
     private int id;
     @Size(max = 20)
     private String title;
@@ -22,6 +22,7 @@ public class ItemRequestSearch {
     private String link;
     @Size(max = 3500)
     private String description;
+    @Size(min = 350000)
     private int category_id;
 
 

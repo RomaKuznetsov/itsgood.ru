@@ -35,6 +35,7 @@ public class HibernateCustomerRepositoryImpl implements HibernateCustomerReposit
 
     @Override
     public CustomerDTO create(CustomerDTO object) throws SQLException {
+        Session session = sessionFactory.openSession();
         return update(object);
     }
 

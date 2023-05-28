@@ -23,7 +23,7 @@ import java.util.Set;
 @Cacheable("customer")
 public class CustomerDTO {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     @Column(name = "firstname")
     private String firstname;

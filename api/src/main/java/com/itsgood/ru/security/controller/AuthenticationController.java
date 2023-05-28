@@ -1,7 +1,8 @@
 package com.itsgood.ru.security.controller;
 
 
-import com.itsgood.ru.configuration.HttpRequestConfiguration;
+import com.itsgood.ru.configuration.HttpHeadersConfiguration;
+import com.itsgood.ru.configuration.HttpSessionConfiguration;
 import com.itsgood.ru.domain.AuthenticationInfo;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import com.itsgood.ru.security.dto.AuthRequest;
@@ -9,6 +10,7 @@ import com.itsgood.ru.security.dto.AuthResponse;
 import com.itsgood.ru.security.jwt.TokenProvider;
 import com.itsgood.ru.security.util.CustomHeaders;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,17 +25,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/rest")
-public class AuthenticationController extends HttpHeaders {
+public class AuthenticationController {
+    private final HttpHeadersConfiguration httpHeadersConfiguration;
+
+    private final HttpSessionConfiguration httpSessionConfiguration;
     private final AuthenticationManager authenticationManager;
     private final AuthenticationInfo authenticationInfo;
     private final TokenProvider provider;
     private final UserDetailsService userProvider;
     private final JWTConfiguration jwtConfiguration;
     private final PasswordEncoder passwordEncoder;
-    private final HttpRequestConfiguration httpRequestConfiguration;
 
     //ok
     @PostMapping(value = "/authentication", consumes = {"application/xml", "application/json"})
@@ -49,7 +55,7 @@ public class AuthenticationController extends HttpHeaders {
         }
         /*Generate token with answer to user*/
         String token = provider.generateToken(userDetails);
-        httpRequestConfiguration.getHeaders().add(CustomHeaders.X_AUTH_TOKEN, token);
+        httpHeadersConfiguration.getHeadersBean().add(CustomHeaders.X_AUTH_TOKEN, token);
         authenticationInfo.setUsername(userDetails.getUsername());
         return ResponseEntity.ok(
                 AuthResponse.builder().login(request.getLogin())

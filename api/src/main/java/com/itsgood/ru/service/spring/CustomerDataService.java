@@ -1,5 +1,7 @@
 package com.itsgood.ru.service.spring;
 
+import com.itsgood.ru.configuration.HttpHeadersConfiguration;
+import com.itsgood.ru.configuration.HttpSessionConfiguration;
 import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestSearch;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
@@ -7,8 +9,13 @@ import com.itsgood.ru.converters.CustomerConverterRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestUpdate;
 import com.itsgood.ru.domain.*;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
+import com.itsgood.ru.security.util.CustomHeaders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.j2ee.J2eeBasedPreAuthenticatedWebAuthenticationDetailsSource;
+import org.springframework.security.web.http.SecurityHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +30,8 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 @Service
 @RequiredArgsConstructor
 public class CustomerDataService {
+    private final HttpHeadersConfiguration httpHeadersConfiguration;
+    private final HttpSessionConfiguration httpSessionConfiguration;
     private final AuthenticationInfo authenticationInfo;
     private final CustomerDataRepository customerDataRepository;
     private final CustomerConverterRequestCreate customerConverterRequestCreate;
@@ -44,8 +53,14 @@ public class CustomerDataService {
 
     public CustomerDTO findCustomerByAuthenticationInfo() {
        String login = authenticationInfo.getUsername();
+       //если token будет валидным обьект
+       String token = httpHeadersConfiguration.getHeadersBean().get(CustomHeaders.X_AUTH_TOKEN).get(0);
+
         Optional<CustomerDTO> searchResult = customerDataRepository.findByMail(login);
-        return searchResult.orElseThrow(EntityNotFoundException::new);
+
+        CustomerDTO customerDTO = searchResult.orElseThrow(EntityNotFoundException::new);
+        httpSessionConfiguration.SessionRegistryBean().registerNewSession(login, customerDTO);
+        return customerDTO;
     }
 
     @Transactional(isolation = DEFAULT, propagation = REQUIRED, rollbackFor = Exception.class)

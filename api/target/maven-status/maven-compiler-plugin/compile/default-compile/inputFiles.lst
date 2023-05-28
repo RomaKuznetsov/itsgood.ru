@@ -7,6 +7,7 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\security\jwt\TokenProvider.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\category\CategoryRequestUpdate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\basic\CustomerUpdateConverter.java
+D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\configuration\HttpSessionConfiguration.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\rest\spring\RoleDataController.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\security\dto\AuthRequest.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\item\ItemRequestSearch.java
@@ -63,7 +64,6 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\Ro
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\RoleService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\EquipmentConverterRequestUpdate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\ContractService.java
-D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\configuration\HttpRequestConfiguration.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\impl\ContractServiceImpl.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\CustomerService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\item\ItemRequestCreate.java
@@ -72,6 +72,7 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\re
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\hibernate\HibernateDeliveryService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\hibernate\impl\HibernateDeliveryServiceImpl.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\spring\CustomerDataService.java
+D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\configuration\HttpHeadersConfiguration.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\ItemService.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\BucketConverterRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\impl\equipment\EquipmentConverterRequestUpdateImpl.java

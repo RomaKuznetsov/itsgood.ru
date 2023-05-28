@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 @Configuration
-public class HttpRequestConfiguration {
-    @Bean
-    public HttpHeaders getHeaders() {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        return httpHeaders;
-    }
+public class HttpHeadersConfiguration {
 
+    @Bean
+    public HttpHeaders getHeadersBean() {
+        HttpHeaders headers = new HttpHeaders();
+        return headers;
+    }
 }

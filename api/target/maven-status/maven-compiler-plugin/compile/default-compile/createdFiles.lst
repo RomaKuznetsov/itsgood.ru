@@ -61,6 +61,7 @@ com\itsgood\ru\configuration\WebMVC.class
 com\itsgood\ru\exceptions\ApplicationErrorMessage.class
 com\itsgood\ru\service\hibernate\impl\HibernateContractServiceImpl.class
 com\itsgood\ru\service\hibernate\impl\HibernateCategoryServiceImpl.class
+com\itsgood\ru\configuration\HttpSessionConfiguration.class
 com\itsgood\ru\basic\CustomerUpdateConverter.class
 com\itsgood\ru\controller\request\bucket\BucketRequestSearch.class
 com\itsgood\ru\converters\ItemConverterRequestUpdate.class
@@ -69,7 +70,6 @@ com\itsgood\ru\service\spring\CustomerDataService.class
 com\itsgood\ru\controller\request\address\AddressRequestUpdate.class
 com\itsgood\ru\JDBCTemplate\service\impl\PaymentServiceImpl.class
 com\itsgood\ru\JDBCTemplate\service\RoleService.class
-com\itsgood\ru\configuration\HttpRequestConfiguration.class
 com\itsgood\ru\JDBCTemplate\service\impl\RoleServiceImpl.class
 com\itsgood\ru\controller\rest\hibernate\HibernateCategoryRest.class
 com\itsgood\ru\controller\request\payment\PaymentRequestSearch.class
@@ -119,6 +119,7 @@ com\itsgood\ru\service\hibernate\HibernateCustomerService.class
 com\itsgood\ru\service\hibernate\HibernateItemService.class
 com\itsgood\ru\controller\request\contract\ContractRequestSearch.class
 com\itsgood\ru\codes\PaymentTypesContract.class
+com\itsgood\ru\configuration\HttpHeadersConfiguration.class
 com\itsgood\ru\converters\BucketConverterRequestCreate.class
 com\itsgood\ru\service\spring\ContractDataService.class
 com\itsgood\ru\controller\request\bucket\BucketRequestCreate.class

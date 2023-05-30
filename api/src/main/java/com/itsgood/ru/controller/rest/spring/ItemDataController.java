@@ -9,6 +9,8 @@ import com.itsgood.ru.service.spring.ItemDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +32,12 @@ import java.util.Set;
 @RequestMapping("/rest/spring/item")
 @RequiredArgsConstructor
 public class ItemDataController {
-
+//                    @Parameter(name = "gender",
+//                            required = true,
+//                            in = ParameterIn.QUERY,
+//                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED,
+//                            example = "NOT_SELECTED", type = "Gender", implementation = Gender.class,
+//                            description = "user gender"))
     private final ItemDataService itemDataService;
 
     @Operation(summary = "Spring data item find all search",
@@ -65,9 +72,34 @@ public class ItemDataController {
         }
         return new ResponseEntity<>(itemDataService.findItemById(request.getId()), HttpStatus.OK);
     }
-
+    @Operation(
+            summary = "Spring Data Item Search According to search request",
+            description = "Item criteria for search id or title",
+            parameters = {
+                    @Parameter(name = "id",
+                            required = true,
+                            in = ParameterIn.QUERY,
+                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "400000",
+                                    type = "int", description = "id item")),
+                    @Parameter(name = "title",
+                            required = true,
+                            in = ParameterIn.QUERY,
+                            schema = @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "title",
+                                    type = "string", description = "title item"))
+            },
+            responses = {
+                    @ApiResponse(
+                            responseCode = "OK",
+                            description = "Successfully loaded Items",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ItemDTO.class)
+                            )
+                    )
+            }
+    )
     @GetMapping(value = "/findItemByIdOrTitle", consumes = {"application/xml", "application/json"})
-    public ResponseEntity<ItemDTO> findItemByIdOrTitle(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
+    public ResponseEntity<ItemDTO> findItemByIdOrTitle(@Parameter(hidden = true) @Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
         }
@@ -96,7 +128,7 @@ public class ItemDataController {
             throw new IllegalRequestException(result);
         }
         itemDataService.deleteItem(request);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/deleteItemById", consumes = {"application/xml", "application/json"})
@@ -105,7 +137,7 @@ public class ItemDataController {
             throw new IllegalRequestException(result);
         }
         itemDataService.deleteItemById(request.getId());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/findSetBucketById", consumes = {"application/xml", "application/json"})

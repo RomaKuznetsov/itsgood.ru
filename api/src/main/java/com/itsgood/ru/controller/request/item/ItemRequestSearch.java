@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Validated
 @Schema(title = "Item whit information about search")
 public class ItemRequestSearch {
+
     @Size(min = 400000)
     private int id;
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED, example = "Notebook", type = "string",

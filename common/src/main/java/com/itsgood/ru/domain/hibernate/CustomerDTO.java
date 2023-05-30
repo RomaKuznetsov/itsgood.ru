@@ -1,4 +1,4 @@
-package com.itsgood.ru.domain;
+package com.itsgood.ru.domain.hibernate;
 
 import org.springframework.cache.annotation.Cacheable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

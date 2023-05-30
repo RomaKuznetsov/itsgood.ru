@@ -1,4 +1,4 @@
-package com.itsgood.ru.domain;
+package com.itsgood.ru.domain.hibernate;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;

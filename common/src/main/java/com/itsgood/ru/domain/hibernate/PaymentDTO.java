@@ -1,4 +1,4 @@
-package com.itsgood.ru.domain;
+package com.itsgood.ru.domain.hibernate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.cache.annotation.Cacheable;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Collections;

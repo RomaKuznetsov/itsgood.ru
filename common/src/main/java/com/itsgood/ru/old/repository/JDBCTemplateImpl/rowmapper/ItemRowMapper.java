@@ -1,5 +1,6 @@
 package com.itsgood.ru.old.repository.JDBCTemplateImpl.rowmapper;
 
+import com.itsgood.ru.domain.Volume;
 import com.itsgood.ru.old.domain.Item;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class ItemRowMapper implements RowMapper<Item> {
             item.setLink(rs.getString(LINK));
             item.setDescription(rs.getString(DESCRIPTION));
             item.setWeight(rs.getInt(WEIGHT));
-            item.setVolume(rs.getString(VOLUME));
+            item.setVolume(Volume.valueOf(rs.getString(VOLUME)));
             item.setCreate_time(rs.getString(CREATE_TIME));
             item.setUpdate_time(rs.getString(UPDATE_TIME));
             item.setCategory_id(rs.getInt(CATEGORY_ID));

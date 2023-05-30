@@ -3,15 +3,13 @@ package com.itsgood.ru.security.controller;
 
 import com.itsgood.ru.configuration.HttpHeadersConfiguration;
 import com.itsgood.ru.configuration.HttpSessionConfiguration;
-import com.itsgood.ru.domain.AuthenticationInfo;
+import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import com.itsgood.ru.security.dto.AuthRequest;
 import com.itsgood.ru.security.dto.AuthResponse;
 import com.itsgood.ru.security.jwt.TokenProvider;
 import com.itsgood.ru.security.util.CustomHeaders;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpCookie;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor

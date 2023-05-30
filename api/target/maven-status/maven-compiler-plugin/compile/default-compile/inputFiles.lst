@@ -17,7 +17,6 @@ D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\service\hiber
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\basic\CustomerUpdateRequest.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\converters\impl\address\AddressConverterRequestUpdateImpl.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\customer\CustomerRequestSearch.java
-D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\codes\VolumeItem.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\category\CategoryRequestCreate.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\controller\request\payment\PaymentRequestSearch.java
 D:\User_Roma\IdeaProjects\itsgood\api\src\main\java\com\itsgood\ru\JDBCTemplate\service\AddressAggregationService.java

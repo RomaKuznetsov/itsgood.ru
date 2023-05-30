@@ -4,7 +4,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.payment.PaymentRequestCreate;
 import com.itsgood.ru.controller.request.payment.PaymentRequestSearch;
 import com.itsgood.ru.controller.request.payment.PaymentRequestUpdate;
-import com.itsgood.ru.domain.PaymentDTO;
+import com.itsgood.ru.domain.hibernate.PaymentDTO;
 import com.itsgood.ru.service.spring.PaymentDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;

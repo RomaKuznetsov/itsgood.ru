@@ -1,8 +1,8 @@
 package com.itsgood.ru.repository.hibernate;
 
 
-import com.itsgood.ru.domain.ContractDTO;
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.old.repository.CRUDRepository;
 
 import java.sql.SQLException;

@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.repository.hibernate.HibernateDeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

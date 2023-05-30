@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.service.hibernate.HibernateCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -3,15 +3,14 @@ package com.itsgood.ru.converters.impl.payment;
 import com.itsgood.ru.codes.StatusPayment;
 import com.itsgood.ru.controller.request.payment.PaymentRequestUpdate;
 import com.itsgood.ru.converters.PaymentConverterRequestUpdate;
-import com.itsgood.ru.domain.CustomerDTO;
-import com.itsgood.ru.domain.PaymentDTO;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.PaymentDTO;
 import com.itsgood.ru.repository.spring.PaymentDataRepository;
 import com.itsgood.ru.service.spring.CustomerDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityExistsException;
-import java.util.List;
 import java.util.Optional;
 
 @Component

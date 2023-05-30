@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.bucket.BucketRequestCreate;
 import com.itsgood.ru.controller.request.bucket.BucketRequestSearch;
 import com.itsgood.ru.controller.request.bucket.BucketRequestUpdate;
-import com.itsgood.ru.domain.BucketDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
 import com.itsgood.ru.service.spring.BucketDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;

@@ -1,5 +1,6 @@
 package com.itsgood.ru.old.domain;
 
+import com.itsgood.ru.domain.Volume;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class Item {
     private String link;
     private String description;
     private int weight;
-    private String volume;
+    private Volume volume;
     private String create_time;
     private String update_time;
     private int  category_id;

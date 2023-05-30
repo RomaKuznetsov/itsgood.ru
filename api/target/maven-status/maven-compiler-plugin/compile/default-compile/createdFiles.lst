@@ -137,7 +137,6 @@ com\itsgood\ru\converters\impl\role\RoleConverterRequestUpdateImpl.class
 com\itsgood\ru\controller\request\role\RoleRequestUpdate.class
 com\itsgood\ru\JDBCTemplate\service\impl\DeliveryServiceImpl.class
 com\itsgood\ru\converters\impl\address\AddressConverterRequestCreateImpl.class
-com\itsgood\ru\codes\VolumeItem.class
 com\itsgood\ru\basic\CustomerUpdateRequest.class
 com\itsgood\ru\basic\CustomerCreateConverter.class
 com\itsgood\ru\controller\request\category\CategoryRequestUpdate.class

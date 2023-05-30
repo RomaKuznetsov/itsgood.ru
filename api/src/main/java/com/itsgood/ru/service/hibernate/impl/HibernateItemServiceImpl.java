@@ -1,7 +1,7 @@
 package com.itsgood.ru.service.hibernate.impl;
 
 
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.hibernate.HibernateItemRepository;
 import com.itsgood.ru.service.hibernate.HibernateItemService;
 import lombok.RequiredArgsConstructor;

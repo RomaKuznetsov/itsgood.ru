@@ -2,8 +2,8 @@ package com.itsgood.ru.converters.impl.bucket;
 
 import com.itsgood.ru.controller.request.bucket.BucketRequestUpdate;
 import com.itsgood.ru.converters.BucketConverterRequestUpdate;
-import com.itsgood.ru.domain.BucketDTO;
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.service.spring.ContractDataService;
 import com.itsgood.ru.service.spring.EquipmentDataService;
 import com.itsgood.ru.repository.spring.BucketDataRepository;

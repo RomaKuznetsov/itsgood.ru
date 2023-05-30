@@ -1,7 +1,7 @@
 package com.itsgood.ru.service.hibernate;
 
-import com.itsgood.ru.domain.ContractDTO;
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 
 
 import java.sql.SQLException;

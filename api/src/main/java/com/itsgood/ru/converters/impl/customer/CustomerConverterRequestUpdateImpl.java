@@ -2,8 +2,8 @@ package com.itsgood.ru.converters.impl.customer;
 
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
 import com.itsgood.ru.converters.CustomerConverterRequestUpdate;
-import com.itsgood.ru.domain.AuthenticationInfo;
-import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.AuthenticationInfo;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
 import lombok.RequiredArgsConstructor;

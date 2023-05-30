@@ -2,9 +2,9 @@ package com.itsgood.ru.converters.impl.bucket;
 
 import com.itsgood.ru.controller.request.bucket.BucketRequestCreate;
 import com.itsgood.ru.converters.BucketConverterRequestCreate;
-import com.itsgood.ru.domain.BucketDTO;
-import com.itsgood.ru.domain.ContractDTO;
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
+import com.itsgood.ru.domain.hibernate.ContractDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.ContractDataService;
 import com.itsgood.ru.service.spring.ItemDataService;
 import lombok.RequiredArgsConstructor;

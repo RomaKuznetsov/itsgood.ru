@@ -3,6 +3,7 @@ package com.itsgood.ru.domain.hibernate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.itsgood.ru.domain.Volume;
 import lombok.*;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -39,7 +40,7 @@ public class ItemDTO {
     @Column(name = "weight")
     private int weight;
     @Column(name = "volume")
-    private String volume;
+    private Volume volume;
     @Column(name = "create_time")
     private Timestamp create_time;
     @Column(name = "update_time")

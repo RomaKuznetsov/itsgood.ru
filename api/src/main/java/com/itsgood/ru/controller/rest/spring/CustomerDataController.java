@@ -1,12 +1,11 @@
 package com.itsgood.ru.controller.rest.spring;
 
-import com.itsgood.ru.configuration.HttpSessionConfiguration;
 import com.itsgood.ru.controller.request.contract.ContractRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestCreate;
 import com.itsgood.ru.controller.request.customer.CustomerRequestSearch;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
 import com.itsgood.ru.controller.request.role.RoleRequestCreate;
-import com.itsgood.ru.domain.*;
+import com.itsgood.ru.domain.hibernate.*;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.configuration.JWTConfiguration;
@@ -14,7 +13,6 @@ import com.itsgood.ru.service.spring.ContractDataService;
 import com.itsgood.ru.service.spring.CustomerDataService;
 import com.itsgood.ru.service.spring.RoleDataService;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.Jsoup;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -7,15 +7,11 @@ import com.itsgood.ru.controller.request.customer.CustomerRequestSearch;
 import com.itsgood.ru.controller.request.customer.CustomerRequestUpdate;
 import com.itsgood.ru.converters.CustomerConverterRequestCreate;
 import com.itsgood.ru.converters.CustomerConverterRequestUpdate;
-import com.itsgood.ru.domain.*;
+import com.itsgood.ru.domain.hibernate.*;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import com.itsgood.ru.security.util.CustomHeaders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.preauth.j2ee.J2eeBasedPreAuthenticatedWebAuthenticationDetailsSource;
-import org.springframework.security.web.http.SecurityHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

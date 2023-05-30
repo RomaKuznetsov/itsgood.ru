@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.address;
 
 import com.itsgood.ru.controller.request.address.AddressRequestCreate;
 import com.itsgood.ru.converters.AddressConverterRequestCreate;
-import com.itsgood.ru.domain.AddressDTO;
+import com.itsgood.ru.domain.hibernate.AddressDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

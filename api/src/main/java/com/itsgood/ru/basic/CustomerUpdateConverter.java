@@ -1,6 +1,6 @@
 package com.itsgood.ru.basic;
 
-import com.itsgood.ru.domain.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
 import com.itsgood.ru.repository.spring.CustomerDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

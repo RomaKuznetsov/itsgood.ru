@@ -1,7 +1,7 @@
 package com.itsgood.ru.repository.spring;
 
 
-import com.itsgood.ru.domain.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;

@@ -3,17 +3,26 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.item.ItemRequestCreate;
 import com.itsgood.ru.controller.request.item.ItemRequestSearch;
 import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
-import com.itsgood.ru.domain.BucketDTO;
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.ItemDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -24,9 +33,29 @@ public class ItemDataController {
 
     private final ItemDataService itemDataService;
 
+    @Operation(summary = "Spring data item find all search",
+            description = "find all item without limitation",
+            responses = {@ApiResponse(responseCode = "OK",
+                    description = "successfully loaded items",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = ItemDTO.class))))})
     @GetMapping(value = "/findAllItem", consumes = {"application/xml", "application/json"})
     public ResponseEntity<List<ItemDTO>> findAllItem() {
-        return new ResponseEntity<>(itemDataService.findAllHibernateItem(), HttpStatus.OK);
+        return new ResponseEntity<>(itemDataService.findAllItem(), HttpStatus.OK);
+    }
+    @Operation(summary = "Spring data item find all search",
+            description = "find all item without limitation",
+            responses = {@ApiResponse(responseCode = "OK",
+                    description = "successfully loaded items",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = PageImpl.class))))})
+    @GetMapping(value = "/page/{page}", consumes = {"application/xml", "application/json"})
+    public ResponseEntity<Object> testEndPoint(@Parameter(name = "page", example = "1", required = true)
+                                                   @PathVariable int page) {
+        return new ResponseEntity<>(Collections.singletonMap("result",
+                itemDataService.findNumberPageItem(PageRequest.of(page, 4))), HttpStatus.OK);
     }
 
     @GetMapping(value = "/findItemById", consumes = {"application/xml", "application/json"})
@@ -53,7 +82,7 @@ public class ItemDataController {
         return new ResponseEntity<>(itemDataService.createItem(request), HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/createItem", consumes = {"application/xml", "application/json"})
+    @PatchMapping(value = "/updateItem", consumes = {"application/xml", "application/json"})
     public ResponseEntity<ItemDTO> updateItem(@Validated @RequestBody ItemRequestUpdate request, BindingResult result) {
         if (result.hasErrors()) {
             throw new IllegalRequestException(result);
@@ -102,6 +131,7 @@ public class ItemDataController {
         }
         return new ResponseEntity<>(itemDataService.findItemByTitleAndPriceBeforeOrFirm(request), HttpStatus.OK);
     }
+
     @GetMapping(value = "/findItemByTitleAndDescription", consumes = {"application/xml", "application/json"})
     public ResponseEntity<List<ItemDTO>> findItemByTitleAndDescription(@Validated @RequestBody ItemRequestSearch request, BindingResult result) {
         if (result.hasErrors()) {

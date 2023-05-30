@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.hibernate.impl;
 
-import com.itsgood.ru.domain.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 import com.itsgood.ru.repository.hibernate.HibernateCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;

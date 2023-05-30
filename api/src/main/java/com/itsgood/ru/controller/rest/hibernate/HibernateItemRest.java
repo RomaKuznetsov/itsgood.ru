@@ -1,6 +1,6 @@
 package com.itsgood.ru.controller.rest.hibernate;
 
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.old.domain.Item;
 import com.itsgood.ru.service.hibernate.HibernateItemService;
 import lombok.RequiredArgsConstructor;

@@ -5,12 +5,14 @@ import com.itsgood.ru.controller.request.item.ItemRequestSearch;
 import com.itsgood.ru.controller.request.item.ItemRequestUpdate;
 import com.itsgood.ru.converters.ItemConverterRequestCreate;
 import com.itsgood.ru.converters.ItemConverterRequestUpdate;
-import com.itsgood.ru.domain.CategoryDTO;
-import com.itsgood.ru.domain.BucketDTO;
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.BucketDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.repository.spring.ItemDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +34,12 @@ public class ItemDataService {
     private final ItemConverterRequestCreate itemConverterRequestCreate;
     private final ItemConverterRequestUpdate itemConverterRequestUpdate;
     @Cacheable("item")
-    public List<ItemDTO> findAllHibernateItem() {
+    public List<ItemDTO> findAllItem() {
         return itemDataRepository.findAll();
+    }
+
+    public Page<ItemDTO> findNumberPageItem(Pageable page) {
+        return itemDataRepository.findAll(page);
     }
 
     public ItemDTO findItemById(Integer id) {

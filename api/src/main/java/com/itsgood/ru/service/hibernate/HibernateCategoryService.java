@@ -1,6 +1,6 @@
 package com.itsgood.ru.service.hibernate;
 
-import com.itsgood.ru.domain.CategoryDTO;
+import com.itsgood.ru.domain.hibernate.CategoryDTO;
 
 import java.sql.SQLException;
 import java.util.List;

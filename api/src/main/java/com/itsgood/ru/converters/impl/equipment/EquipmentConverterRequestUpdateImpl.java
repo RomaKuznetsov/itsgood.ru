@@ -2,8 +2,8 @@ package com.itsgood.ru.converters.impl.equipment;
 
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestUpdate;
 import com.itsgood.ru.converters.EquipmentConverterRequestUpdate;
-import com.itsgood.ru.domain.EquipmentDTO;
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.repository.spring.EquipmentDataRepository;
 import com.itsgood.ru.service.spring.ContractDataService;

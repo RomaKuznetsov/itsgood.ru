@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.role.RoleRequestCreate;
 import com.itsgood.ru.controller.request.role.RoleRequestSearch;
 import com.itsgood.ru.controller.request.role.RoleRequestUpdate;
-import com.itsgood.ru.domain.RoleDTO;
+import com.itsgood.ru.domain.hibernate.RoleDTO;
 import com.itsgood.ru.service.spring.RoleDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 import lombok.RequiredArgsConstructor;

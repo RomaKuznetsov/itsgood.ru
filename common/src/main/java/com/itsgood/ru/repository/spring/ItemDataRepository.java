@@ -1,6 +1,6 @@
 package com.itsgood.ru.repository.spring;
 
-import com.itsgood.ru.domain.ItemDTO;
+import com.itsgood.ru.domain.hibernate.ItemDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,5 +16,4 @@ public interface ItemDataRepository extends JpaRepository<ItemDTO, Integer>,
     Optional<List<ItemDTO>> findHibernateItemByTitleAndPriceAfterOrFirm(String title, int price, String firm);
     Optional<List<ItemDTO>> findHibernateItemByTitleAndPriceBeforeOrFirm(String title, int price, String firm);
     Optional<List<ItemDTO>> findHibernateItemByTitleAndDescription(String title, String description);
-
 }

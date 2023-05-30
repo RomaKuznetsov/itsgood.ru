@@ -2,7 +2,7 @@ package com.itsgood.ru.converters.impl.equipment;
 
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestCreate;
 import com.itsgood.ru.converters.EquipmentConverterRequestCreate;
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.service.spring.AddressDataService;
 import com.itsgood.ru.utilits.RandomValuesGenerator;
 import lombok.RequiredArgsConstructor;

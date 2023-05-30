@@ -1,12 +1,11 @@
 package com.itsgood.ru.repository.spring;
 
-import com.itsgood.ru.domain.CustomerDTO;
-import com.itsgood.ru.domain.PaymentDTO;
+import com.itsgood.ru.domain.hibernate.CustomerDTO;
+import com.itsgood.ru.domain.hibernate.PaymentDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;

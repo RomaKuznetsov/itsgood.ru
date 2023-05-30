@@ -3,7 +3,7 @@ package com.itsgood.ru.controller.rest.spring;
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestCreate;
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestSearch;
 import com.itsgood.ru.controller.request.equipment.EquipmentRequestUpdate;
-import com.itsgood.ru.domain.EquipmentDTO;
+import com.itsgood.ru.domain.hibernate.EquipmentDTO;
 import com.itsgood.ru.service.spring.EquipmentDataService;
 import com.itsgood.ru.exceptions.IllegalRequestException;
 
@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @RestController

@@ -1,0 +1,15 @@
+package com.itsgood.ru.old.repository;
+
+import com.itsgood.ru.old.domain.Address;
+import com.itsgood.ru.old.domain.Customer;
+
+import java.sql.SQLException;
+import java.util.List;
+
+public interface AddressRepository extends CRUDRepository<Integer, Address> {
+    Address findCustomerRegistration(Customer customer) throws SQLException;
+    List<Address> findListCustomerDelivery(Customer customer) throws SQLException;
+    List<Address> findListAddressOneCustomer(Customer customer) throws SQLException;
+    Address findMaxIdAddress() throws SQLException;
+    Address findMinIdAddress() throws SQLException;
+}
